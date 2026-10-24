@@ -1,8 +1,9 @@
 """Golden-set retrieval eval for the RAG chatbot service.
 
 Runs each case in golden_set.jsonl against the *real* Elasticsearch index and
-BGE-m3 model (no mocks -- see rag/service/test_main.py for the mocked unit
-tests) and checks whether the chunk we expect shows up in the top-K results.
+BGE-m3 model (no mocks -- see rag/service/test_retrieval.py for the mocked
+unit tests) and checks whether the chunk we expect shows up in the top-K
+results.
 
 This is how retrieval regressions and failure cases get reproduced: when a
 question returns the wrong lesson (or nothing), add it here with the chunk id
@@ -22,7 +23,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "service"))
-import main  # noqa: E402
+import retrieval  # noqa: E402
 
 GOLDEN_SET_PATH = Path(__file__).parent / "golden_set.jsonl"
 
@@ -36,15 +37,15 @@ def run():
     from elasticsearch import Elasticsearch
     from sentence_transformers import SentenceTransformer
 
-    print(f"Loading {main.CLAUDE_MODEL and 'BGE-m3'} embedding model...")
-    main.state["model"] = SentenceTransformer("BAAI/bge-m3")
-    main.state["es"] = Elasticsearch(main.ES_HOST)
+    print("Loading BGE-m3 embedding model...")
+    retrieval.state["model"] = SentenceTransformer("BAAI/bge-m3")
+    retrieval.state["es"] = Elasticsearch(retrieval.ES_HOST)
 
     cases = load_cases()
     failures = []
 
     for case in cases:
-        hits = main.retrieve(case["question"], case.get("language"))
+        hits = retrieval.retrieve(case["question"], case.get("language"))
         hit_ids = [h["_source"].get("id") or h["_id"] for h in hits]
         top_score = hits[0]["_score"] if hits else 0.0
 

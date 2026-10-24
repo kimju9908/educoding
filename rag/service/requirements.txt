@@ -5,3 +5,5 @@ torch>=2.3
 elasticsearch>=8.17,<9
 anthropic>=0.40
 python-dotenv>=1.0
+langgraph>=1.2
+langchain-anthropic>=1.7

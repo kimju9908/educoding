@@ -8,7 +8,7 @@ study-seed/*.json
   -> chunking/chunk_lessons.py   (레슨을 섹션 단위로 쪼개고 headingIndex 부여)
   -> embedding/embed_chunks.py   (BGE-m3로 임베딩)
   -> indexing/index_chunks.py    (Elasticsearch study_chunks 인덱스에 색인)
-  -> service/main.py             (질문 임베딩 -> kNN 검색 -> Claude 답변 생성, FastAPI)
+  -> service/*.py                (retrieval.py 검색/도구 + agent_graph.py LangGraph 에이전트 + main.py FastAPI)
   -> backend (Spring Boot)       (/api/chatbot/ask 에서 위 서비스로 프록시)
   -> frontend                    (학습 페이지 우하단 챗봇 위젯, 답변 속 출처 링크로 해당 섹션까지 스크롤)
 ```
@@ -88,7 +88,7 @@ RAG 서비스에 `history`로 같이 보내고, 이번 턴(질문+답변)을 다
 
 예전에는 질문이 오면 백엔드가 먼저 검색하고, 그 결과를 통째로 Claude에게 넘겨서 답변만
 받아오는 구조였습니다. 이제는 검색 자체가 `search_study_material` 도구이고, Claude가
-"지금 검색이 필요한지, 뭘로 검색할지"를 직접 판단합니다 (`run_agent`, `service/main.py`).
+"지금 검색이 필요한지, 뭘로 검색할지"를 직접 판단합니다 (`agent_graph.run`).
 
 ```
 질문 -> Claude (도구 보유)
@@ -115,14 +115,61 @@ RAG 서비스에 `history`로 같이 보내고, 이번 턴(질문+답변)을 다
 고친 방법: 매 턴의 **첫 번째** Claude 호출에서 `tool_choice`를 `{"type": "tool", "name":
 "search_study_material"}`로 강제해서, 이번 턴에 적어도 한 번은 실제 검색을 거치도록
 만들었습니다. 이후 호출은 다시 `auto`로 풀어줘서 Claude가 재검색이 필요한지 스스로 판단할
-수 있게 두었습니다. 같은 멀티턴 시나리오를 3번 반복 실행해서 매번 실제로 검색이 일어나고
-`sources`가 채워지는 걸 확인했습니다 (서비스 로그의 `run_agent finished after N call(s)`).
+수 있게 두었습니다. 같은 멀티턴 시나리오를 여러 번 반복 실행해서 매번 실제로 검색이 일어나고
+`sources`가 채워지는 걸 확인했습니다 (서비스 로그의 `answered with N distinct cited chunk(s)`).
 
 ### 무한 루프 방지
 
 Claude가 검색을 계속 반복하며 답을 안 낼 가능성에 대비해 `MAX_TOOL_ITERATIONS`(기본 4) 상한을
-두었고, 마지막 호출은 `tool_choice="none"`으로 강제해서 그동안 모은 자료만으로라도 반드시
-텍스트 답변을 내도록 만들었습니다 (`.env.example`의 `RAG_MAX_TOOL_ITERATIONS`).
+두었고, 마지막 호출은 `tool_choice`를 강제로 꺼서(`{"type": "none"}`) 그동안 모은 자료만으로라도
+반드시 텍스트 답변을 내도록 만들었습니다 (`.env.example`의 `RAG_MAX_TOOL_ITERATIONS`).
+
+## LangGraph로 재구성
+
+위 에이전트 루프는 원래 `main.py` 안에 직접 짠 `while` 루프였습니다. 같은 동작을
+[LangGraph](https://github.com/langchain-ai/langgraph)의 `StateGraph`로 다시 짜서, 전형적인
+"ReAct" 그래프 형태(`agent` <-> `tools` 노드, 조건부 엣지로 순환)로 바꿨습니다. 코드는 세
+파일로 나뉩니다.
+
+```
+retrieval.py     검색(retrieve), 도구 스키마(SEARCH_TOOL), 인용 번호 매기기 -- LangGraph/FastAPI 둘 다 몰라도 되는 순수 로직
+agent_graph.py   LangGraph 그래프: agent 노드(Claude 호출) <-> tools 노드(실제 검색 실행)
+main.py          FastAPI 엔드포인트. agent_graph.run()을 호출하고 결과를 HTTP 응답으로 포장
+```
+
+```
+START -> agent --[tool_calls 있음?]--> tools -> agent -> ... -> END
+             \\--[없음]----------------------------------------> END
+```
+
+### 포팅하면서 다시 터진 "도구 호출 실패" (langchain-anthropic 특유의 함정)
+
+이 리팩터링 자체는 동작을 바꾸려는 게 아니었는데도, 실제 스택에 붙여 같은 멀티턴 시나리오를
+돌려보니 **바로 위에서 고쳤던 "검색 생략" 버그가 그대로 재발**했습니다 (`sources`가 다시 빈
+배열로 나옴). 서비스 로그에 이런 경고가 찍혀 있었습니다.
+
+```
+UserWarning: tool_choice is forced but thinking is enabled. The Anthropic API does not
+support forced tool use with thinking. Dropping tool_choice to avoid an API error.
+```
+
+원인: `langchain-anthropic`의 `bind_tools()`는 모델에 `thinking`이 켜져 있으면 강제
+`tool_choice`(`"any"` 또는 특정 도구 이름)를 **무조건 조용히 버리고** `auto`로 되돌립니다 --
+"Anthropic API가 지원하지 않는다"는 주석과 함께요. 그런데 실제로 `anthropic` 파이썬 SDK를
+직접 호출해서 `thinking`과 `tool_choice={"type": "any"}`를 같이 보내보면 `claude-sonnet-5`
+기준으로는 **멀쩡히 동작합니다** -- 라이브러리가 과도하게 방어적으로 막아놓은 케이스였습니다.
+고친 방법: 강제 호출에만 쓰는 `thinking`을 끈 `ChatAnthropic` 인스턴스를 하나 더 만들어서,
+그 호출만 그걸 쓰게 했습니다 (`build_graph`). 이 호출의 목적은 검색어를 고르는 것뿐이라 거기서
+`thinking`을 잃는 건 큰 손해가 아닙니다.
+
+고치고 나서 똑같은 경고가 **또** 찍혀서 다시 봤더니, 이번엔 다른 줄(`tool_choice="none"`)이
+원인이었습니다. `bind_tools`는 문자열 `tool_choice`를 `"any"`/`"auto"`만 특별 처리하고, 그 외
+문자열은 전부 "이 이름의 도구를 강제하라"로 해석합니다 -- 즉 `"none"`이라는 문자열을 `{"type":
+"tool", "name": "none"}`으로 바꿔버려서, 역시 강제 호출로 취급되어 같은 경고로 조용히
+드롭된 것입니다. `tool_choice`를 끄는 올바른 형태는 문자열이 아니라 `{"type": "none"}` 딕셔너리였습니다.
+
+두 군데를 모두 고친 뒤 같은 시나리오를 5번 반복 실행해서 매번 `sources`가 채워지고 경고 로그가
+한 줄도 없는 걸 확인했습니다 (`grep -c "Dropping tool_choice" rag-service.log` == 0).
 
 ## headingIndex로 섹션까지 딥링크하는 원리
 
