@@ -76,8 +76,3 @@ celery -A worker.celery_app worker --loglevel=info --concurrency=4
 
 
 
-
-
-<h2>License</h2>
-
-MIT

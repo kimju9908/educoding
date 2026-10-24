@@ -141,6 +141,3 @@ signature = hmac.new(
 
 
 
-## License
-
-MIT
