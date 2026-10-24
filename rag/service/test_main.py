@@ -111,6 +111,7 @@ def test_ask_happy_path_returns_answer_and_sources(client, no_auth, monkeypatch)
     source = body["sources"][0]
     assert source["language"] == "java"
     assert source["url"] == "/study/java/04/02?headingIndex=3"
+    assert source["chunkId"] == "java-04-02-03"
 
 
 def test_ask_forwards_question_language_and_history_to_agent_graph(client, no_auth, monkeypatch):
@@ -123,7 +124,10 @@ def test_ask_forwards_question_language_and_history_to_agent_graph(client, no_au
             "language": "java",
             "history": [
                 {"role": "user", "content": "자바에서 메소드는 어떻게 선언하나요?"},
-                {"role": "assistant", "content": "메소드는 [1]처럼 선언합니다."},
+                {
+                    "role": "assistant", "content": "메소드는 [1]처럼 선언합니다.",
+                    "sources": [{"citationNumber": 1, "chunkId": "java-04-02-03"}],
+                },
             ],
         },
         headers={"X-Anthropic-Api-Key": "sk-test"},
@@ -135,6 +139,8 @@ def test_ask_forwards_question_language_and_history_to_agent_graph(client, no_au
     assert call["question"] == "그럼 반환값이 없을 때는요?"
     assert call["language"] == "java"
     assert [t.content for t in call["history"]] == ["자바에서 메소드는 어떻게 선언하나요?", "메소드는 [1]처럼 선언합니다."]
+    assert call["history"][0].sources == []
+    assert call["history"][1].sources[0].chunkId == "java-04-02-03"
     assert call["api_key"] == "sk-test"
 
 

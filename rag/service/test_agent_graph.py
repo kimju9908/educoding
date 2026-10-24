@@ -6,11 +6,12 @@ calls retrieval.retrieve() for real.
 """
 import numpy as np
 import pytest
+from elasticsearch import NotFoundError
 from langchain_core.messages import AIMessage
 
 import agent_graph
 import retrieval
-from retrieval import ChatTurn
+from retrieval import ChatTurn, CitedSource
 
 
 class FakeModel:
@@ -21,9 +22,15 @@ class FakeModel:
 class FakeEs:
     def __init__(self, hits):
         self._hits = hits
+        self._docs = {h["_source"]["id"]: h["_source"] for h in hits}
 
     def search(self, **kwargs):
         return {"hits": {"hits": self._hits}}
+
+    def get(self, *, index, id):
+        if id not in self._docs:
+            raise NotFoundError("not found", None, None)
+        return {"_source": self._docs[id]}
 
 
 def make_hit(id="java-04-02-03", score=1.0, language="java", heading="메소드의 선언"):
@@ -53,10 +60,14 @@ def text_message(text):
     return AIMessage(content=text)
 
 
-def tool_call_message(call_id, query, language=None):
-    args = {"query": query}
+def tool_call_message(call_id, query=None, language=None, chunk_id=None):
+    args = {}
+    if query is not None:
+        args["query"] = query
     if language is not None:
         args["language"] = language
+    if chunk_id is not None:
+        args["chunk_id"] = chunk_id
     return AIMessage(
         content=[{"type": "text", "text": ""}],
         tool_calls=[{"name": "search_study_material", "args": args, "id": call_id}],
@@ -192,3 +203,59 @@ def test_build_graph_disables_thinking_only_for_the_forced_tool_model(monkeypatc
     assert len(with_thinking) == 1
     assert with_thinking[0]["thinking"] == {"type": "adaptive"}
     assert len(without_thinking) == 1
+
+
+def test_run_appends_citation_mapping_for_assistant_turns_with_sources(monkeypatch):
+    fake = mock_chat_anthropic(monkeypatch, [text_message("답")])
+    history = [
+        ChatTurn(role="user", content="메소드는 어떻게 선언하나요?"),
+        ChatTurn(
+            role="assistant", content="메소드는 [1]처럼 선언합니다.",
+            sources=[CitedSource(citationNumber=1, chunkId="java-04-02-03")],
+        ),
+    ]
+
+    agent_graph.run("그 자료 더 설명해줘", None, history, "fake-key", "claude-sonnet-5", 4)
+
+    sent_messages = fake.calls[0]["messages"]
+    assistant_message = sent_messages[2]
+    assert "메소드는 [1]처럼 선언합니다." in assistant_message.content
+    assert "[이전 답변 자료 매핑: 1=java-04-02-03]" in assistant_message.content
+
+
+def test_run_does_not_append_mapping_for_assistant_turns_without_sources(monkeypatch):
+    fake = mock_chat_anthropic(monkeypatch, [text_message("답")])
+    history = [ChatTurn(role="assistant", content="답변 내용")]
+
+    agent_graph.run("질문", None, history, "fake-key", "claude-sonnet-5", 4)
+
+    assert fake.calls[0]["messages"][1].content == "답변 내용"
+
+
+def test_run_looks_up_chunk_by_id_when_tool_call_provides_one(monkeypatch):
+    fake = mock_chat_anthropic(monkeypatch, [
+        tool_call_message("tu_1", chunk_id="java-04-02-03"),
+        text_message("그 자료는 [1]에 나온 대로입니다."),
+    ])
+
+    answer, hits = agent_graph.run("그 자료 더 설명해줘", None, [], "fake-key", "claude-sonnet-5", 4)
+
+    assert answer == "그 자료는 [1]에 나온 대로입니다."
+    assert hits[0]["_source"]["id"] == "java-04-02-03"
+    # the tool_result passed back is a direct lookup, not a semantic search
+    tool_result_message = fake.calls[1]["messages"][-1]
+    assert "[1]" in tool_result_message.content
+
+
+def test_run_tool_lookup_returns_no_match_for_unknown_chunk_id(monkeypatch):
+    fake = mock_chat_anthropic(monkeypatch, [
+        tool_call_message("tu_1", chunk_id="does-not-exist"),
+        text_message("그 자료를 찾지 못했습니다."),
+    ])
+
+    answer, hits = agent_graph.run("그 자료 더 설명해줘", None, [], "fake-key", "claude-sonnet-5", 4)
+
+    assert answer == "그 자료를 찾지 못했습니다."
+    assert hits == []
+    tool_result_message = fake.calls[1]["messages"][-1]
+    assert "검색 결과 없음" in tool_result_message.content

@@ -50,7 +50,7 @@ from retrieval import (
     format_search_result,
     ordered_hits_from_cited,
     resolve_tool_language,
-    retrieve,
+    search_or_lookup,
 )
 
 logger = logging.getLogger("rag.chatbot")
@@ -61,13 +61,28 @@ class AgentState(TypedDict):
     agent_calls: int
 
 
+def _render_assistant_turn(turn: ChatTurn) -> str:
+    """An assistant turn's stored text has citations like [2] in it, but nothing
+    ties [2] back to an actual chunk once that turn scrolls into history -- so a
+    follow-up like "아까 [2]번 자료 더 설명해줘" has nothing to resolve against.
+    Appending this turn's own citation->chunk_id mapping lets Claude look it up
+    for real (via SEARCH_TOOL's chunk_id param) instead of guessing from the
+    surrounding text. See build_system_prompt for how Claude is told to read it
+    and why it won't confuse this turn's [2] with a different turn's [2].
+    """
+    if not turn.sources:
+        return turn.content
+    mapping = ", ".join(f"{s.citationNumber}={s.chunkId}" for s in turn.sources)
+    return f"{turn.content}\n\n[이전 답변 자료 매핑: {mapping}]"
+
+
 def _history_to_messages(history: List[ChatTurn]):
     messages = []
     for turn in history[-MAX_HISTORY_TURNS:]:
         if turn.role == "user":
             messages.append(HumanMessage(content=turn.content))
         elif turn.role == "assistant":
-            messages.append(AIMessage(content=turn.content))
+            messages.append(AIMessage(content=_render_assistant_turn(turn)))
     return messages
 
 
@@ -113,9 +128,10 @@ def build_graph(claude_api_key: str, model_name: str, max_tool_iterations: int, 
         results = []
         for call in last_message.tool_calls:
             args = call.get("args") or {}
-            query = args.get("query") or ""
+            query = args.get("query") or None
+            chunk_id = args.get("chunk_id") or None
             language = resolve_tool_language(args, language_hint)
-            hits = retrieve(query, language)
+            hits = search_or_lookup(query, language, chunk_id)
             results.append(ToolMessage(
                 content=format_search_result(hits, cited),
                 tool_call_id=call["id"],

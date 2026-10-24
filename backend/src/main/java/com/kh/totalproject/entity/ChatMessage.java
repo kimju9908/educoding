@@ -37,6 +37,13 @@ public class ChatMessage {
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
+    // JSON-serialized List<CitedSource> (citationNumber + chunkId), in citation order.
+    // Only ever set for role=ASSISTANT; null for USER rows and for ASSISTANT rows from
+    // before this column existed -- both are treated as "no sources" when loaded
+    // (RagChatbotService.loadHistory), not as an error.
+    @Column(name = "sources_json", columnDefinition = "LONGTEXT")
+    private String sourcesJson;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

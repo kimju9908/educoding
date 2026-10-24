@@ -5,6 +5,7 @@ retrieve() against the real stack.
 """
 import numpy as np
 import pytest
+from elasticsearch import NotFoundError
 
 import retrieval
 
@@ -15,15 +16,21 @@ class FakeModel:
 
 
 class FakeEs:
-    """Stands in for the Elasticsearch client's .search(...) call."""
+    """Stands in for the Elasticsearch client's .search(...)/.get(...) calls."""
 
     def __init__(self, hits):
         self._hits = hits
+        self._docs = {h["_source"]["id"]: h["_source"] for h in hits}
         self.last_kwargs = None
 
     def search(self, **kwargs):
         self.last_kwargs = kwargs
         return {"hits": {"hits": self._hits}}
+
+    def get(self, *, index, id):
+        if id not in self._docs:
+            raise NotFoundError("not found", None, None)
+        return {"_source": self._docs[id]}
 
 
 def make_hit(id="java-04-02-03", score=1.0, language="java", chapterTitle="04. 객체 지향 프로그래밍",
@@ -126,3 +133,43 @@ def test_ordered_hits_from_cited_sorts_by_citation_number():
 
 def test_build_system_prompt_mentions_the_tool():
     assert "search_study_material" in retrieval.build_system_prompt()
+
+
+def test_get_chunk_by_id_returns_the_source_with_a_synthetic_score(es, model):
+    hit = retrieval.get_chunk_by_id("java-04-02-03")
+
+    assert hit["_source"]["id"] == "java-04-02-03"
+    assert hit["_score"] == 1.0
+
+
+def test_get_chunk_by_id_returns_none_when_not_found(es, model):
+    assert retrieval.get_chunk_by_id("does-not-exist") is None
+
+
+def test_search_or_lookup_prefers_chunk_id_over_query(es, model):
+    hits = retrieval.search_or_lookup("아무 질문", "java", "java-04-02-03")
+
+    assert [h["_source"]["id"] for h in hits] == ["java-04-02-03"]
+    assert es.last_kwargs is None  # .search() (semantic query) was never called
+
+
+def test_search_or_lookup_falls_back_to_query_when_no_chunk_id(es, model):
+    hits = retrieval.search_or_lookup("메소드 선언", "java", None)
+
+    assert len(hits) == 1
+    assert es.last_kwargs is not None  # .search() was used
+
+
+def test_search_or_lookup_returns_empty_when_neither_query_nor_chunk_id():
+    assert retrieval.search_or_lookup(None, "java", None) == []
+
+
+def test_chat_turn_sources_default_to_empty_and_accept_cited_sources():
+    bare = retrieval.ChatTurn(role="user", content="질문")
+    assert bare.sources == []
+
+    cited = retrieval.ChatTurn(
+        role="assistant", content="답변 [1]",
+        sources=[retrieval.CitedSource(citationNumber=1, chunkId="java-04-02-03")],
+    )
+    assert cited.sources[0].chunkId == "java-04-02-03"

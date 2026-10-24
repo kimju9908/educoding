@@ -29,13 +29,15 @@ from typing import List, Optional
 
 import anthropic
 import torch
-from dotenv import load_dotenv
 from elasticsearch import Elasticsearch
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
 import agent_graph
+# Importing retrieval is what actually loads rag/service/.env (see its module
+# docstring/top) -- that has to happen before ES_HOST etc. below are read, which is
+# exactly why it's a plain import and not deferred.
 from retrieval import (
     ALLOWED_LANGUAGES,
     CLAUDE_MODEL,
@@ -44,11 +46,10 @@ from retrieval import (
     ES_USERNAME,
     MAX_TOOL_ITERATIONS,
     ChatTurn,
+    chunk_key,
     state,
     verify_auth,
 )
-
-load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("rag.chatbot")
@@ -77,6 +78,13 @@ class AskRequest(BaseModel):
 
 
 class Source(BaseModel):
+    # The chunk's own id (same string used as SEARCH_TOOL's chunk_id and as the ES
+    # document id). The backend persists it per source, in order, against the
+    # assistant message that cited it -- that's what lets a later turn's
+    # ChatTurn.sources carry {citationNumber, chunkId} pairs back in as history,
+    # so a follow-up that points at an old citation can be looked up for real
+    # instead of guessed. See retrieval.CitedSource / agent_graph._render_assistant_turn.
+    chunkId: str
     language: str
     chapterTitle: str
     lessonLabel: str
@@ -130,6 +138,7 @@ def ask(
 
     sources = [
         Source(
+            chunkId=chunk_key(hit),
             language=hit["_source"]["language"],
             chapterTitle=hit["_source"]["chapterTitle"],
             lessonLabel=hit["_source"]["lessonLabel"],

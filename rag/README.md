@@ -45,6 +45,24 @@ source ../.venv/bin/activate
 uvicorn main:app --host 127.0.0.1 --port 5051
 ```
 
+## .env 로딩 순서 버그
+
+`retrieval.py`의 설정값(`TOP_K`, `RAG_X_API_KEY` 등)은 모듈이 import되는 순간 `os.environ`에서
+읽힙니다. 한동안 `main.py`가 `retrieval`/`agent_graph`를 먼저 import하고 `load_dotenv()`를
+그 다음에 호출했는데, 그러면 import 시점에는 `.env`가 아직 로드되지 않은 상태라 `.env`에 적은
+값이 전부 무시됐습니다 -- `RAG_TOP_K=9`를 넣어도 `TOP_K`는 하드코딩된 기본값 5로 남고,
+`RAG_X_API_KEY`도 `None`으로 남아서 **공유 비밀키 인증이 조용히 꺼져 있었습니다**
+(`verify_auth(None, None)`가 예외 없이 통과). `rag/eval/run_eval.py`는 `retrieval`을 직접
+import하면서 `load_dotenv()`를 아예 호출하지 않아 같은 문제가 있었습니다.
+
+고친 방법: `retrieval.py` 맨 위에서 자기 디렉터리의 `.env`를 직접 로드하게 했습니다
+(`load_dotenv(Path(__file__).resolve().parent / ".env")`). 실행 디렉터리와 무관하고, 이
+모듈을 import하는 쪽(`main.py`, `run_eval.py` 둘 다)이 순서를 신경 쓸 필요가 없습니다.
+`load_dotenv`의 기본값(`override=False`)이라 실제 프로세스 환경변수가 `.env`보다 우선하는
+동작도 그대로 유지됩니다. `test_env_loading.py`가 서브프로세스로 이걸 검증합니다 -- 같은
+프로세스에서 다시 `import retrieval`하면 캐시 때문에 모듈 코드가 재실행되지 않아 버그가
+있어도 테스트가 통과해버리므로, 매번 깨끗한 환경의 새 프로세스를 띄워서 확인합니다.
+
 ## 학습 자료가 바뀌었을 때
 
 `study-seed/*.json`을 수정한 뒤 `chunking` -> `embedding` -> `indexing` 세 스크립트를
@@ -170,6 +188,37 @@ support forced tool use with thinking. Dropping tool_choice to avoid an API erro
 
 두 군데를 모두 고친 뒤 같은 시나리오를 5번 반복 실행해서 매번 `sources`가 채워지고 경고 로그가
 한 줄도 없는 걸 확인했습니다 (`grep -c "Dropping tool_choice" rag-service.log` == 0).
+
+## 멀티턴에서 이전 출처 다시 조회하기
+
+인용 번호(`[1]`, `[2]`...)는 턴마다 새로 매겨집니다 (`format_search_result`). 그런데 과거에는
+답변 텍스트만 저장했지 그 턴이 실제로 어떤 자료를 몇 번으로 인용했는지는 저장하지 않아서,
+"방금 답변의 [1]번 자료 더 설명해줘" 같은 질문이 오면 Claude가 그 번호가 뭘 가리키는지 알
+방법이 없었습니다. 게다가 턴마다 번호가 1부터 다시 매겨지므로, 이전 턴의 [1]과 이번 턴의
+[1]이 다른 자료일 수도 있어서 혼동 위험도 있었습니다.
+
+고친 방법: 백엔드가 ASSISTANT 메시지를 저장할 때 그 답변이 인용한 자료들을
+`{citationNumber, chunkId}` 쌍으로 같이 저장합니다 (`chat_message.sources_json`,
+`RagChatbotService.citedSourcesFrom` -- `ChatbotSourceResponse`의 배열 순서가 곧 인용
+번호라 별도 계산 없이 그대로 씁니다). 이 다음 턴에서 히스토리를 불러올 때 그 매핑을
+`ChatTurn.sources`로 같이 보내고, `agent_graph.py`의 `_render_assistant_turn`이 그 과거
+답변 뒤에 `[이전 답변 자료 매핑: 1=java-08-01-04, ...]` 같은 주석을 붙여서 대화 기록에
+넣습니다. 시스템 프롬프트는 이 주석이 그 턴에서만 유효하다는 것, 그리고 번호만 보고 내용을
+추측하지 말고 `search_study_material`을 `chunk_id`로 호출해 실제로 다시 조회하라고
+지시합니다 (`retrieval.search_or_lookup` -- ES `GET`으로 그 문서를 직접 가져오며, kNN
+유사도 검색이 아니라서 다른 자료가 섞여 나올 위험이 없습니다).
+
+실제 스택에서 3턴을 돌려서 검증했습니다: 1턴은 "메소드 선언"을 물어 `[1]=java-04-02-05`를
+인용했고, 2턴은 전혀 다른 질문("람다식 문법")을 물어 `[1]=java-08-01-04`를 인용했습니다
+(서로 다른 자료인데 번호는 똑같이 1). 3턴에서 "방금 답변의 [1]번 자료 더 설명해줘"라고
+물었을 때, Claude는 **2턴의 [1]**(람다식)을 정확히 가리켜 "이전 답변에서 [1]번으로 인용한
+자료는 '람다 표현식 작성'입니다"라고 답하며 `chunk_id=java-08-01-04`를 다시 조회해
+`sources`에 그 자료 하나만 채워 돌아왔습니다 -- 1턴의 메소드 선언 자료와 혼동하지 않았고,
+추측 없이 실제로 다시 조회해서 답했습니다.
+
+sessionId 없는 단발 요청, 그리고 이 기능이 생기기 전에 저장된 `sources_json = NULL`인
+과거 행도 "출처 정보 없음"으로 조용히 처리되어(=그냥 텍스트만 있는 일반 턴처럼 취급)
+에러 없이 동작합니다 (`RagChatbotService.parseSources`).
 
 ## headingIndex로 섹션까지 딥링크하는 원리
 

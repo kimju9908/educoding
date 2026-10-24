@@ -1,12 +1,16 @@
 package com.kh.totalproject.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.totalproject.constant.ChatRole;
 import com.kh.totalproject.constant.rag.RagApiPath;
 import com.kh.totalproject.constant.rag.RagProperties;
 import com.kh.totalproject.dto.request.AskChatbotRequest;
 import com.kh.totalproject.dto.request.ChatTurn;
+import com.kh.totalproject.dto.request.CitedSource;
 import com.kh.totalproject.dto.request.RagAskRequest;
 import com.kh.totalproject.dto.response.ChatbotAnswerResponse;
+import com.kh.totalproject.dto.response.ChatbotSourceResponse;
 import com.kh.totalproject.entity.ChatMessage;
 import com.kh.totalproject.exception.CustomHttpClientErrorException;
 import com.kh.totalproject.exception.CustomHttpMessageNotReadableException;
@@ -27,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * RAG 챗봇 서비스(Python/FastAPI)에 질문을 전달하고 답변을 받아오는 서비스입니다.
@@ -49,6 +54,7 @@ public class RagChatbotService {
     private final RestTemplate restTemplate;
     private final RagProperties ragProperties;
     private final ChatMessageRepository chatMessageRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ChatbotAnswerResponse ask(AskChatbotRequest request) {
         String sessionId = normalizeSessionId(request.sessionId());
@@ -61,11 +67,19 @@ public class RagChatbotService {
         ChatbotAnswerResponse response = callRagService(ragRequest);
 
         if (sessionId != null) {
-            saveTurn(sessionId, ChatRole.USER, request.question());
-            saveTurn(sessionId, ChatRole.ASSISTANT, response.answer());
+            saveTurn(sessionId, ChatRole.USER, request.question(), List.of());
+            saveTurn(sessionId, ChatRole.ASSISTANT, response.answer(), citedSourcesFrom(response.sources()));
         }
 
         return response;
+    }
+
+    // RAG 서비스가 보낸 sources는 이미 인용 순서대로 와 있으므로(agent_graph.py의
+    // ordered_hits_from_cited), 배열 안 위치(1부터)가 바로 그 답변 본문에서 쓰인 [n] 번호다.
+    private List<CitedSource> citedSourcesFrom(List<ChatbotSourceResponse> sources) {
+        return IntStream.range(0, sources.size())
+                .mapToObj(i -> new CitedSource(i + 1, sources.get(i).chunkId()))
+                .toList();
     }
 
     private String normalizeSessionId(String sessionId) {
@@ -81,16 +95,45 @@ public class RagChatbotService {
         );
         Collections.reverse(recent); // 최신순으로 가져왔으니 시간순으로 되돌림
         return recent.stream()
-                .map(m -> new ChatTurn(m.getRole().name().toLowerCase(), m.getContent()))
+                .map(m -> new ChatTurn(m.getRole().name().toLowerCase(), m.getContent(), parseSources(m.getSourcesJson())))
                 .toList();
     }
 
-    private void saveTurn(String sessionId, ChatRole role, String content) {
+    // sourcesJson이 없는 행(USER 메시지, 또는 이 컬럼이 생기기 전에 저장된 ASSISTANT 메시지)이나
+    // 파싱이 깨진 행은 "출처 정보 없음"으로 조용히 처리한다 -- 없는 정보를 추측해서 채우지 않음.
+    private List<CitedSource> parseSources(String sourcesJson) {
+        if (sourcesJson == null || sourcesJson.isBlank()) {
+            return List.of();
+        }
+        try {
+            return List.of(objectMapper.readValue(sourcesJson, CitedSource[].class));
+        }
+        catch (JsonProcessingException e) {
+            log.warn("Failed to parse stored sourcesJson, treating as no sources: {}", e.getMessage());
+            return List.of();
+        }
+    }
+
+    private void saveTurn(String sessionId, ChatRole role, String content, List<CitedSource> sources) {
         chatMessageRepository.save(ChatMessage.builder()
                 .sessionId(sessionId)
                 .role(role)
                 .content(content)
+                .sourcesJson(sources.isEmpty() ? null : writeSourcesJson(sources))
                 .build());
+    }
+
+    private String writeSourcesJson(List<CitedSource> sources) {
+        try {
+            return objectMapper.writeValueAsString(sources);
+        }
+        catch (JsonProcessingException e) {
+            // Serializing a list of two primitive-ish fields should never actually fail;
+            // if it somehow does, the turn is still saved (just without sources) rather
+            // than losing the whole message.
+            log.warn("Failed to serialize sources, saving turn without them: {}", e.getMessage());
+            return null;
+        }
     }
 
     private ChatbotAnswerResponse callRagService(RagAskRequest request) {
