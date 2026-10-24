@@ -50,6 +50,25 @@ uvicorn main:app --host 127.0.0.1 --port 5051
 `study-seed/*.json`을 수정한 뒤 `chunking` -> `embedding` -> `indexing` 세 스크립트를
 순서대로 다시 돌리면 됩니다 (전체 749개 청크 기준 1분 이내).
 
+## 테스트 & 평가
+
+```bash
+cd rag/service
+source ../.venv/bin/activate
+pip install -r requirements-dev.txt
+pytest -v                       # ES/모델/Claude를 모두 모킹한 유닛 테스트 (외부 서비스 불필요)
+```
+
+```bash
+cd rag
+python eval/run_eval.py         # 실제 Elasticsearch + BGE-m3로 돌리는 retrieval 골든셋 평가
+```
+
+`eval/golden_set.jsonl`은 질문 -> 기대 청크 id 쌍의 회귀 테스트 모음입니다. 질문이 엉뚱한
+레슨을 가져오거나 아예 못 찾는 걸 발견하면, 그 질문을 여기 추가하고 원인을 고친 뒤 다시 돌려서
+실제로 고쳐졌는지 확인하는 식으로 씁니다. 자세한 내용과 이 과정에서 실제로 잡힌 버그는
+[`eval/README.md`](eval/README.md) 참고.
+
 ## headingIndex로 섹션까지 딥링크하는 원리
 
 `chunk_lessons.py`는 레슨의 마크다운을 문서 순서대로 훑어 모든 제목(`##`/`###`/`####`)에

@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 .env
+.pytest_cache/
 
 # Regenerable from backend/src/main/resources/study-seed/*.json --
 # see chunking/chunk_lessons.py and embedding/embed_chunks.py.

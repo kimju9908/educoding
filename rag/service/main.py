@@ -42,6 +42,11 @@ INDEX_NAME = "study_chunks"
 
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
 TOP_K = int(os.environ.get("RAG_TOP_K", "5"))
+# Below this cosine similarity, a hit is treated as noise rather than a real match --
+# e.g. "오늘 저녁 메뉴 추천해줘" otherwise pulls in a HashMap "메뉴 예제" chunk at ~0.74
+# purely on the word "메뉴". Calibrated against eval/golden_set.jsonl: true matches
+# cluster at 0.81-0.89, that off-topic case sits at 0.74. See eval/run_eval.py.
+RAG_MIN_SCORE = float(os.environ.get("RAG_MIN_SCORE", "0.75"))
 
 RAG_X_API_KEY = os.environ.get("RAG_X_API_KEY")
 RAG_X_CLIENT_ID = os.environ.get("RAG_X_CLIENT_ID")
@@ -105,7 +110,7 @@ def retrieve(question: str, language: Optional[str]):
     if language:
         knn["filter"] = {"term": {"language": language}}
     response = state["es"].search(index=INDEX_NAME, knn=knn, size=TOP_K)
-    return response["hits"]["hits"]
+    return [hit for hit in response["hits"]["hits"] if hit["_score"] >= RAG_MIN_SCORE]
 
 
 def build_prompt(question: str, hits) -> tuple:

@@ -1,0 +1,12 @@
+{"id": "java-method-declare", "question": "자바에서 메소드는 어떻게 선언하나요?", "language": "java", "expect_chunk_id": "java-04-02-05"}
+{"id": "java-if-else", "question": "자바에서 if else문은 어떻게 쓰나요?", "language": "java", "expect_chunk_id": "java-02-04-02"}
+{"id": "java-substring", "question": "자바 문자열에서 특정 부분만 뽑아내려면 어떻게 하나요?", "language": "java", "expect_chunk_id": "java-03-03-07"}
+{"id": "java-nested-class", "question": "자바의 정적 중첩 클래스는 언제 쓰는 건가요?", "language": "java", "expect_chunk_id": "java-04-23-01"}
+{"id": "java-stream-terminal-op", "question": "자바 스트림의 최종 연산에는 어떤 것들이 있나요?", "language": "java", "expect_chunk_id": "java-08-02-19"}
+{"id": "java-serversocket-client-info", "question": "자바 ServerSocket에서 연결된 클라이언트의 IP와 포트를 어떻게 확인하나요?", "language": "java", "expect_chunk_id": "java-09-03-04"}
+{"id": "python-for-range", "question": "파이썬 for문에서 range 함수는 어떻게 쓰나요?", "language": "python", "expect_chunk_id": "python-01-10-07"}
+{"id": "python-ternary", "question": "파이썬 삼항 연산자 문법이 어떻게 되나요?", "language": "python", "expect_chunk_id": "python-01-08-05"}
+{"id": "python-comment", "question": "파이썬에서 주석은 어떻게 작성하나요?", "language": "python", "expect_chunk_id": "python-01-04-05"}
+{"id": "python-multiplication-table", "question": "파이썬으로 구구단 출력하는 예제 보여줘", "language": "python", "expect_chunk_id": "python-01-10-10"}
+{"id": "ambiguous-no-language-filter", "question": "반복문에서 break는 어떻게 쓰나요?", "language": null, "expect_chunk_id": null, "note": "언어를 명시하지 않은 모호한 질문 -- 상위 K개에 java/python 반복문 관련 청크가 섞여 나오는지, 특정 언어로 쏠리지는 않는지 확인하는 회귀 케이스"}
+{"id": "off-topic-no-match", "question": "오늘 저녁 메뉴 추천해줘", "language": null, "expect_chunk_id": null, "expect_low_score": true, "note": "학습 자료와 무관한 질문 -- 억지로 끌어다 붙이지 않고 '찾지 못했습니다' 답으로 이어질 만큼 점수가 낮아야 함"}
