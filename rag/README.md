@@ -69,6 +69,27 @@ python eval/run_eval.py         # 실제 Elasticsearch + BGE-m3로 돌리는 ret
 실제로 고쳐졌는지 확인하는 식으로 씁니다. 자세한 내용과 이 과정에서 실제로 잡힌 버그는
 [`eval/README.md`](eval/README.md) 참고.
 
+## 대화 상태 (멀티턴)
+
+```
+frontend (sessionId 생성, 매 질문마다 같이 전송)
+  -> RagChatbotController / RagChatbotService   (sessionId로 DB에서 최근 히스토리 조회)
+  -> chat_message 테이블                          (턴마다 USER/ASSISTANT 메시지 저장)
+  -> service/main.py                              (history를 Claude messages 배열로 변환)
+```
+
+프론트의 챗봇 위젯은 열려 있는 동안 유지되는 `sessionId`(UUID)를 매 질문에 함께 보냅니다.
+백엔드(`RagChatbotService`)는 이 값으로 `chat_message` 테이블에서 최근 6턴을 불러와
+RAG 서비스에 `history`로 같이 보내고, 이번 턴(질문+답변)을 다시 저장합니다. `/api/chatbot/**`는
+비로그인 사용자도 쓸 수 있는 공개 엔드포인트라(`SecurityConfig`), 대화는 User가 아니라
+`sessionId`만으로 구분됩니다 -- sessionId를 안 보내면 예전처럼 매 질문이 독립적으로 처리됩니다.
+
+이번 턴에 검색되는 [학습 자료]는 매번 새로 바뀌므로, 시스템 프롬프트에서 `[번호]` 인용이
+이전 턴이 아니라 이번 턴 자료만 가리킨다는 걸 명시합니다 (`build_system_prompt` 참고).
+단, 검색(`retrieve`)은 아직 이번 질문만 임베딩하므로 "그거 말고 람다식으로는요?"처럼 이전
+맥락이 있어야 의미가 통하는 짧은 후속 질문은 검색 품질이 떨어질 수 있습니다 -- 질문을
+히스토리로 재작성해서 검색하는 건 다음 단계(도구 호출 / LangGraph)에서 다룰 예정입니다.
+
 ## headingIndex로 섹션까지 딥링크하는 원리
 
 `chunk_lessons.py`는 레슨의 마크다운을 문서 순서대로 훑어 모든 제목(`##`/`###`/`####`)에

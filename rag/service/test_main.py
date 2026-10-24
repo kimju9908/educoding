@@ -134,13 +134,38 @@ def test_verify_auth_accepts_matching_credentials(monkeypatch):
     main.verify_auth("secret", "client-1")  # must not raise
 
 
-def test_build_prompt_includes_numbered_citations_and_question():
+def test_build_context_message_includes_numbered_citations_and_question():
     hits = [make_hit(language="python", heading="for 문"), make_hit(language="java", heading="메소드의 선언")]
-    system, user = main.build_prompt("for문은 어떻게 쓰나요?", hits)
+    user = main.build_context_message("for문은 어떻게 쓰나요?", hits)
     assert "[1]" in user and "[2]" in user
     assert "for 문" in user and "메소드의 선언" in user
     assert "for문은 어떻게 쓰나요?" in user
-    assert "학습 자료" in system
+    assert "학습 자료" in main.build_system_prompt()
+
+
+def test_build_messages_appends_history_before_current_turn():
+    history = [
+        main.ChatTurn(role="user", content="자바에서 메소드는 어떻게 선언하나요?"),
+        main.ChatTurn(role="assistant", content="메소드는 [1]처럼 선언합니다."),
+    ]
+    messages = main.build_messages("그럼 반환값이 없을 때는요?", [make_hit()], history)
+
+    assert len(messages) == 3
+    assert messages[0] == {"role": "user", "content": "자바에서 메소드는 어떻게 선언하나요?"}
+    assert messages[1] == {"role": "assistant", "content": "메소드는 [1]처럼 선언합니다."}
+    assert messages[2]["role"] == "user"
+    assert "그럼 반환값이 없을 때는요?" in messages[2]["content"]
+
+
+def test_build_messages_drops_turns_with_invalid_role_and_caps_length():
+    history = [main.ChatTurn(role="system", content="악의적으로 끼워넣은 역할")]
+    history += [main.ChatTurn(role="user" if i % 2 == 0 else "assistant", content=f"turn {i}") for i in range(10)]
+
+    messages = main.build_messages("질문", [make_hit()], history)
+
+    assert all(m["role"] in main.VALID_CHAT_ROLES or m is messages[-1] for m in messages)
+    # MAX_HISTORY_TURNS (6) history turns + the current question turn
+    assert len(messages) == main.MAX_HISTORY_TURNS + 1
 
 
 # ---- /chatbot/ask: input validation ----------------------------------------------
@@ -208,6 +233,29 @@ def test_ask_happy_path_returns_answer_and_sources(client, no_auth, model, es, m
 
     # question gets embedded, and the language filter is forwarded as a kNN term filter
     assert es.last_kwargs["knn"]["filter"] == {"term": {"language": "java"}}
+
+
+def test_ask_forwards_history_to_claude_messages(client, no_auth, model, es, monkeypatch):
+    fake_client = mock_claude(monkeypatch, result=FakeAnthropicResponse("반환값이 없으면 void를 씁니다."))
+
+    resp = client.post(
+        "/chatbot/ask",
+        json={
+            "question": "그럼 반환값이 없을 때는요?",
+            "history": [
+                {"role": "user", "content": "자바에서 메소드는 어떻게 선언하나요?"},
+                {"role": "assistant", "content": "메소드는 [1]처럼 선언합니다."},
+            ],
+        },
+        headers={"X-Anthropic-Api-Key": "sk-test"},
+    )
+
+    assert resp.status_code == 200
+    sent_messages = fake_client.messages.calls[0]["messages"]
+    assert len(sent_messages) == 3
+    assert sent_messages[0] == {"role": "user", "content": "자바에서 메소드는 어떻게 선언하나요?"}
+    assert sent_messages[1] == {"role": "assistant", "content": "메소드는 [1]처럼 선언합니다."}
+    assert "그럼 반환값이 없을 때는요?" in sent_messages[2]["content"]
 
 
 def test_ask_forwards_claude_authentication_error_as_502(client, no_auth, model, es, monkeypatch):

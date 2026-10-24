@@ -51,6 +51,12 @@ RAG_MIN_SCORE = float(os.environ.get("RAG_MIN_SCORE", "0.75"))
 RAG_X_API_KEY = os.environ.get("RAG_X_API_KEY")
 RAG_X_CLIENT_ID = os.environ.get("RAG_X_CLIENT_ID")
 
+# How many history turns (from the caller) to actually forward to Claude. The backend
+# already caps what it sends (RagChatbotService.HISTORY_TURN_LIMIT), this is a second,
+# independent cap so a misbehaving/compromised caller can't blow up the prompt size.
+MAX_HISTORY_TURNS = int(os.environ.get("RAG_MAX_HISTORY_TURNS", "6"))
+VALID_CHAT_ROLES = {"user", "assistant"}
+
 ALLOWED_LANGUAGES = {"java", "c", "cplus", "javascript", "python"}
 
 state = {}
@@ -72,9 +78,15 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="educoding RAG chatbot service", lifespan=lifespan)
 
 
+class ChatTurn(BaseModel):
+    role: str
+    content: str
+
+
 class AskRequest(BaseModel):
     question: str
     language: Optional[str] = None
+    history: List[ChatTurn] = []
 
 
 class Source(BaseModel):
@@ -113,7 +125,18 @@ def retrieve(question: str, language: Optional[str]):
     return [hit for hit in response["hits"]["hits"] if hit["_score"] >= RAG_MIN_SCORE]
 
 
-def build_prompt(question: str, hits) -> tuple:
+def build_system_prompt() -> str:
+    return (
+        "너는 educoding 학습 플랫폼의 학습 보조 챗봇이다. "
+        "아래 [학습 자료]에 제공된 내용만 근거로 한국어로 답변하라. "
+        "학습 자료에 없는 내용은 추측하지 말고, 자료에서 답을 찾을 수 없다고 명확히 말하라. "
+        "답변 본문에서 근거로 사용한 자료는 해당 번호를 [1], [2]처럼 표시하라. "
+        "이전 대화는 맥락 참고용이며, [번호] 인용은 이전 턴이 아니라 이번 턴에 새로 주어진 "
+        "[학습 자료]만을 가리킨다."
+    )
+
+
+def build_context_message(question: str, hits) -> str:
     context_blocks = []
     for i, hit in enumerate(hits, start=1):
         src = hit["_source"]
@@ -122,15 +145,22 @@ def build_prompt(question: str, hits) -> tuple:
             f"{src['content']}"
         )
     context = "\n\n".join(context_blocks)
+    return f"[학습 자료]\n{context}\n\n[질문]\n{question}"
 
-    system = (
-        "너는 educoding 학습 플랫폼의 학습 보조 챗봇이다. "
-        "아래 [학습 자료]에 제공된 내용만 근거로 한국어로 답변하라. "
-        "학습 자료에 없는 내용은 추측하지 말고, 자료에서 답을 찾을 수 없다고 명확히 말하라. "
-        "답변 본문에서 근거로 사용한 자료는 해당 번호를 [1], [2]처럼 표시하라."
-    )
-    user = f"[학습 자료]\n{context}\n\n[질문]\n{question}"
-    return system, user
+
+def build_messages(question: str, hits, history: List[ChatTurn]) -> list:
+    """Multi-turn message list for Claude: prior turns verbatim, then this turn's
+    retrieved context + question. History entries with an invalid role are dropped
+    rather than rejected outright, since a stale/odd session shouldn't 500 the whole
+    request over one bad turn.
+    """
+    messages = [
+        {"role": turn.role, "content": turn.content}
+        for turn in history[-MAX_HISTORY_TURNS:]
+        if turn.role in VALID_CHAT_ROLES
+    ]
+    messages.append({"role": "user", "content": build_context_message(question, hits)})
+    return messages
 
 
 @app.post("/chatbot/ask", response_model=AskResponse)
@@ -159,7 +189,7 @@ def ask(
     if not hits:
         return AskResponse(answer="관련된 학습 자료를 찾지 못했습니다.", sources=[])
 
-    system, user = build_prompt(question, hits)
+    messages = build_messages(question, hits, body.history)
 
     try:
         claude = anthropic.Anthropic(api_key=x_anthropic_api_key)
@@ -167,8 +197,8 @@ def ask(
             model=CLAUDE_MODEL,
             max_tokens=2000,
             thinking={"type": "adaptive"},
-            system=system,
-            messages=[{"role": "user", "content": user}],
+            system=build_system_prompt(),
+            messages=messages,
         )
     except anthropic.AuthenticationError:
         raise HTTPException(status_code=502, detail="Claude API authentication failed -- check ANTHROPIC_API_KEY")

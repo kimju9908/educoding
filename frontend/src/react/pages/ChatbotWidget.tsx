@@ -33,6 +33,9 @@ const ChatbotWidget = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const listEndRef = useRef<HTMLDivElement | null>(null);
   const anchorRef = useRef<HTMLButtonElement | null>(null);
+  // 위젯이 마운트된 동안(탭을 새로고침하기 전까지) 대화 하나를 식별하는 값.
+  // 백엔드가 이 id로 이전 턴들을 불러와 멀티턴 대화로 이어간다.
+  const sessionIdRef = useRef<string>(crypto.randomUUID());
 
   const scrollToBottom = (): void => {
     requestAnimationFrame(() => listEndRef.current?.scrollIntoView({ behavior: 'smooth' }));
@@ -48,7 +51,11 @@ const ChatbotWidget = (): JSX.Element => {
     scrollToBottom();
 
     try {
-      const result = await ChatbotApi.ask({ question: trimmed, language: language?.toLowerCase() });
+      const result = await ChatbotApi.ask({
+        question: trimmed,
+        language: language?.toLowerCase(),
+        sessionId: sessionIdRef.current,
+      });
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', text: result.answer, sources: result.sources },

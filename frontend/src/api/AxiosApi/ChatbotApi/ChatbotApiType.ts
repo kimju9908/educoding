@@ -3,6 +3,9 @@
 export type AskChatbotRequest = {
   question: string;
   language?: string; // 지정하면 해당 언어 학습 자료로만 검색 범위를 제한
+  // 챗봇 위젯이 열려 있는 동안 한 번 생성해서 매 질문마다 같이 보내는 값.
+  // 백엔드가 이 값으로 이전 턴들을 불러와 멀티턴 대화로 이어간다 (RagChatbotService 참고).
+  sessionId?: string;
 };
 
 export type ChatbotSource = {
