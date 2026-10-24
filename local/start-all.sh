@@ -1,5 +1,5 @@
 #!/bin/bash
-# educoding 전체 로컬 실행. 로그: local-dev/*.log
+# educoding 전체 로컬 실행. 로그: local/*.log
 D="$(cd "$(dirname "$0")" && pwd)"; R="$D/.."
 docker compose -f "$D/docker-compose.yml" up -d
 echo "MySQL 준비 대기..."; until docker compose -f "$D/docker-compose.yml" exec -T mysql mysqladmin ping -uroot -peducoding --silent >/dev/null 2>&1; do sleep 2; done

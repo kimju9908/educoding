@@ -24,7 +24,7 @@ pip install -r embedding/requirements.txt -r indexing/requirements.txt -r servic
 python chunking/chunk_lessons.py      # data/chunks.jsonl
 python embedding/embed_chunks.py      # data/chunks_with_embeddings.jsonl (M4 Pro는 MPS로 ~40초)
 
-# Elasticsearch가 떠 있어야 함 (local-dev/docker-compose.yml, 또는 docker compose up -d elasticsearch)
+# Elasticsearch가 떠 있어야 함 (local/docker-compose.yml, 또는 docker compose up -d elasticsearch)
 python indexing/index_chunks.py       # study_chunks 인덱스 생성 + 색인
 
 cp service/.env.example service/.env  # 이미 .env는 만들어져 있음 -- ANTHROPIC_API_KEY만 채우면 됨
@@ -32,11 +32,11 @@ cp service/.env.example service/.env  # 이미 .env는 만들어져 있음 -- AN
 
 `service/.env`에 본인의 Anthropic API 키를 넣어야 답변이 생성됩니다
 (https://console.anthropic.com/settings/keys). 나머지 값(ES 주소, 서비스 간 공유 비밀키)은
-local-dev 기본값으로 이미 채워져 있습니다.
+local 기본값으로 이미 채워져 있습니다.
 
 ## 실행
 
-`local-dev/start-all.sh`가 백엔드/프론트와 함께 이 서비스도 자동으로 띄웁니다
+`local/start-all.sh`가 백엔드/프론트와 함께 이 서비스도 자동으로 띄웁니다
 (포트 5051). 따로 띄우려면:
 
 ```bash

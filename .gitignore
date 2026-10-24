@@ -17,5 +17,5 @@
 backend/build/
 
 # 로컬 실행 로그
-local-dev/*.log
-local-dev/TEST_ACCOUNTS.md
+local/*.log
+local/TEST_ACCOUNTS.md
