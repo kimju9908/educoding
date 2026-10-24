@@ -1,0 +1,284 @@
+[
+  {
+    "chapterKey": "01",
+    "title": "01. 개발 환경 구성 및 기본 문법",
+    "sortOrder": 1,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. Python?",
+        "sortOrder": 1,
+        "content": "****Life is short, You need Python.\n인생은 짧다. 당신에겐 파이썬이 필요하다.****\n\n### 프로그래밍이란?\n\n프로그래밍은 프로그램을 만드는 것을 의미합니다. 프로그래밍 언어에는 파이썬 외에도 Java, JavaScript, C, C++ 등이 있으며, 앱 개발에는 Kotlin이나 Swift 같은 언어도 사용됩니다.\n\n#### 코딩이란?\n\n코딩은 사람이 이해하는 언어를 컴퓨터가 이해할 수 있는 언어로 바꾸는 작업을 말합니다. 이를 위해 코딩과 함께 컴파일 또는 인터프리터 작업이 필요합니다.\n\n### 프로그래밍이란?\n\n프로그래밍은 특정 목적을 달성하기 위해 설계된 알고리즘을 프로그래밍 언어로 구체적으로 표현하는 것을 말합니다. 이 과정에는 규칙성을 찾아내고 효율적인 방법을 설계하는 논리적 사고가 필요합니다.\n프로그래밍의 일반적인 과정은 다음과 같습니다 :\n\n- 문제 인식 → 프로그램 설계 → 프로그램 구현 → 테스트와 디버깅 → 유지보수\n\n파이썬 강의를 통해 코딩을 배우면서, 여러분은 컴퓨터가 문제를 해결하는 방식처럼 복잡한 문제를 단순화하고 이를 논리적이고 효율적으로 해결하는 능력을 배울 수 있습니다. 이는 중요한 학습 목표입니다.\n\n### 파이썬(Python)\n\n파이썬은 1991년 귀도 반 로섬에 의해 개발된 고급 프로그래밍 언어입니다. 현재 전 세계에서 가장 인기 있는 프로그래밍 언어 중 하나입니다. 다양한 플랫폼에서 사용 가능하며, 풍부한 라이브러리 덕분에 사용이 쉽고 개발 속도가 빠른 것이 장점입니다.\n\n### 파이썬의 특징\n\n#### 간결한 코드\n\n파이썬은 교육용으로 만들어졌기 때문에 코드가 간결하고 가독성이 좋습니다. 문법이 사람의 사고방식과 유사하여 코딩 과정이 영작하는 것처럼 느껴질 정도로 쉽습니다. 생산성이 높아 개발 속도가 빠르다는 장점이 있습니다.\n\n· C++로 “Hello World” 출력\n\n```cpp\n#include <iostream>\nusing namespace std;\nint main() {\n\tcout << \"Hello World\");\n\treturn 0;\n}\n```\n\n· Java로 “Hello World” 출력\n\n```java\npackage sample;\npublic class Hello { \n\tpublic static void main(String[] args) { \n\t\tSystem.out.println(\"Hello, World\"); \n\t}\n}\n```\n\n· Python에서의 “Hello World” 출력\n\n```python\nprint(\"Hello World\")\n```\n\n#### 들여쓰기\n\n파이썬은 코드의 **들여쓰기**로 블록을 구분합니다. 이는 다른 언어가 를 사용하는 것과 다릅니다. 이 방식은 코드의 일관성을 유지하도록 하여, 다른 사람이 작성한 코드도 읽기 쉽게 만들어 줍니다.\n\n#### 인터프리터(Interpreter) 언어\n\n파이썬은 **인터프리터 언어**로, 프로그램의 코드가 한 줄씩 순서대로 해석되고 실행됩니다. 따라서 코드가 완전히 작성되지 않아도 작성된 부분까지 테스트가 가능합니다. C/C++이나 자바 같은 언어는 **컴파일 언어**인 반면, 파이썬은 인터프리터 언어로 컴파일 언어에 비해 실행 속도가 느릴 수 있습니다.\n\n#### 멀티 패러다임 언어\n\n파이썬은 **절차 지향**(C 언어)과 **객체 지향**(자바 등) 두 가지 특성을 모두 가지고 있습니다.\n\n- **절차 지향** : 프로그램이 위에서 아래로 순차적으로 진행됩니다.\n- **객체 지향** : 실제 세계를 모델링하여 객체를 만드는 방식입니다.\n\n#### 높은 생산성과 빠른 개발 속도\n\n파이썬은 다양한 자료형과 라이브러리를 제공하며, 다른 언어와의 연동성도 좋습니다(C/C++ 등). 이를 통해 높은 생산성과 빠른 개발 속도를 자랑합니다.\n\n### 활용 영역 (라이브러리 활용)\n\n파이썬은 다양한 라이브러리를 활용하여 여러 분야에서 사용됩니다 :\n\n- **업무 자동화** : 반복적인 사무 업무(예: 엑셀과 연동)를 자동화합니다.\n- **크롤링** : 웹상의 데이터를 수집하거나 이미지, 정보를 추출합니다.\n- **웹 서버 개발** : 데이터베이스와 연동을 위한 다양한 솔루션을 제공합니다. 프론트엔드에도 사용되지만 JavaScript보다 덜 사용됩니다.\n- **데이터 분석** : 판다스(pandas) 라이브러리를 사용하여 데이터 분석을 수행합니다. 데이터 분석에 특화된 R 언어도 있지만, 파이썬 역시 각광받고 있습니다.\n- **인공지능** : 머신 러닝 등의 인공지능 개발에 사용됩니다.\n- **C/C++와의 결합** : C/C++로 만들어진 코드와 결합하여 사용 가능합니다.\n\n### 파이썬으로 할 수 없는 일\n\n· **시스템과 밀접한 프로그래밍** : 운영체제 개발, 대규모 연산이 필요한 영상 처리, 압축 알고리즘 등은 파이썬의 주요 활용 영역이 아닙니다.\n· **임베디드 시스템** : 하드웨어와 밀접하게 연관된 임베디드 시스템 개발에는 적합하지 않습니다.\n· **모바일 프로그래밍** : 모바일 앱 개발에 있어 파이썬은 여전히 부족한 점이 있습니다.\n\n### 사용되는 회사\n\n파이썬은 다양한 글로벌 기업에서 사용됩니다. 데이터 분석, 인공지능, 웹 개발, 자동화 등 여러 분야에서 활용되어, 많은 회사들이 파이썬을 주요 기술로 채택하고 있습니다.\n\n![](/images/study/python/python_01_01_01.png)\n"
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. Python 개발 환경 만들기",
+        "sortOrder": 2,
+        "content": "### 아나콘다 설치하기\n\n아나콘다를 쉽게 설명하자면 **Python의 일반적인 데이터 과학 패키지가 포함된 소프트웨어 패키지**라고 할 수 있습니다.\n\n[아나콘다 다운로드](https://www.anaconda.com/download)\n\n![](/images/study/python/python_01_02_01.png)\n\n### 파이참(Community Edition) 설치\n\n[파이참 다운로드](https://www.jetbrains.com/ko-kr/pycharm/download/?section=windows)\n\n### 시작하기\n\n#### 프로젝트 이름, 위치, 인터프리터 지정하기\n\n파이참 설치 완료 후 실행하면 새로운 프로젝트를 생성해야 합니다.\n상단 왼쪽의 New Project 선택\n\n![](/images/study/python/python_01_02_02.png)\n\n- Name에 적절한 프로젝트 이름을 입력합니다.\n- Location에 개발을 위한 적절한 위치를 지정합니다. (간단한 개발을 위해서는 기본값을 유지)\n- Interpreter 타입에서 Python 환경을 사용하기 위해서는 Project venv를 선택하고 필요시 Python Version을 다운로드 받으면 되고, 위와 같이 아나콘다를 설치한 경우는 Base conda를 선택하시면 됩니다.\n\n### 파이썬 파일 생성하기\n\n- 프로젝트 이름에서 마우스 커서를 올리고 마우스 오른쪽 버튼 클릭 후 아래와 같이 Python File을 선택합니다.\n\n![](/images/study/python/python_01_02_03.png)\n\n- 아래와 같이 임의의 파일 이름을 입력합니다. (확장자는 자동으로 .py로 지정됩니다.)\n\n![](/images/study/python/python_01_02_04.png)\n\n- 아래와 같이 나타납니다.\n\n![](/images/study/python/python_01_02_05.png)\n\n- 아래와 같이 창에 글을 입력하고 실행 버튼을 누릅니다. (화면과 같이 Current File로 지정되어 있지 않은 경우에는 해당 메뉴를 눌러 변경합니다.)\n\n![](/images/study/python/python_01_02_06.png)\n\n- 실행 결과 확인\n\n![](/images/study/python/python_01_02_07.png)\n"
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. Python 용어 노트",
+        "sortOrder": 3,
+        "content": "### 아나콘다\n\n· **특징** : 데이터 과학, 머신러닝 분야에 특화된 파이썬·R 패키지 모음 배포판\n· **장점** :\n\n- conda를 통한 손쉬운 패키지·환경 관리\n- NumPy, Pandas 등 자주 쓰이는 데이터 분석 라이브러리 사전 탑재\n\n· **활용 예** : 프로젝트별 가상 환경 구축, GPU 활용 TensorFlow 설치, 신속한 분석 환경\n\n---\n\n### VS Code\n\n· **특징** : 마이크로소프트가 개발한 경량 오픈소스 에디터\n· **장점** :\n\n- 확장 기능(Extensions)으로 기능 확장 가능 (파이썬 플러그인, Git 연동, Docker 지원 등)\n- 빠른 속도, 다양한 언어 지원, 테마 변경, 디버깅 환경 제공\n\n· **활용 예** : 데이터 분석 스크립트 작성, 웹 서비스 코드 편집, Jupyter 확장으로 노트북 환경 구축\n\n---\n\n### PyCharm\n\n· **특징** : JetBrains사의 전문 파이썬 IDE\n· **장점** :\n\n- 코드 자동완성, 품질 검사, 리팩토링, 디버깅, 테스트 등 고급 기능 제공\n- 가상 환경 관리, 웹 프레임워크(Django, Flask) 및 데이터베이스 연동 지원\n\n· **활용 예** : 대규모 파이썬 애플리케이션 개발, 복잡한 머신러닝 파이프라인 관리, 웹 서비스 프로토타이핑\n\n---\n\n### 주피터 노트북\n\n· **특징** : 웹 브라우저 기반 코드 실행 및 결과 시각화 환경\n· **장점** :\n\n- 셀 단위 실행으로 탐색적 데이터 분석에 적합\n- 그래프, 표, 이미지 시각화 용이, Markdown 활용 문서화 가능\n\n· **활용 예** : 데이터 전처리, 모델 프로토타이핑, 실험 결과 공유 및 프레젠테이션\n\n---\n\n### 코랩\n\n· **특징** : 구글 클라우드 기반 주피터 노트북 서비스\n· **장점** :\n\n- 무료 GPU/TPU 지원 → 딥러닝 모델 학습 용이\n- 구글 드라이브 연동으로 파일 공유·저장 편리\n- 추가 설치 없이 웹 브라우저에서 즉시 사용 가능\n\n· **활용 예** : 신속한 딥러닝 모델 테스트, 온라인 실습 및 교육, 대규모 데이터 처리 예제 구현\n\n---\n\n### 넘파이(NumPy)\n\n· **특징** : 고성능 다차원 배열 및 수치연산 라이브러리\n· **장점** :\n\n- 내부 C/Fortran 구현으로 빠른 연산 속도\n- 선형대수, 난수 생성, 푸리에 변환 지원\n\n· **활용 예** : 과학·공학적 연산, 머신러닝 전처리 단계 벡터·행렬 연산\n\n---\n\n### 판다스(Pandas)\n\n· **특징** : 고성능 다차원 배열 및 수치연산 라이브러리\n· **장점** :\n\n- 내부 C/Fortran 구현으로 빠른 연산 속도\n- 선형대수, 난수 생성, 푸리에 변환 지원\n\n· **활용 예** : 과학·공학적 연산, 머신러닝 전처리 단계 벡터·행렬 연산\n\n---\n\n### 텐서플로(TensorFlow)\n\n· **특징** : 구글 개발 오픈소스 딥러닝 프레임워크\n· **장점** :\n\n- 계산 그래프 기반 효율적 연산, 자동 미분 지원\n- GPU/TPU 활용, 분산 학습 기능, 다양한 API 레벨 제공\n\n· **활용 예** : 이미지 분류, 음성 인식, 자연어 처리 등 대규모 딥러닝 모델 훈련\n\n---\n\n### 케라스(Keras)\n\n· **특징** : 텐서플로 등을 백엔드로 사용하는 고수준 딥러닝 라이브러리\n· **장점** :\n\n- 직관적 API(Sequential, Functional) → 빠른 모델 프로토타이핑\n\n· **활용 예** : CNN, RNN 모델 구현, 실험용 프로토타입 모델 개발\n\n---\n\n### 사이킷런(Scikit-learn)\n\n· **특징** : 파이썬 머신러닝 라이브러리\n· **장점** :\n\n- 회귀, 분류, 클러스터링 등 다양한 모델 및 전처리 기능 지원\n- 일관된 API로 모델 피팅, 예측, 평가 간편\n\n· **활용 예** : 기본 머신러닝 모델 학습, 평가, 특징 추출, 하이퍼파라미터 튜닝\n\n---\n\n### 장고(Django)\n\n· **특징** : 파이썬 기반 고수준 웹 프레임워크\n· **장점** :\n\n- 인증, 관리자 페이지, ORM, 보안 등 다양한 웹 기능 내장\n- MTV(Model-Template-View) 아키틱처로 구조화된 개발 기능\n\n· **활용 예** : 블로그, 뉴스 포털, 전자상거래 웹사이트, RESTful API 서버 구축\n\n---\n\n### 가상 환경\n\n파이썬의 가상 환경은 프로젝트 별로 독립적인 환경을 생성하여 각각의 프로젝트마다 필요한 라이브러리와 패키지를 분리하여 관리할 수 있는 도구입니다. 가상 환경을 사용하면 다양한 프로젝트에서 서로 다른 버전의 패키지를 사용할 수 있으며, 프로젝트 간의 충돌을 피하고 프로젝트 관리를 더욱 효율적으로 할 수 있습니다.\n가상 환경을 만들고 관리하기 위해 사용되는 주요 도구는 다음과 같습니다.\n\n1. 가상 환경 생성\n\n- 파이썬의 기본 모듈인 venv나 virtualenv를 사용하여 가상 환경을 생성할 수 있습니다. 이들 도구는 파이썬 패키지를 격리된 디렉토리에 설치하여 가상 환경을 생성합니다.\n\n2. conda :\n\n- 아나콘다 배포판의 일부인 conda는 가상 환경을 만들고 관리하기 위한 강력한 도구입니다. conda를 사용하면 파이썬 뿐만 아니라 다양한 패키지와 의존성을 함께 관리할 수 있습니다.\n"
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. Python 기본",
+        "sortOrder": 4,
+        "content": "### 파일 작성 및 실행\n\n- 파이썬 파일의 확장자는 반드시 .py로 설정해야 합니다.\n- 간단한 프로그램은 터미널(명령 프롬프트 또는 PowerShell)에서 실행 가능합니다.\n- 터미널에서 파이썬 실행 모드 (>>> 상태) 종료 : exit() 또는 quit() 입력\n\n#### 코드 작성해 보기\n\n```python\nprint(’Hello, world’)\nprint(”Hello, world”)\nprint(100)\nprint(33.33)\nprint(100+20)\n\nname = \"educoding\"\nprint(name)\n```\n\n---\n\n### 변수 사용\n\n- 변수를 선언하고 값을 대입할 수 있습니다.\n- 변수는 재할당이 가능하며, 새로운 값을 저장하면 기존 값은 대체됩니다.\n\n```python\n# 변수 선언 및 값 대입\nnum = 100\nprint(num)\n\n# 기존 변수에 새로운 값 대입\nnum = 200\nprint(num)\n```\n\n---\n\n### 식별자(Identifier)\n\n- 변수, 함수, 클래스 등 다양한 이름을 식별자로 사용\n- 이름은 사용 목적을 이해하기 쉽게 설정\n\n#### 제약 조건\n\n1. 예약어(키워드)는 사용 불가\n2. 특수문자 중 _(언더바)만 허용\n3. 숫자는 사용할 수 있으나, 숫자로 시작할 수 없음\n4. 공백 포함 불가\n\n#### 이름 규칙(Naming Convention)\n\n- snake_case : 단어를 _로 연결(주로 변수 및 함수 이름에 사용)\n- camelCase : 첫 단어는 소문자, 이후 단어의 첫 글자는 대문자\n- PascalCase : 모든 단어의 첫 글자는 대문자 (주로 클래스 이름에 사용)\n\n```python\n# \"주소 : 서울시 강남구 역삼동\"\n# \"전화번호 : 02-0000-0000\"\n# \"직책 : 개발자\"\n# \"이름 : educoding\"\n# \"이메일 : educoding.service@gmail.com\"\n\nname = \"educoding\"\nemail = \"educoding.service@gmail.com\"\nposition = \"개발자\"\naddr = \"서울시 강남구 역삼동\"\n\nprint(f\"\"\"\n주소 : {addr}\n전화번호 : 02-0000-0000\n직책 : {position}\n이름 : {name}\n이메일 : {email}@gmail.com\n\"\"\")\n```\n\n---\n\n### 예약어\n\n- 예약된 단어로, 특정 기능을 수행하며 다른 용도로 사용할 수 없음\n\n#### 파이썬 예약어\n\n```python\nand, exec, not, assert, finally, or, break, for, pass,\nclass, from, print, continue, global, raise, def, if,\nreturn, del, import, try, elif, in, while, else, is,\nwith, except, lambda, yield\n```\n\n---\n\n### 줄 들여쓰기\n\n- 파이썬은 중괄호 대신 들여쓰기로 코드 블록을 구분\n- 들여쓰기는 공백(Space) 또는 탭(Tab) 사용 가능\n- 동일한 블록 내에서는 반드시 동일한 공백 개수를 유지해야 함\n\n#### 정상 코드\n\n```python\nif True:\n    print(\"True\")\nelse:\n    print(\"False\")\n```\n\n#### 오류 코드(들여쓰기 불일치)\n\n```python\nif True:\n    print(\"Answer\")\n    print(\"True\")\nelse:\n    print(\"Answer\")\n  print(\"False\")\n```\n\n---\n\n### 주석\n\n- 주석은 실행되지 않으며 코드 설명이나 비활성화를 위해 사용\n- 주석 작성 방법 :\n\n· 단일 줄 : #\n· 여러 줄 : \"\"\" \"\"\" 또는 ''' '''\n\n```python\n\"\"\"\n작성자 : educoding\n수정날짜 : 2021.02.22\n\"\"\"\n\nprint(38)        # 숫자를 출력하는 코드\nprint(\"문자열\")  # 문자열을 출력하는 코드\nprint([1, 2, 3]) # 배열을 출력하는 코드\n```\n"
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 표준 입출력 함수",
+        "sortOrder": 5,
+        "content": "### 출력 : print() 함수\n\n- 데이터를 화면에 출력하거나 사용자에게 메시지를 전달할 때 사용\n- 이스케이프 문자를 사용해 줄바꿈, 탭 등을 추가할 수 있음\n\n· \\\\n : 줄바꿈을 의미\n· \\\\t : 탭을 의미\n· \\\\b : 백스페이스\n· \\\\r : 커서를 맨 앞으로 이동시킴\n\n#### 출력 예제\n\n```python\nprint(38) # 정수형\nprint(\"문자열\") \nprint([1, 2, 3]) # 리스트형\nprint(1+2)\nprint(\"파\"+\"이\"+\"썬\")\nprint(\"파\"\"이\"\"썬\")\nprint(\"파\",\"이\",\"썬\") # 콤마는 띄어쓰기를 의미 한다.\n\nprint(\"\n\n\n\") # 줄바꿈 문자 (이스케이프 케릭터라고 함)\n\n# 작은 따옴표 3개를 사용해도 동일 함, 여러줄 연속 사용, 사용으로도 동일 효과 낼 수 있음\nprint(\"\"\"동해물과 백두산이 마르고 닳도록 하느님이\n보우하사 우리나라 만세\n무궁화 삼천리 화려 강산\n대한 사람 대한으로 길이 보전 하세\n\"\"\")\n\n# 큰 따옴표, 작은 따옴표 화면에 표시 하기\nprint(\"\"안녕하세요\"라고 말했습니다.\")\nprint(\"'안녕하세요'라고 말했습니다.\")\n\n# 이스케이프 문자 사용 하기\nprint(\"서울시\t강남구\t역삼동\n\")\n```\n\n### 출력 옵션 : end와 sep\n\n- end : 출력 후 삽입될 문자를 지정 (기본값은 \\\\n)\n- sep : 출력 값 사이에 삽입될 문자를 지정 (기본값은 공백)\n\n#### 출력 옵션 예제\n\n```python\nprint(\"Hello\", end=\"\n\")\nprint()\n\nprint(\"Hello\", end=\"\")\nprint(\"World\");\n\nprint(\"Hello\",end=\"-\")\nprint(\"python\")\n\nprint(\"life\",\"is\",\"too short\"); # 콤마는 띄어쓰기 역할을 한다. (기본 값)\nprint(1,2,3,4,5,sep=\" \")\nprint(1,2,3,4,5,sep=\"\n\")\nprint(\"010\",\"1234\",\"5678\",sep=\"-\")\n\nyear = 2024\nmonth = 5\nday = 23\nprint(year, month, day, sep=\"/\")\n```\n\n### 다양한 출력 스타일\n\n```python\nname = \"educoding\"\nage = 20\ngender = \"남성\"\njobs = \"소프트웨어 개발자\"\naddr = \"서울시 역삼동\"\n\n# C언어 스타일, %방식\nprint(\"====== C 스타일 ======\")\nprint(\"이름 : %s\"%(name))\nprint(\"나이 : %d\"%(age))\nprint(\"성별 : %s\"%(gender))\nprint(\"직업 : %s\"%(jobs))\nprint(\"주소 : %s\n\"%(addr))\n\n# 파이썬 스타일 1, str.format\nprint(\"====== 파이썬 스타일 1 ======\")\nprint(\"이름 : {}{}\".format(name, addr))\nprint(\"나이 : {}\".format(age))\nprint(\"성별 : {}\".format(gender))\nprint(\"직업 : {}\".format(jobs))\nprint(\"주소 : {}\n\".format(addr))\n\n# 파이썬 스타일 2, 가장 최근에 추가된 방식(f-string), 3.6 이후\n# f와 {}로 사용 합니다.\nprint(\"====== 파이썬 스타일 2 ======\")\nprint(f\"이름 : {name}\")\nprint(f\"나이 : {age}\")\nprint(f\"성별 : {gender}\")\nprint(f\"직업 : {jobs}\")\nprint(f\"주소 : {addr}\n\")\n\n# 자바 스타일\nprint(\"====== 자바 스타일 ======\")\nprint(\"이름 : \" + name)\nprint(\"나이 : \" + str(age))\nprint(\"성별 : \" + gender)\nprint(\"직업 : \" + jobs)\nprint(\"주소 : \" + addr)\n```\n\n### 정렬 및 포맷 지정\n\n- &lt; : 왼쪽 정렬\n- > : 오른쪽 정렬\n- ^ : 가운데 정렬\n\n```python\n#정렬 위치\n# < - 좌측\n# > - 우측 (기본값 : 생략 가능)\n# ^ - 중앙\nnum1 = 100\nnum2 = 1000\nnum3 = 10000\nprint(f\"|{num1:^7}|\")\nprint(f\"|{num2:^7}|\")\nprint(f\"|{num3:^7}|\")\n\nprint(f\"|{10:5}|\")  # 오른쪽 정렬, 10이라는 값을 오른쪽 정렬으로 출력 한다는 의미 \nprint(f\"|{10:<5}|\") # 왼쪽 정렬, 10이라는 값을 왼쪽 정렬으로 출력 한다는 의미\nprint(f\"|{10:^6}|\") # 중간 정렬, 10이라는 값을 중간 정렬 한다는 의미\nprint(f\"{20.3333333:.2f}\")\n```\n\n### 입력 : input() 함수\n\n- 사용자로부터 데이터를 입력받아 처리\n- 기본적으로 문자열로 반환되며, 다른 데이터형으로 변환하려면 형변환 함수를 사용해야 함\n\n#### 입력 예제\n\n```python\nname = input() # 데이터를 입력 받아 변수에 저장 합니다.\nprint(name)\n\nname = input(\"이름을 입력하세요 : \") # 가이드로 표시 할 내용을 포함하여 한줄에 표시\nprint(name)\n```\n\n```python\nname = input('이름을 입력하세요 : ')\nage = int(input(\"나이를 입력 하세요 : \")) # 문자열이 아닌 데이터형을 입력 받기 위해서는 형변환을 해야 합니다.\naddr = input(\"주소를 입력 하세요 : \")\njobs = input(\"직업을 입력 하세요 : \")\naver = float(input(\"성적을 입력하세요 : \"))\n\nprint(f'안녕하세요? {name} 님.')\nprint(f\"당신의 주소는 {addr}이고 직업은 {jobs}이고 나이는 {age} 입니다.\")\nprint(f\"당신의 성적은 {aver} 입니다.\")\n```\n\n#### 여러개의 데이터를 한번에 입력받기\n\n- split() : 입력받은 문자를 공백 기준으로 분리하여 변수에 넣어주는 역할을 함, 항상 공백 기준은 아니고 split(옵션)에 따라 기준이 달라짐\n- map() : 리스트의 요소를 지정된 함수로 처리하는 함수(첫번째 매개변수는 적용시킬 함수 또는 형, 두번째 매개변수는 반복 가능한 자료형)\n\n```python\nstr1, str2 = input(\"이름과 주소 입력 : \").split()\nprint(str1,str2)\n\nkor, eng, mat = map(int, input(\"국어 영어 수학 : \").split())\nprint(kor,eng,mat)\n\nhour, min, sec = input(\"시:분:초 : \").split(\":\")\nprint(f\"{hour}시{min}분{sec}초\")\n\na, b, c = map(int, input(\"정수 입력 : \").split(\":\"))\nif a == 12:\n    print(f\"오후{a:02}시{b:02}분{c:02}초\")\nelif a > 12:\n    a -= 12\n    print(f\"오후{a:02}시{b:02}분{c:02}초\")\nelse:\n    print(f\"오전{a:02}시{b:02}분{c:02}초\")\n```\n\n### 요약 정리\n\n1. 출력(print) :\n\n- print(\"내용\")으로 출력\n- 이스케이프 문자로 출력 모양 제어 가능 (\\\\n, \\\\t 등)\n- end와 sep 옵션으로 출력 형식 조정 가능\n- 다양한 스타일로 출력 가능 (C 스타일, format, f-string)\n\n2. 입력(input) :\n\n- input()으로 사용자 입력 받기\n- 반환값은 문자열이며, 필요한 경우 형변환 필요 (int(), float() 등)\n\n3. 정렬 및 포맷 :\n\n- 문자열 및 숫자 정렬 가능 (&lt;, >, ^)\n- 소수점 자릿수 지정 가능 (:.nf)\n\n4. 여러 입력값 처리 :\n\n- split()으로 공백 기준 입력 분리\n- map()으로 형변환 및 여러 변수에 입력값 저장 가능\n"
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 자료형과 표준 데이터 형식",
+        "sortOrder": 6,
+        "content": "### 자료형이란?\n\n**자료형**은 데이터를 저장하기 위해 미리 정의된 데이터의 형태를 의미합니다. Python은 변수에 값이 할당될 때 자료형이 자동으로 결정되지만, 데이터형에 대한 이해는 필수적입니다.\n\n#### 파이썬의 주요 자료형\n\n1. 문자열(String) :\n\n- 연속된 문자 데이터로, \" \" 또는 ' '로 표현됩니다.\n- 예: 이름, 주소, 이메일 제목 등\n- 문자형은 따로 존재하지 않으며, 모든 문자는 문자열로 취급됩니다.\n\n2. 숫자(Numeric) :\n\n- 숫자 데이터로 연산 가능한 값\n- 정수형(int)과 실수형(float)으로 나뉩니다.\n- 예: 가격, 점수 등\n\n3. 불리언(Boolean) :\n\n- 참(True)과 거짓(False) 값을 나타냄\n- 첫 글자는 반드시 대문자로 작성\n\n---\n\n### 변수\n\n**변수**는 데이터를 저장하기 위해 메모리 공간에 이름을 부여하는 것을 의미합니다.\n\n- Python은 값을 할당하는 순간 자동으로 변수 선언과 자료형 결정이 이루어집니다.\n- 대입 연산자 =를 사용하며, ==는 비교 연산자이므로 혼동하지 않도록 주의하세요.\n\n#### 변수 사용 예제\n\n```python\naddr = \"서울시 강남구 역삼동\" # 문자열을 나타낸다.\nlang = \"파이썬\"\nname = \"educoding\"\nage = 10  #정수형이다.\n\nprint(\"나의 이름은 \" + name + \"입니다.\")\nprint(\"나이는 \" + str(age) + \"입니다.\")\nprint(addr + \"에서\" + lang + \"을 배우고 있습니다.\")\n```\n\n#### 변수의 재활용\n\n선언된 변수에 대해 저장된 데이터를 변경 할 수 있습니다.\n\n```python\naddr = \"서울시 강남구 역삼동\"\nlang = \"Python\"\nname = \"educoding\"\nage = 10\n\nprint(\"나의 이름은 \" + name + \"입니다.\")\nprint(\"나이는 \" + str(age) + \"입니다.\")\nprint(addr + \"에서\" + lang + \"을 배우고 있습니다.\")\n\naddr = \"서울시 강남구 역삼동\"  # 기존에 선언과 할당이 이루어진 변수에 값을 업데이트 한다.\nprint(f\"{addr} 에서 {lang}를 배우고 있습니다.\") # 이런 방법으로 출력 할 수도 있음 (포맷 문자열 리터럴)\n```\n\n#### 다중 할당\n\n```python\na = b = c = 1  # 하나의 값을 여러 변수에 한번에 할당 가능하다.\nprint(a, b, c)\na, b, c = 1, 2, \"educoding\" # 여러개의 변수에 여러개의 값을 한번에 할당 가능 하다.\nprint(a, b, c)\n```\n\n#### 입력값으로 변수 초기화\n\n```python\nlang = input(\"배우고 싶은 언어를 입력하세요: \")\nprint(f\"입력된 언어는 {lang}입니다.\")\n```\n\n#### 변수의 타입 확인\n\nPython에서는 type() 함수를 사용하여 변수의 자료형을 확인할 수 있습니다.\n\n```python\nnum = 10\nprint(type(num))  # <class 'int'>\n```\n\n### 표준 데이터 형식\n\n#### 숫자형 타입(numeric types)\n\n- 정수(int) : 소수점이 없는 숫자. 예: 123, -345, 0\n- 실수(float) : 소수점이 포함된 숫자. 예 : 123.45, -1234.5, 3.4e10\n\n#### 숫자형 연산 예제\n\n```python\ni = 10\nj = 3\nprint(i+j)\nprint(i-j)\nprint(i*j)\nprint(i**j)  # 제곱 연산자\nprint(i/j)\nprint(i//j)  # 몫의 값을 실수가 아닌 정수로 얻고자 한다면..\nprint(i%j)\n```\n\n| **자료형** | **사용 예** |\n|---|---|\n| 정수 | 123, -345, 0 |\n| 실수 | 123.45, -1234.5, 3.4e10 |\n| 복소수 | 1 + 2j, -3j |\n| 8진수 | 034, 025 |\n| 16진수 | 0x2A, 0xFF |\n\n#### 불리언(Boolean)\n\n참(True)과 거짓(False) 값을 표현합니다.\n\n```python\nprint(bool(1)) # True\nprint(bool(0)) # False\nprint(bool(None)) # False\n```\n\n#### 문자열(String)\n\n문자열은 문자들의 연속된 집합으로 '' 또는 \"\"로 감싸서 표현합니다.\n\n```python\nstr = 'Hello World!'\n\nprint(str)\nprint(str[0])\nprint(str[2:5])\nprint(str[2:])\nprint(str * 2)\nprint(str + \"TEST\")\n```\n\n#### 형변환\n\nPython에서는 데이터를 다른 자료형으로 변환할 수 있습니다.\n\n- **bool(값)** : 값을 논리형으로 변환\n- **int(값)** : 값을 정수형으로 변환\n- **float(값)** : 값을 실수형으로 변환\n- **str(값)** : 값을 문자열로 변환\n\n```python\nprint(10 + int(\"10\"))\nprint(\"나이\" + str(30))\nprint(float(0.1) * float(\"512.45\"))\n\na = 10\nb = \"20\"\nprint(a + int(b))\n\n\tx,y,z = -1, 10, \"test\"   # 0, None은 False 입니다.\nprint(bool(x))\nprint(bool(y))\nprint(bool(z))\n```\n\n---\n\n### 주요 포인트\n\n1. Python은 **동적 타입** 언어로, 변수 선언 시 자료형을 명시하지 않아도 됩니다.\n2. type() 함수로 변수의 자료형을 확인할 수 있습니다.\n3. **형변환**을 통해 변수의 자료형을 변경할 수 있습니다.\n4. 자료형은 Python의 기본 클래스이며, 이를 통해 다양한 연산과 조작이 가능합니다.\n"
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. 문자열",
+        "sortOrder": 7,
+        "content": "### 문자열 표현 방법\n\n문자열은 문자들의 집합으로, 파이썬에서는 다음 방법으로 표현할 수 있습니다: 1. **큰따옴표(\"\")**로 감싸기\n\n- 예 : \"안녕하세요\"\n\n2. **작은따옴표('')**로 감싸기\n\n- 예 : '안녕하세요'\n\n3. **큰따옴표 3개(\"\"\" \"\"\")**로 감싸기 : 여러 줄 문자열에 사용\n\n- 예 : \"\"\" 안녕하세요. 반갑습니다. \"\"\"\"\n\n4. **작은따옴표 3개(''' ''')**로 감싸기 : 여러 줄 문자열에 사용\n\n- 예 : ''' 안녕하세요. 반갑습니다.'''\n\n### 이스케이프 코드\n\n문자열 내에서 특수한 동작을 수행하거나 특정 문자를 표현할 떄 사용합니다.\n\n| **코드** | **설명** |\n|---|---|\n| \\\\n | 문자열 안에서 줄을 바꿀 때 사용 |\n| \\\\t | 문자열 사이에 탭 간격을 줄 때 사용 |\n| \\\\\\\\ | \\\\를 표현 할 때 사용 |\n| \\\\’ | 작은 따옴표를 표현 할 때 사용 |\n| \\\\” | 큰 따옴표를 표현 할 때 사용 |\n| \\\\b | 백 스페이스 |\n| \\\\r | 커서를 줄의 맨 앞으로 옮김 |\n\n### 문자열 연산\n\n1. **문자열 연산(+)**\n\n- 두 문자열을 합칩니다.\n\n```python\nprint(\"안녕하세요\" + \" 반갑습니다.\")  # 결과: \"안녕하세요 반갑습니다.\"\n```\n\n2. **문자열 반복(\\*)**\n\n문자열을 주어진 횟수만큼 반복합니다.\n\n```python\nprint(\"안녕\" * 3)  # 결과: \"안녕안녕안녕\"\n```\n\n```python\nprint(38)\nprint(\"문자열\")\nprint([1, 2, 3])\nprint(1+2)\nprint(\"파\"+\"이\"+\"썬\")\nprint(\"파\"\"이\"\"썬\") # 띄어쓰기 없다.\nprint(\"파\",\"이\",\"썬\") # 콤마는 띄어쓰기를 의미 한다. sep 옵션을 통해 변경 가능\n\nprint(\"\n\n\n\") # 줄바꿈 문자 (이스케이프 케릭터라고 함)\n\n# 작은 따옴표 3개를 사용해도 동일 함\nprint(\"\"\"동해물과 백두산이 마르고 닳도록 하느님이\n보우하사 우리나라 만세\n무궁화 삼천리 화려 강산\n대한 사람 대한으로 길이 보전 하세\n\"\"\")\n\n# 큰 따옴표, 작은 따옴표 화면에 표시 하기\nprint(\"\"안녕하세요\"라고 말했습니다.\")\nprint(\"'안녕하세요'라고 말했습니다.\")\n\n# 이스케이프 문자 사용 하기\nprint(\"서울시\t강남구\t역삼동\n\")\n```\n\n### 문자열 인덱싱\n\n문자열에서 특정 위치의 문자를 선택하는 작업을 **인덱싱**이라고 합니다.\n\n- 문자열의 각 문자는 **인덱스**로 접근 가능하며, 인덱스는 **0부터 시작**합니다.\n- 음수 인덱스를 사용하면 문자열 뒤에서부터 접근합니다.\n- 사용법 : 문자열\\[index\\]\n\n#### 예제\n\n```python\ntext = \"안녕하세요\"\nprint(text[0])   # 결과: \"안\" (첫 번째 문자)\nprint(text[-1])  # 결과: \"요\" (뒤에서 첫 번째 문자)\n```\n\n### 문자열 슬라이싱(Slicing)\n\n문자열의 일부를 잘라내는 작업을 **슬라이싱**이라고 합니다.\n\n- **구문** : 문자열\\[start:end:step\\]\n- start : 시작 인덱스 (포함)\n- end : 끝 인덱스 (포함하지 않음)\n- step : 추출 간격 (기본값: 1)\n\n```python\ntext = \"안녕하세요\"\nprint(text[1:4])    # 결과: \"녕하세\" (인덱스 1~3)\nprint(text[::2])    # 결과: \"안하요\" (2칸 간격으로 추출)\nprint(text[::-1])   # 결과: \"요세하녕안\" (문자열 뒤집기\n```\n\n#### 인덱싱 및 슬라이싱 연습\n\n- 주민등록번호 자르기\n- 하위 7자리중 첫번째 글자는 성별을 의미 합니다.\n- 앞의 6자리는 년,월,일을 의미 합니다.\n*****인덱싱의 범위는 0부터 시작 합니다. 프로그램의 모든 시작 위치는 0 입니다.\n그러므로 항상 실제 숫자보다 1이 작다는걸 유의 해야 합니다.*****\n\n```python\njumin = \"991120-1234567\"\n\nprint(\"성별 : \" + jumin[7]) # 인덱스 7은 8번째 숫자를 의미 합니다.\nprint(\"년 : \" + jumin[:2]) # 0부터 2 미만까지 (0,1)\nprint(\"월 : \" + jumin[2:4]) # 2부터 4 미만\nprint(\"일 : \" + jumin[4:6])\n\nprint(\"생년월일 : \" + jumin[:6])\nprint(\"뒤 7자리 : \" + jumin[7:])\nprint(\"뒤 7자리 : \" + jumin[-7:])\n```\n\n---\n\n### 문자열 함수\n\n#### 대소문자 바꾸기 : upper()와 lower()\n\n```python\na = \"Hello Python Program..\"\nprint(a.upper())\nprint(a.lower())\n```\n\n#### 문자열 변경 : replace(””, “”)\n\n- .replace(old, new) : 문자열에서 old를 찾아 new로 변경\n\n```python\ninput_str = \"Hello Python Program\"\nnew_str = input_str.replace(\"Python\", \"JavaScript\") \nprint(new_str)\n```\n\n#### 문자 갯수 세기\n\n- .count(char) : 문자열에서 특정 문자의 개수를 반환\n\n```python\ntext = \"banana\"\nprint(text.count(\"a\"))  # 결과: 3\n```\n\n#### 문자열 길이\n\n- len(string) : 문자열의 전체 길이 반환\n\n```python\ntext = \"Hello World\"\nprint(len(text))  # 결과: 11\n```\n\n#### 문자열 찾기 : find()와 rfind(), 그리고 index()\n\n- **find()** : 찾은 부분 문자열의 첫 번째 인덱스를 반환합니다. 부분 문자열을 찾지 못하면 -1을 반환합니다.\n- **index()** : 찾은 부분 문자열의 첫 번째 인덱스를 반환합니다. 부분 문자열을 찾지 못하면 ValueError 예외를 발생시킵니다.\n\n```python\nphrase = \"가장 큰 실수는 포기, 가장 어리석은 일은 남의 결점 찾기, 가장 좋은 선물은 용서\"\nprint(phrase.find(\"가장\"))\nprint(phrase.rfind(\"가장\")) # 뒤에서 부터 찾지만 인덱스는 앞에서 부터\n\nprint(phrase.index(\"포기\")) \n\nprint(phrase.find(\"나에게\"))  # 찾는 결과 없으면 -1\nprint(input_b.index(\"나에게\")) # 해당 단어가 없으므로 에러가 발생 합니다\n\nnew_phrase = phrase.replace(\"가장\", \"나에게\")\nprint(new_phrase)\n```\n\n#### 문자열 양옆의 공백제거\n\n- **.strip()** : 양쪽 공백 제거\n- **.lstrip()** : 왼쪽 공백 제거\n- **.rstrip()** : 오른쪽 공백 제거\n\n```python\ninput_a = \"\"\"\n    안녕하세요.\n문자열 함수를 알아 봅니다.\n\n    \"\"\"\nprint(input_a.strip())\n```\n\n#### 응용예제 1번\n\n*****행사 안내 메일 내용 자동 작성 하기*****\n\n- 이름 : 백이진\n- 행사내용 : 현대 자동차 신차 발표회\n- 일시 : 20220301 (연속해서 입력)\n- 시간 : 14\n\n```python\n# 한파의 연속인 1월 입니다.\n# 봄을 기다리는 2월 입니다.\n# 봄의 기운이 느껴지는 3월 입니다.\n# 새싹이 피어나는 4월 입니다.\n# 계절의 여왕 5월 입니다.  \n# 활동하기 좋은 6월 입니다. \n# 휴가가 기다려지는 7월 입니다. \n# 무더운 8월 입니다. \n# 선선한 9월 입니다. \n# 천고마비의 계절 10월 입니다.\n# 쓸쓸한 늦가을 11월 입니다.\n# 올 한해의 마무리 12월 입니다.\n\nname = input(\"이름 : \")\nevent = input(\"제목 : \")\ndate = input(\"일시 : \")\ntime = input(\"시간 : \")\n\n# date에서 몇월인지 가져오기\nmonth = date[4:6]\ngreeting = \"봄의 기운이 느껴지는 3월 입니다.\"\n\nprint(f\"{name}님.\")\nprint(greeting)\nprint(f\"아래와 일정으로 {event}를 진행 하고자 하오니 오셔서 자리를 빛내 주시기 바랍니다.\n\")\nprint(\"=\"*5, \"행사 안내\", \"=\"*5)\nprint(\"행사 안내 : \" + event)\n# print(\"일시 : \" + date[:4] + \"년 \" + date[4:6]+\"월 \" + date[6:8] + \"일\")\nprint(f\"일시 : {date[:4]}년 {date[4:6]}월 {date[6:8]}일\")\nprint(\"시간 : \" + time + \"시\")\n```\n\n**👉 추가 과제 :**\n\n1. 월별 안내 문구를 자동으로 변경 해보기\n\n```python\nif month == \"01\":\n    greeting = \"한파의 연속인 1월 입니다.\"\nelif month == \"02\":\n    greeting = \"봄을 기다리는 2월 입니다.\"\nelif month == \"03\":\n    greeting = \"봄의 기운이 느껴지는 3월 입니다.\"\nelif month == \"04\":\n    greeting = \"새싹이 피어나는 4월 입니다.\"\nelif month == \"05\":\n    greeting = \"계절의 여왕 5월 입니다.\"\nelif month == \"06\":\n    greeting = \"활동하기 좋은 6월 입니다.\"\nelif month == \"07\":\n    greeting = \"휴가가 기다려지는 7월 입니다.\"\nelif month == \"08\":\n    greeting = \"무더운 8월 입니다.\"\nelif month == \"09\":\n    greeting = \"무더운 8월 입니다.\"\nelif month == \"10\":\n    greeting = \"천고마비의 계절 10월 입니다.\"\nelif month == \"11\":\n    greeting = \"쓸쓸한 늦가을 11월 입니다.\"\nelse :\n    greeting = \"올 한해의 마무리 12월 입니다.\"\n```\n\n2. 시간을 14로 입력 받으면 오후 2시로 출력 해보기\n\n```python\ntrans_time = int(time)\nif(trans_time > 12):\n    trans_time = trans_time - 12\n    time = \"오후\" + str(trans_time)\nelse:\n    time = \"오전\" + str(trans_time)\n```\n\n3. 파일로 저장해보기\n4. 파일에서 발송 명단 가져 오기\n\n#### 응용 예제 2번\n\n*****각 사이트 비밀번호 자동으로 만들기*****\n- 규칙1 : http://naver.com에서 앞의 http:// 잘라내기\n- 규칙2 : 처음 만나는 점(.) 이후는 제외\n- 규칙3 : 남은 글자 중 처음 세자리 + 글자 갯수 + 글자에 포함된 'o' 갯수 +글자에 포함된 'k' 갯수+ '!' + 자신의이니셜(예: 'educoding')\n\n```python\nurl = input(\"사이트 : \")\n\nmy_str = url.replace(\"http://\", \"\")\nmy_str = my_str[:my_str.index(\".\")] # 슬라이싱, 처음부터 . 위치 미만까지\npassword = my_str[:3] + str(len(my_str)) + str(my_str.count(\"o\")) + str(my_str.count(\"k\")) + \"!\" + \"educoding\"\nprint(\"비밀번호 : \" + password)# 각 사이트 비밀번호 자동으로 만들기\n```\n\n#### 번외 과제\n\n- 반복 수행 및 종료 조건 추가\n- 파일에 저장 하기\n\n```python\nfile_name = \"password.txt\"\nf = open(file_name, \"wt\") #t는 텍스트 모드이며 기본 값\nwhile True:\n    url = input(\"사이트 : \")\n    if url == \"exit\": break\n    my_str = url.replace(\"http://\", \"\")\n    my_str = my_str[:my_str.index(\".\")] # 슬라이싱, 처음부터 . 위치 미만까지\n    password = my_str[:3] + str(len(my_str)) + str(my_str.count(\"o\")) + str(my_str.count(\"o\")) + \"!\" + \"educoding\"\n    print(\"비밀번호 : \" + password)# 각 사이트 비밀번호 자동으로 만들기\n    f.write(password + \"\n\")\nf.close()\n```\n\n#### 연습문제 1번\n\n정해진 형식으로 시간을 입력 받아서 출력하기\n\n```python\nhour, min, sec = map(int, input(\"시간 입력 : \").split(\":\"))\nif hour == 12:\n    print(f\"오후 : {hour}시 {min}분 {sec}초 \")\nelif hour > 12:\n    hour -= 12 # hour = hour - 12\n    print(f\"오후 {hour}시 {min}분 {sec}초\")\nelse:\n    print(f\"오전 {hour}시 {min}분 {sec}초\")\n```\n\n#### 연습문제 2번\n\n3개의 정수를 입력 받아 최대값 구하기\n\n```python\na, b, c = map(int, input(\"정수 입력 : \").split())\nif a > b :\n    if a > c : print(a)\n    else : print(c)\nelse :\n    if b > c : print(b)\n    else : print(c)\n```\n\n#### 연습문제 3번\n\n주민등록번호를 입력받아 생년월일, 성별, 나이 출력하기\n\n```python\nfrom datetime import datetime\ncurr_year = datetime.today().year\njumin = input(\"주민등록번호 : \")\nyear = int(jumin[:2])\ngender = int(jumin[7])\nmonth = int(jumin[2:4])\nday = int(jumin[4:6])\n\nif gender == 1 or gender == 2:\n    age = curr_year - 1900 - year\nelse:\n    age = curr_year - 2000 - year\n\nif gender == 1 or gender == 3:\n    gender_str = \"남성\"\nelse:\n    gender_str = \"여성\"\n\nprint(f\"생년월일 : {year:02}년 {month:02}월 {day:02}일\")\nprint(f\"성별 : {gender_str}\")\nprint(f\"나이 : {age}\")\n```\n"
+      },
+      {
+        "lessonKey": "08",
+        "label": "08. 연산자",
+        "sortOrder": 8,
+        "content": "연산자는 프로그램에서 값을 계산하거나 변수에 대해 연산을 수행하는 기호입니다. 다양한 종류의 연산자가 있으며, 각기 다른 목적에 사용됩니다. 아래는 주요 연산자와 그 사용 예제입니다.\n\n### 산술연산자\n\n숫자형 데이터 사이에서 기본적인 사칙연산을 수행합니다. 정수형 연산은 정수형으로, 실수형 연산은 실수형으로 결과를 반환합니다. 문자열에 대해서도 일부 산술연산이 가능합니다.\n\n#### 예제 코드\n\n```python\ni = 10\nj = 4\nprint(i + j)   # 덧셈 : 14\nprint(i - j)   # 뺄셈 : 6\nprint(i * j)   # 곱셈 : 40\nprint(i / j)   # 나눗셈 : 2.5\nprint(i % j)   # 나머지 : 2\nprint(i // j)  # 몫 : 2\nprint(i ** 4)  # 제곱 : 10 * 10 * 10 * 10\n```\n\n#### 문자열에 대한 연산\n\n```python\ntext = \"Python\"\nprint(text + \" Programming\")  # 문자열 연결\nprint(text * 3)               # 문자열 반복\n```\n\n#### 응용 예제 1\n\n```python\ntax_rate = 0.10\nincome = int(input(\"당신의 수입은 얼마입니까? \"))\nprint(f\"당신이 내야 할 세금은 {income * tax_rate} 입니다.\")\n```\n\n#### 응용 예제2\n\n```python\nmonth_pay = float(input(\"당신의 월 실수령액은 얼마 입니까? \"))\nprint(f\"당신의 연봉은 {month_pay * 12 * 1.15:.2f} 입니다.\")\n```\n\n### 대입연산자\n\n변수에 값을 할당하거나, 복합적으로 값을 갱신할 때 사용됩니다.\n\n- 대입 연산자의 종류 : =, +=, -=, \\*=, /=, //=, %=\n\n> 대입 연산자는 기본적으로 (=)이다. (==)은 같다라는 비교연산자이므로 잘 구별해서 사용해야 합니다.\n\n```python\nnum1 = 10\nnum1 += 2    # num1 = num1 + 2\nprint(num1)  # 12\nnum1 -= 2\nprint(num1)  # 10\nnum1 *= 2\nprint(num1)  # 20\nnum1 //= 2\nprint(num1)  # 10\nnum1 %= 2\nprint(num1)  # 0\n```\n\n### 비교연산자\n\n두개의 값을 비교하여 조건이 참인지 거짓인지 판별 합니다.\n\n- == 같다 , > 크다, != 같지 않다,  &lt;= 작거나 같다, &lt; 작다, >= 크거나 같다.\n\n> 값의 범위를 체크하는 비교 연산자 사용시 변수를 한번만 넣을 수 있습니다. (예,  0 &lt; x ≤ 100)\n\n```python\na = 10\nb = 20\nprint(a > b)\nprint(a < b)\nprint(a == b)\nprint(a != b)\nprint(a >= b)\nprint(a <= b)\n```\n\n### 논리 연산자\n\n조건을 비교하여 참(True)과 거짓(False)을 반환합니다.\n\n- and : 둘다 참 일 때 참이다. (교집합)\n- or : 둘중 하나만 참이면 참이다. (합집합)\n- not : 조건의 결과를 반대로 변환 (참 → 거짓)\n\n```python\nx = 10\ny = 20\n\nprint(x > 5 and y > 15)  # True\nprint(x > 15 or y > 15)  # True\nprint(not(x > 15))       # True\n```\n\n### 삼항 연산자\n\n조건에 따라 다른 값을 반환 합니다.\n\n#### 구문\n\n```python\n값 = (조건) and 참일 때의 값 or 거짓일 때의 값\n```\n\n#### 예제 코드\n\n```python\nnum = 100\nflag = (num % 2 == 0) and \"짝수\" or \"홀수\"\nprint(flag)  # 짝수\n```\n\n### 연산자 우선 순위\n\n1. 소괄호 ( )\n2. 거듭 제곱 **\n3. 곱셈, 나눗셈, 나머지, 몫 \\*, /, %, //\n4. 덧셈, 뺄셈 +, -\n5. 비교 연산자 &lt;, >, &lt;=, >=, ==, !=\n6. 논리 연산자 not, and, or\n\n```python\nresult = 5 + 2 * 3\nprint(result)  # 11 (곱셈이 먼저 수행)\n\nresult = (5 + 2) * 3\nprint(result)  # 21 (소괄호가 우선)\n```\n\n### 진법\n\n인간이 사용하는 진법은 10진법 입니다. 0 ~ 9까지의 숫자로 총개의 숫자를 의미 합니다.\n컴퓨터는 2진법을 사용 합니다. 2진법은 0과1반 있으며, 전기적인 신호인 ON/OFF를 의미 합니다.\n16진법은 프로그램 작성시 많이 사용되며, 2진번 4자리와 일치하므로 사용에 편리 하여 자주 사용 됩니다.\n\n- 2진수(0b) : 2진수를 의미 합니다.\n- 8진수(0o) : 8진수를 의미 합니다.\n- 16진수(0x) : 16진수를 의미 합니다.\n\n```python\n42 == 0b1010100  # True\n42 == 0o52  # True\n42 == 0x2a  # True\nbin(42)  # 2진수의 문자열로 변환 합니다.\noct(42)  # 8진수의 문자열로 변환 합니다.\nhex(42)  # 16진수 문자열로 변환 합니다.\n```\n\n### 비트 연산자\n\n각 비트별로 연산을 한다. (2진법)\n\n```python\na = 10  # 00001010\nb = 12  # 00001100\nprint(a & b) # bit and\nprint(a | b) # bit or\nprint(a ^ b) # bit xor (값이 다른 경우 1)\nprint(~a)    # bit 반전\nprint(a << 1) # bit 이동\nprint(a >> 1)\n```\n\n#### 응용 예제\n\n*****윤년 판단하기 (조건문, 나머지 연산자, 비교연산자, 논리연산자)*****\n달력(양력)은 지구가 태양을 공전하는 시간을 기준으로 작성된다.\n양력에서의 1년은 지구가 태양을 1바퀴 도는데 걸리는 시간이며, 시간은 365일 과 1/4만큼 걸린다.\n\n*****윤년의 조건*****\n- 연도가 4로 나누어 떨어진다.\n- 100으로 나누어 떨어지면 연도는 윤년이 아니다.\n- 400으로 나누어 떨어지면 윤년이다.\n\n```python\nyear = int(input(\"년도를 입력하세요: \"))\n\nif year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):\n    print(f\"{year}년은 윤년입니다.\")\nelse:\n    print(f\"{year}년은 윤년이 아닙니다.\")\n```\n"
+      },
+      {
+        "lessonKey": "09",
+        "label": "09. 조건문",
+        "sortOrder": 9,
+        "content": "### 제어문이란?\n\n제어문은 프로그램의 흐름을 제어하는 데 사용됩니다. 순차적인 흐름을 조건에 따라 변경하거나, 특정 코드를 반복 실행할 수 있도록 해줍니다. 제어문이 없다면 프로그램은 입력값과 상관없이 항상 동일한 흐름을 따르게 됩니다.\n\n#### 제어문의 종류\n\n1. **조건문 (if, elif, else)** : 입력 값에 따라 특정 코드 블록을 선택적으로 실행합니다.\n2. **반복문 (while, for)** : 조건이 충족되는 동안 특정 코드 블록을 반복 실행합니다.\n\n---\n\n### 조건문(if, elif, else)\n\n조건문은 조건을 평가하여 참(True)인지 거짓(False)인지에 따라 특정 코드를 실행합니다.\n\n### if ~ else문\n\n조건이 참이면 if 블록을 실행하고, 거짓이면 else 블록을 실행합니다.\n\n```python\nnum = int(input(\"정수를 입력 하세요 : \"))\n\nif num % 2 == 0 : print(\"짝수 입니다.\")\nelse : print(\"홀수 입니다.\")\n```\n\n#### if ~ elif ~ else\n\n다양한 조건을 확인할 때 사용됩니다. elif는 여러 개 사용할 수 있으며, 순차적으로 조건을 평가합니다.\n\n```python\nn = int(input(\"정수를 입력 하세요 : \"))\nif n > 100 :\n\tprint(\"100보다 커요\")\nelif n < 100 :\n\tprint(\"100보다 작아요\")\nelse :\n\tprint(\"100과 같아요\")\n```\n\n#### 응용 : 문자열 비교\n\n```python\nseason = input(\"지금 계절은? \").lower()  # 소문자로 변환하여 비교\n\nif season == \"spring\":  \n    print(\"봄이 왔어요.\")  \nelif season == \"summer\":  \n    print(\"여름이 왔어요.\")  \nelif season == \"fall\":  \n    print(\"쓸쓸한 가을입니다.\")  \nelif season == \"winter\":  \n    print(\"아직 겨울이네요ㅠㅠ\")  \nelse:  \n    print(\"알 수 없는 계절입니다.\")\n```\n\n- input() 함수로 입력받은 값은 기본적으로 문자열 형태입니다.\n- lower()를 사용해 입력값을 소문자로 변환하면 대소문자 구분 없이 비교할 수 있습니다.\n\n---\n\n### 학점 계산 프로그램 (실습)\n\n학생의 이름, 학번, 그리고 국어, 영어, 수학 점수를 입력받아 평균 점수에 따라 학점을 출력하는 프로그램 작성\n\n```python\nname = input(\"이름을 입력하세요: \")\nhakbun = int(input(\"학번을 입력하세요: \"))\nscore1 = int(input(\"국어 점수: \"))\nscore2 = int(input(\"영어 점수: \"))\nscore3 = int(input(\"수학 점수: \"))\n\ntotal = score1 + score2 + score3\naverage = total / 3\n\n# 학점 계산\nif average >= 90:  \n    grade = \"A\"  \nelif average >= 80:  \n    grade = \"B\"  \nelif average >= 70:  \n    grade = \"C\"  \nelif average >= 60:  \n    grade = \"D\"  \nelse:  \n    grade = \"F\"\n\nprint(f\"이름: {name}, 학번: {hakbun}, 평균: {average:.2f}, 학점: {grade}\")\n```\n\n- 평균 점수를 소수점 두 자리까지 출력하기 위해 .2f 형식을 사용했습니다.\n- 조건은 위에서부터 순차적으로 평가되므로, 하위 조건은 별도로 제한하지 않아도 됩니다.\n\n---\n\n### 24시간 형식을 12시간 형식으로 변경\n\n```python\ntime = int(input(\"시간을 입력하세요 (0~23): \"))\n\nif time == 0:  \n    print(\"오전 12시\")  \nelif time < 12:  \n    print(f\"오전 {time}시\")  \nelif time == 12:  \n    print(\"오후 12시\")  \nelse:  \n    print(f\"오후 {time - 12}시\")\n```\n\n---\n\n### 회원 가입을 위한 아이디와 패스워드 입력 받기\n\n아이디는 8자리 이상이어야 하며, 비밀번호는 8~16자리 사이여야 하고 아이디를 포함해서는 안 됩니다.\n\n```python\nid = input(\"아이디를 입력하세요: \")\n\nif len(id) < 8:  \n    print(\"아이디는 반드시 8자리 이상이어야 합니다.\")  \nelse:  \n    pw = input(\"비밀번호를 입력하세요: \")\n    if len(pw) < 8 or len(pw) > 16:  \n        print(\"비밀번호는 8자리 이상, 16자리 이하여야 합니다.\")  \n    elif id in pw:  \n        print(\"비밀번호에 아이디를 포함할 수 없습니다.\")  \n    else:  \n        print(\"회원가입이 완료되었습니다.\")\n```\n\n---\n\n### 로또 번호 자동 생성 (중복 제거)\n\n```python\nimport random\n\nnumbers = []\nwhile len(numbers) < 6:  \n    num = random.randint(1, 45)  \n    if num not in numbers:  \n        numbers.append(num)\n\nprint(f\"생성된 로또 번호: {sorted(numbers)}\")\n```\n\n- random.randint(1, 45)는 1에서 45 사이의 정수를 반환합니다.\n- sorted()를 사용해 최종 출력 시 번호를 오름차순으로 정렬했습니다.\n\n#### \\[실습문제\\] 세자리수 중에서 가장 큰 수\n\n- 3자리의 정수를 입력을 받아 100의자리, 10자리, 1의 자리로 나누어 담고 가장 큰수를 찾아서 출력\n- 예) 입력 : 574, 출력 : 7\n\n```python\nn = int(input(\"정수 입력 : \"))\na = n // 100\nb = (n % 100) // 10\nc = n % 10\nif a > b:\n    if a > c: print(a)\n    else: print(c)\nelse:\n    if b > c : print(b)\n    else: print(c)\n```\n\n- 리스트 사용 코드\n\n```python\nn = int(input(\"정수 입력 : \"))\nx = []\nx.append(n // 100)  # 100 나눈 몫을 구함\nx.append((n % 100) // 10) # 100으로 나눈 나머지에서 다시 10으로 나눈 몫 구하기\nx.append(n % 10) # 10으로 나눈 나머지\nprint(max(x))\n```\n\n#### \\[실습문제\\] 주/야간 근무시간을 입력 받아 아르바이트 급여 계산하기\n\n- 주간 근무 : 9860원\n- 야간 근무 : 주간 시급 \\* 1.5\n\n- 주간근무 \\[1\\], 야간근무\\[2\\]를 입력 하세요 :\n- 근무 시간을 입력해 주세요 :\n- 입력한 시간 동안 근무한 주간 또는 야간 급여는 ___원 입니다.\n\n```python\nwork_type = int(input(\"주간근무 [1] 야간근무[2] 를 입력 하세요 : \"))\nwork_time = int(input(\"근무 시간을 입력 하세요 : \"))\nHOUR_PAY = 9860\n\nif work_type == 1:\n    pay = work_time * HOUR_PAY\nelse:\n    pay = work_time * HOUR_PAY * 1.5\n\nwork_type_str = work_type == 1 and \"주간\" or \"야간\"\npay_str = f\"{pay:,.0f}\"\nprint(f\"{work_time}시간 동안 근무한 {work_type_str} 급여는 {pay_str}원 입니다.\")\n```\n\n- pay:,.0f를 사용해 급여를 천 단위 콤마로 표시했습니다.\n"
+      },
+      {
+        "lessonKey": "10",
+        "label": "10. 반복문",
+        "sortOrder": 10,
+        "content": "## while문\n\n- 조건이 참인 동안 반복을 수행하는 반복문\n- **특징** : 조건이 거짓이 될 때까지 반복. 조건을 설정하지 않으면 무한 반복(while True)을 사용할 수 있음\n\n---\n\n#### 예제 1 : 입력 받은 정수에 대한 합 구하기\n\n- 사용자가 입력한 숫자부터 1까지의 합을 계산하는 예제\n- 반복문이 실행되면서 입력받은 숫자를 하나씩 줄이며 합계를 구함\n\n```python\nn = int(input(\"정수를 입력하세요: \"))\ntotal = 0  # 합계를 저장할 변수\nwhile n > 0:  # n이 0보다 클 때만 반복\n    total += n\n    n -= 1  # n 값을 1씩 감소시킴\nprint(f\"합: {total}\")\n```\n\n---\n\n#### 예제 2 : 입력값 유효성 검증\n\n- 유효한 나이를 입력받을 때까지 반복해서 사용자에세 입력을 요구하는 예제\n- if 조건문을 통해 입력값이 유효한 경우에만 반복문을 종료(break)\n\n```python\nwhile True:  # 무한 반복 시작\n    age = int(input(\"나이를 입력하세요: \"))\n    if 0 < age < 200:  # 나이가 0~200 사이일 경우 유효\n        print(\"입력 완료!\")\n        break  # 유효한 입력값이면 반복 종료\n    else:\n        print(\"나이를 잘못 입력했습니다. 다시 시도하세요.\")\n```\n\n---\n\n#### 예제 3 : 선택 기반 반복(MBTI 예제)\n\n- 특정 선택지를 입력받아 MBTI 유형을 구분하는 프로그램\n- 잘못된 선택을 입력하면 다시 시도하도록 유도\n\n```python\nwhile True:\n    energy = 0\n    print(\"1. 다른 누군가에게 발상, 지식이나 감정을 표현함으로써 에너지를 얻고 활동적이며 적극적입니다.\")\n    print(\"2. 지식이나 감정에 대한 자각의 깊이를 늘려감으로써 에너지를 얻고 깊이 있는 대인 관계를 가집니다.\")\n    print(\"[에너지 방향] : 1, 2중에 선택 하세요 : \", end=\" \")\n    energy = input()\n    if (energy == '1'): \n        mbti = \"E\"\n        break\n    elif (energy == '2'): \n        mbti = \"I\"\n        break\n    else: print(\"입력 오류 다시 입력 하세요.\")\n\nwhile True:\n    recog = 0\n    print(\"1. 실제 경험을 중시하고 현실에 초점을 맞추어 정확하고 철저하게 일처리를 합니다.\")\n    print(\"2. 아이디어를 중시하고 미래지향적이고 개연성과 의미에 초점을 맞추어 신속하게 일을 처리 합니다.\")\n    print(\"[인식기능] : 1, 2중에 선택 하세요 : \", end=\" \")\n    recog = input()\n    if (recog == '1'): \n        mbti = mbti + \"S\"\n        break\n    elif(recog == '2'):\n        mbti = mbti + \"N\"\n        break\n    else: print(\"입력 오류 다시 입력 하세요.\")\n\nwhile True:\n    print(\"1. 업무 중심 타입이며, 진실과 사실에 근거하고 논리적이고 분석적, 객관적으로 사실을 판단 합니다.\")\n    print(\"2. 인간 관계 중심이며, 사람과의 관계에 주로 관심이 많습니다, 우호적이고 공감하기를 좋아하고 도적성을 중시 합니다.\")\n    print(\"[판단기능] : 1, 2중에 선택 하세요 : \", end=\" \")\n    judg = input()\n    if (judg == '1'): \n        mbti = mbti + \"T\"\n        break\n    elif (judg == '2'): \n        mbti = mbti + \"F\"\n        break\n    else: print(\"입력 오류 다시 입력 하세요.\")\n\nwhile True:\n    pattern = 0\n    print(\"1. 분명한 목적과 방향을 선호하고 계획적이며 체계적이고 기한을 잘 지킵니다. 정리정돈을 잘하고 뚜렷한 자기의사와 기준으로 신속한 결론을 내립니다.\")\n    print(\"2. 유동적이고, 자율적이고 융통성이 있으며 때에 따라 일정을 변경하며, 상황에 적응하고 결정을 보류 합니다.\")\n    print(\"[생활양식] : 1, 2중에 선택 하세요 : \", end=\" \")\n    pattern = input()\n    if (pattern == '1'): \n        mbti = mbti + \"J\"\n        break\n    elif (pattern == '2'): \n        mbti = mbti + \"P\"\n        break\n    else: print(\"입력 오류 다시 입력 하세요.\")\n\nprint(\"당신의 MBTI 유형은 \" + mbti + \"입니다.\")\n```\n\n---\n\n## for 문\n\n정해진 범위만큼 반복 수행 할 때 효과적이다.\n범위기반 반복문으로 많이 사용되며, 반드시 반복문에 대한 종료 조건이 있어야 합니다.\n\n### for 요소 in 시퀀스\n\n\"for-in\"문은 **시퀀스(리스트, 튜플, 문자열 등)**의 각 요소를 순회하는 데 사용됩니다. 일반적인 구문은 다음과 같습니다. (자바의 향상된 for문과 동일)\n\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor fruit in fruits:\n    print(fruit)\n```\n\n### for 변수 in range(시작값, 종료값, 증감값)\n\n\"for-range\"문은 숫자 범위를 순회하는 데 사용됩니다. 일반적인 구문은 다음과 같습니다 :\n\n#### 값 더하기 (입력 받은 정수에 이하의 값 더하기)\n\n```python\nn = int(input(\"정수를 입력하세요 : \"))\nsum = 0  # 초기화 해주어야 함, 왜냐면 기존 변수에 들어 있는 값을 기준으로 더하기 때문에\nfor i in range(1, n+1):\n    sum += i\nprint(sum)\n```\n\n#### 이중 for문 사용 하기\n\n```python\nn = int(input(\"정수를 입력 하세요 : \"))\nfor i in range(0, n):  # 범위에서의 최종값 미만까지 반복 한다.\n    for j in range(0, n) :\n        print(\"*\", end=' ')\n    print()\n```\n\n---\n\n#### 구구단 출력\n\n```python\nfor i in range(2, 10): # 2에서 10 미만 까지\n    for j in range(1, 10):\n        print(f\"{i} * {j} = {i*j}\")\n    print()\n```\n\n---\n\n#### 이중 for문과 조건문 사용 하기 (홀수, 짝수 판별)\n\n```python\nn = int(input(\"정수를 입력 하세요 : \"))\nfor i in range(0, n):\n    for j in range(0, n):\n        if j % 2 == 0: print(\"@\", end=' ') # 짝수인 조건이다.\n        else: print(\"*\", end=' ') # 홀수인 조건이다.\n    print()\n```\n\n---\n\n#### 사각형 찍기\n\n- 정수값을 n을 입력 받아 n \\* n 크기의 행렬을 출력하는 프로그램 작성\n- 값은 1부터 시작하고 순서대로 채워 넣는다.\n\n```python\nn = int(input(\"정수를 입력 하세요 : \"))\nfor i in range(1, n * n + 1):\n    print(f\"{i:3}\", end='')    #이쁘게 찍기 위해서 오른쪽 정렬 한다. 왼쪽 정렬은 <\n    if i % n == 0: print()\n```\n\n---\n\n#### 별찍기 1번\n\n\\*\n**\n***\n****\n*****\n\n```python\nn = int(input())\nfor i in range(n):\n    for j in range(i+1):\n        print(\"*\", end=\"\")\n    print()\n```\n\n---\n\n#### 별찍기 2번\n\n*****\n****\n***\n**\n\\*\n\n```python\nn = int(input())\nfor i in range(n):\n    for j in range(n-i):\n        print(\"*\", end=\"\")\n    print()\n```\n\n---\n\n#### 별찍기 3번\n\n*****\n\n****\n\n***\n\n**\n\n\\*\n\n```python\nn = int(input())\nfor i in range(n):\n    for k in range(i):\n        print(\" \", end=\"\")\n    for j in range(n-i):\n        print(\"*\", end=\"\")\n    print()\n```\n\n---\n\n#### for문에서 continue 사용\n\n- continue 문을 만나면 아래의 문자을 수행하지 않고 반복문으로 이동한다.\n\n```python\nn = int(input(\"정수를 입력 하세요 : \"))\nfor i in range(0, n):\n    if i % 2 == 0 : continue # 나머지가 짝수이면 아래의 print문을 수행하지 않는다.\n    print(i)\n```\n\n#### for문을 반대로 반복하기\n\n```python\nfor i in range(4, -1, -1): # 4에서 시작해서 0까지 역순으로 반복\n    print(f\"index : {i}\")\n```\n\n#### for문으로 알파벳 출력하기\n\n- chr : 유니코드 값을 입력 받아 그 코드에 해당하는 문자를 출력하는 함수\n- ord : 문자의 유니코드 값을 돌려주는 함수\n\n```python\nfor i in range(ord(\"A\"),ord(\"Z\")+1): \n    print(chr(i), end=\" \") # chr 문자 출력\nprint()\n\nfor i in range(65,91):#A:65 Z:90\n\tprint(chr(i), end=\" \")\nprint()\n```\n\n****학점 구하기****- break와 continue 사용 하기\n- 출력문에서 “”사용 하기\n- 크거나 같다, 작거나 같다 사용시 크다/작다 부호가 먼저 와야 합니다.\n\n```python\nwhile True:\n    num = int(input(\"점수를 입력하세요(음수는 종료) : \"))\n    if num < 0:\n        break\n\n    if num > 100:\n        print(\"올바른 점수가 아닙니다.\n0 ~ 100 사이의 점수를 입력하세요\")\n        continue  # 반복문으로 되돌아 갑니다.\n\n    if num >= 90:\n        grade = 'A'\n    elif num >= 80:\n        grade = 'B'\n    elif num >= 70:\n        grade = 'C'\n    elif num >= 60:\n        grade = 'D'\n\n    print(f\"{num}점의 학점은 \"{grade}\"입니다.\")\n```\n\n---\n\n### 종합 복습 예제\n\n#### 회원정보 출력하기\n\n· 회원정보를 입력 받아서 출력 하는 예제 진행\n\n- 이름 입력\n- 나이 입력 : 1 ~ 199까지 입력 받고 잘못된 값이 오면 재입력 요청을 한다.\n- 성별 입력 : 영문자 (M과m은 남성) (F와 f는 여성)으로 입력 받고 나머지는 재입력 요청을 한다.\n- 직업 입력 : 1(학생), 2(회사원), 3(주부), 4(무직)으로 입력 받고 나머지는 재입력 요청 한다.\n- 결과는 마지막에 한번에 출력 한다.\n\n```python\nname = input(\"이름을 입력 하세요 : \")\nwhile True:\n    age = input(\"나이를 입력하세요 : \")\n    if age.isdigit() : # 문자열이 '숫자'로만 이루어져있는지 확인하는 함수\n        age = int(age)\n        if 0 < age < 200 : break\n    print(\"나이를 잘못 입력 하셨습니다. 다시 입력 하세요.\")\n\n\nwhile True:\n    gender = input(\"성별을 입력 하세요 : \")\n    if gender == 'M' or gender == 'm': break\n    elif gender == 'F' or gender == 'f': break\n    else: print(\"성별이 틀렸습니다. 다시 입력 해 주세요.\") \n\nwhile True:\n    jobs = input(\"직업을 입력 하세요 : \")\n    if jobs.isdigit() :\n        jobs = int(jobs)\n        if 0 < jobs < 5 : break\n    print(\"직업이 잘못 입력되었습니다. 다시 입력해주세요.\")\n\nif gender == 'M' or gender == 'm': \n\tgen_name = \"남성\"\nelse: \n\tgen_name = \"여성\"\n\njobs_name = (\"\", \"학생\", \"회사원\", \"주부\", \"무직\") # 튜플 사용\n\nprint(\"=\"*3, \"회원정보\", \"=\"*3)     \nprint(f\"이름 : {name}\")\nprint(f\"나이 : {age}\")\nprint(f\"성별 : {gen_name}\")\nprint(f\"직업 : {jobs_name[jobs]}\")\n```\n\n- 함수로 변환, 반복순회, 파일 추가 기능 포함 코드\n\n```python\n# 회원 정보 출력 하기 (1단계는 현재 상태대로 -> 함수 형태로)\ndef input_age() :\n    while True :\n        age = input(\"나이를 입력 하세요 : \")\n        if age.isdigit():  # 문자열이 숫자로 구성되어 있는지 확인\n            age = int(age)\n            if 0 < age < 200: return age\n        print(\"나이를 잘 못 입력 하셨 습니다.\")\n\ndef input_gender() :\n    while True :\n        gender = input(\"성별을 입력하세요 : \")\n        if gender == 'M' or gender == 'm' : return \"남성\"\n        elif gender == 'F' or gender == 'f' : return \"여성\"\n        print(\"성별이 잘 못 입력 되었습니다.\")\n\ndef input_jobs() :\n    while True :\n        jobs = input(\"직업을 입력 하세요 : \")\n        if jobs.isdigit():\n            jobs = int(jobs)\n            if 0 < jobs < 5: return jobs\n        print(\"직업을 잘 못 입력 하셨습니다.\")\n\ndef print_info(name, age, gender, jobs) :\n    jobs_str = \"\", \"학생\", \"회사원\", \"주부\", \"무직\"  # 튜플\n    print(\"=\" * 3, \"회원정보\", \"=\" * 3)\n    return f\"이름 : {name}\n나이 : {age}\n성별 : {gender}\n직업 : {jobs_str[jobs]}\"\n\n# 함수는 선언 이후 호출해야 동작 함.\nmember_info = \"member.txt\"\nfd = open(member_info, \"wt\", encoding=\"utf-8\")\nwhile True :\n    name = input(\"이름을 입력 하세요 (종료하려면 quit) : \")\n    if name == 'quit' : break\n    age = input_age()\n    gender = input_gender()\n    jobs = input_jobs()\n    rst = print_info(name, age, gender, jobs)\n    fd.write(rst + \"\n\")\nfd.close()\n```\n\n#### 핸드폰 요금 계산 하기\n\n👉 **문제**\n동호는 새악대로 T 통신사의 새 핸드폰 옴머나를 샀다. 새악대로 T 통신사는 동호에게 다음 두 가지 요금제 중 하나를 선택하라고 했다.\n\n1. 영식 요금제\n2. 민식 요금제\n\n영식 요금제는 30초마다 10원씩 청구된다. 이 말은 만약 29초 또는 그 보다 적은 시간 통화를 했으면 10원이 청구된다. 만약 30초부터 59초 사이로 통화를 했으면 20원이 청구된다.\n민식 요금제는 60초마다 15원씩 청구된다. 이 말은 만약 59초 또는 그 보다 적은 시간 통화를 했으면 15원이 청구된다. 만약 60초부터 119초 사이로 통화를 했으면 30원이 청구된다.\n동호가 저번 달에 새악대로 T 통신사를 이용할 때 통화 시간 목록이 주어지면 어느 요금제를 사용 하는 것이 저렴한지 출력하는 프로그램을 작성하시오.\n\n👉 **입력**\n동호가 저번 달에 이용한 통화의 개수 N이 주어진다. N은 20보다 작거나 같은 자연수이다. 둘째 줄에 통화 시간 N개가 주어진다. 통화 시간은 10,000보다 작거나 같은 자연수이다.\n\n👉 **출력**\n첫째 줄에 싼 요금제의 이름을 출력한다. 그 후에 공백을 사이에 두고 요금이 몇 원 나오는지 출력한다. 만약 두 요금제의 요금이 모두 같으면 영식을 먼저 쓰고 민식을 그 다음에 쓴다.\n영식은 Y로, 민식은 M으로 출력한다.\n\n🔥 **예제 입력 1**\n\n```python\n3\n40 40 40\n```\n\n🔥 **예제 출력 1**\n\n```python\nM 45\n```\n\n✨ **정답 코드**\n\n```python\nn = int(input())\ncall = list(map(int, input().split()))\n\ny_pay = m_pay = 0\nfor i in range(n):\n    y_pay += (call[i] // 30) * 10 + 10\n    m_pay += (call[i] // 60) * 15 + 15\n\nif y_pay > m_pay:\n    print(\"M\", m_pay)\nelif y_pay < m_pay:\n    print(\"Y\", y_pay)\nelse:\n    print(\"Y M\", y_pay)\n```\n\n#### 대소문자 바꾸기\n\n👉 **문제**\n영어 소문자와 대문자로 이루어진 단어를 입력받은 뒤, 대문자는 소문자로, 소문자는 대문자로 바꾸어 출력하는 프로그램을 작성하시오.\n\n👉 **입력**\n첫째 줄에 영어 소문자와 대문자로만 이루어진 단어가 주어진다. 단어의 길이는 최대 100이다.\n\n👉 **출력**\n첫째 줄에 입력으로 주어진 단어에서 대문자는 소문자로, 소문자는 대문자로 바꾼 단어를 출력한다.\n\n✨ **정답 코드**\n\n```python\nr = \"\"\nfor i in input():\n    if i.islower():\n        r += i.upper()\n    else:\n        r+= i.lower()\nprint(r)\n```\n\n#### 숫자의 개수\n\n👉 **문제**\n세 개의 자연수 A, B, C가 주어질 때 A × B × C를 계산한 결과에 0부터 9까지 각각의 숫자가 몇 번씩 쓰였는지를 구하는 프로그램을 작성하시오.\n예를 들어 A = 150, B = 266, C = 427 이라면 A × B × C = 150 × 266 × 427 = 17037300 이 되고, 계산한 결과 17037300 에는 0이 3번, 1이 1번, 3이 2번, 7이 2번 쓰였다.\n\n👉 **입력**\n첫째 줄에 A, 둘째 줄에 B, 셋째 줄에 C가 주어진다. A, B, C는 모두 100보다 크거나 같고, 1,000보다 작은 자연수이다.\n\n👉 **출력**\n첫째 줄에는 A × B × C의 결과에 0 이 몇 번 쓰였는지 출력한다. 마찬가지로 둘째 줄부터 열 번째 줄까지 A × B × C의 결과에 1부터 9까지의 숫자가 각각 몇 번 쓰였는지 차례로 한 줄에 하나씩 출력한다.\n\n🔥 **예제 입력 1**\n\n```python\n150\n266\n427\n```\n\n🔥 **예제 출력 1**\n\n```python\n3\n1\n0\n2\n0\n0\n0\n2\n0\n0\n```\n\n✨ **정답 코드**\n\n```python\na, b, c = map(int, input(\"정수 3개 입력 : \").split())\nls = str(a * b * c)\nfor i in range(10) :\n    print(ls.count(str(i))) # 해당 문자의 개수 반환\n```\n\n---\n\n### 주요 키워드 정리\n\n- 범위는 정수의 범위를 나타내며 range()함수로 생성합니다.\n- while 반복문은 조건식을 기반으로 특정 코드를 반복해서 실행 할 때 사용합니다.\n- **break**는 반복문을 탈출 할 때 사용합니다.\n- **continue**는 반복문에서 아래의 구간을 수행하지 않고 반복문의 조건으로 이동할 때 사용합니다.\n"
+      }
+    ]
+  },
+  {
+    "chapterKey": "02",
+    "title": "02. 함수 및 자료 처리",
+    "sortOrder": 2,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 유용한 내장 함수 및 외장 함수",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. List",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. Dictionary",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. Tuple & 집합",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 함수",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 파일 입출력",
+        "sortOrder": 6,
+        "content": ""
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. 파이썬 기초 학습 진단",
+        "sortOrder": 7,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "03",
+    "title": "03. 파이썬 고급",
+    "sortOrder": 3,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 객체와 클래스",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. Thread",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. Module & Package",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 예외 처리",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. ✏️ 예제 : 주문 관리 시스템",
+        "sortOrder": 5,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "04",
+    "title": "04. 파이썬 응용",
+    "sortOrder": 4,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. JSON & CSV",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. Web Crawling & Parsing",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 업무 자동화",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. Schedule",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. Flask",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 정부의 공공 데이터 가져오기",
+        "sortOrder": 6,
+        "content": ""
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. 영화 정보 크롤링 및 전송",
+        "sortOrder": 7,
+        "content": ""
+      },
+      {
+        "lessonKey": "08",
+        "label": "08. 네이버 금융 크롤링",
+        "sortOrder": 8,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "05",
+    "title": "05. 파이썬 연동",
+    "sortOrder": 5,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 파이썬과 MySWL 연동",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 플라스크를 사용하여 MySQL 연동",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 파이썬 & 엘라스틱 서치",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 파이썬과 스프링부트 연결",
+        "sortOrder": 4,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "06",
+    "title": "06. 데이터 분석을 위한 패키지",
+    "sortOrder": 6,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 배열 데이터를 효과적으로 다루는 Numfy",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 구조적 데이터 표시와 처리에 강한 Pandas",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 데이터 시각화",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 판다스 데이터 프레임이란?",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 타이타닉 데이터셋 사용하기",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 당뇨병 발병 여부 (로지스틱 회귀)",
+        "sortOrder": 6,
+        "content": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,366 @@
+[
+  {
+    "chapterKey": "01",
+    "title": "01. C++ 기본",
+    "sortOrder": 1,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. C++?",
+        "sortOrder": 1,
+        "content": "*C++은 C 언어를 기반으로 하는 객체 지향 프로그래밍 언어입니다. C++은 C 언어와 마찬가지로 시스템 프로그래밍이나 임베디드 시스템에서 많이 사용되며, 게임 개발, 알고리즘 문제 풀이, 머신러닝 등 다양한 분야에서도 사용됩니다.*\n\n---\n\n## 배경\n\n· 절차 지향 언어인 C언어에 객체 지향 언어의 특성을 추가하여 만들어짐\n· 절차 지향 언어의 특성과 객체 지향 언어의 특성을 모두 가지고 있음\n· 모듈화 및 재사용 특성 등으로 인해 대형 프로젝트에 유리\n· C언어와 마찬가지로 컴파일 언어이며 C언어 특성을 그대로 가지고 있음\n· C++언어의 주요 특성은 C와 동일한 ****절차지향 언어****의 특성, 그리고 C++ 고유의 ****객체지향 언어****의 특성, 그리고 알고리즘 구현에 특화되어 있는 ****일반화 프로그램****의 특성을 모두 가지고 있음. (학습할 내용이 많음)\n\n---\n\n## 객체지향언어의 4가지 특징\n\n· ****캡슐화 (Encapsulation)**** : 객체가 구현된 방식의 세부 정보(내부의 멤버)를 숨기는 기능\n\n- 객체 내부의 멤버를 숨기는 방법은 접근제한자를 통해서 이루어 진다.\n- 접근 제한자는 (private, ptotected, public으로 구성되며 클래스에서 자세하게 다루도록 한다.)\n- 멤버에 대한 접근은 일반적으로 클래스내에 선언된 함수를 통해서만 이루어짐.\n\n· ****상속 (Inheritance)**** : 부모의 자산을 물려 받는 것\n\n- 객체 지향의 중요한 특성중의 하나로 GUI 기능을 구현하거나 게임 구현등에 많이 사용 됨.\n- C++에서는 다중 상속을 지원하고 있으며, 이로 인해 여러가지 문제점이 발생할 수 있음\n\n· ****다형성 (Polymorphism)****\n\n- 오버로딩 : 같은 이름의 함수를 매개변수의 타입이나 개수를 다르게 하여 재 정의\n- 오버라이딩 : 부모 클래스의 메소드와 같은 이름, 동일한 매개변수를 지닌 매소드를 자식 클래스에서 재 정의\n\n· ****추상화 (Abstraction)**** : 실체가 없는 클래스로 부터 상속을 받는 것\n\n- virtual 키워드를 통해 이루어지면 상속과 항상 함께하는 개념임\n\n---\n\n## 객체지향 프로그래밍을 사용하는 이유\n\n### \\[장점\\]\n\n· 코드의 재사용성\n· 유지보수 및 업그레이드가 쉽다.\n· 대형프로젝트에 효과적\n· 직관적인 코드 분석 가능\n\n### \\[단점\\]\n\n· 처리 속도가 느리다. (C언어에 비해서 느리다는 의미이지 다른 언어 보다는 엄청 빠름)\n· 객체가 많아 질수록 용량이 커진다. (상속 관계가 복잡해지면 계속 커짐)\n· 설계 시 시간과 노력이 많이 든다. (클래스 설계)\n"
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. C와 다른 C++",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 개발 환경 구축",
+        "sortOrder": 3,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "02",
+    "title": "02. 자료형과 연산자",
+    "sortOrder": 2,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. C++ 입출력 및 데이터형",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 연산자",
+        "sortOrder": 2,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "03",
+    "title": "03. 제어문",
+    "sortOrder": 3,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "03. 조건문",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "04. 반복문",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "05. 범위 기반 for",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "06. ✏️ 예제 : 회원가입 및 클래스 변경",
+        "sortOrder": 4,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "04",
+    "title": "04. 배열과 문자열",
+    "sortOrder": 4,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 배열",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 문자열",
+        "sortOrder": 2,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "05",
+    "title": "05. 함수 및 자료 처리",
+    "sortOrder": 5,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 함수",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 포인터",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 참조자와 포인터",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. L-R Value",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 동적 할당",
+        "sortOrder": 5,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "06",
+    "title": "06. 클래스",
+    "sortOrder": 6,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 클래스란?",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 클래스 심화",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. ✏️ 예제 : 자동차 만들기",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 생성자",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 익명 객체",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 인수로 객체 사용하기 (동적 바인딩)",
+        "sortOrder": 6,
+        "content": ""
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. ✏️ 예제 : iPad Pro 주문하기",
+        "sortOrder": 7,
+        "content": ""
+      },
+      {
+        "lessonKey": "08",
+        "label": "08. const & static",
+        "sortOrder": 8,
+        "content": ""
+      },
+      {
+        "lessonKey": "09",
+        "label": "09. 다중 상속과 문제점",
+        "sortOrder": 9,
+        "content": ""
+      },
+      {
+        "lessonKey": "10",
+        "label": "10. Binding과 가상 함수 (Overriding)",
+        "sortOrder": 10,
+        "content": ""
+      },
+      {
+        "lessonKey": "11",
+        "label": "11. ✏️ 예제 : 게임 만들기",
+        "sortOrder": 11,
+        "content": ""
+      },
+      {
+        "lessonKey": "12",
+        "label": "12. this 포인터",
+        "sortOrder": 12,
+        "content": ""
+      },
+      {
+        "lessonKey": "13",
+        "label": "13. Friend",
+        "sortOrder": 13,
+        "content": ""
+      },
+      {
+        "lessonKey": "14",
+        "label": "14. Interface",
+        "sortOrder": 14,
+        "content": ""
+      },
+      {
+        "lessonKey": "15",
+        "label": "15. 복사 생성자 및 소멸자",
+        "sortOrder": 15,
+        "content": ""
+      },
+      {
+        "lessonKey": "16",
+        "label": "16. 함수 템플릿과 특수화",
+        "sortOrder": 16,
+        "content": ""
+      },
+      {
+        "lessonKey": "17",
+        "label": "17. Class Template",
+        "sortOrder": 17,
+        "content": ""
+      },
+      {
+        "lessonKey": "18",
+        "label": "18. 연산자 오버로딩",
+        "sortOrder": 18,
+        "content": ""
+      },
+      {
+        "lessonKey": "19",
+        "label": "19. Smart Pointer",
+        "sortOrder": 19,
+        "content": ""
+      },
+      {
+        "lessonKey": "20",
+        "label": "20. STL (Standard Template Library)",
+        "sortOrder": 20,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "07",
+    "title": "07. 컨테이너",
+    "sortOrder": 7,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 시퀀스 컨테이너",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 연관 컨테이너",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 컨테이너 어댑터",
+        "sortOrder": 3,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "08",
+    "title": "08. 집합",
+    "sortOrder": 8,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. ✏️ 예제 : Map을 이용한 Starbucks",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 파일 입출력",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. ✏️ 예제 : Map과 파일 입출력 사용",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 스트림 (입출력 관련 포맷)",
+        "sortOrder": 4,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "09",
+    "title": "09. 모던 C++",
+    "sortOrder": 9,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 모던 C++ 필수 요소 (람다)",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 모던 C++의 thread와 레이스 컨디션",
+        "sortOrder": 2,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "10",
+    "title": "10. 프로그래밍",
+    "sortOrder": 10,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 작업 기반 비동기 프로그래밍",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. ✏️ 예제 : 에어컨 만들기",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. Sigleton",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 예외 처리",
+        "sortOrder": 4,
+        "content": ""
+      }
+    ]
+  }
+]

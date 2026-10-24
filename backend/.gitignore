@@ -1,0 +1,65 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Firebase API Key
+src/main/resources/firebase-service-account.json
+
+# ignore test setting
+src/test/**
+src/main/resources/application-test.properties
+
+# react dependencies
+src/main/react/node_modules
+
+# react build outputs
+src/main/react/build
+src/main/react/dist
+
+# misc
+.DS_Store
+
+# static resources
+src/main/resources/static
+
+# env 파일 추가
+.env
+.env.prod
+
+# react 환경 변수 파일
+src/main/react/.env.development
+src/main/react/.env.production

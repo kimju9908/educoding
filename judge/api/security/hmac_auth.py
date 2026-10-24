@@ -1,0 +1,44 @@
+import base64
+import hashlib
+import hmac
+from typing import Optional
+
+from config import SecurityConfig
+
+
+def validate_hmac_key(received_key: str, received_client_id: str) -> bool:
+    """
+    요청에 포함된 HMAC 키의 유효성을 검증합니다.
+
+    Args:
+        received_key (str): 요청 헤더에서 받은 API 키
+        received_client_id (str): 요청 헤더에서 받은 클라이언트 식별자
+
+    Returns:
+        bool: 키가 유효하면 True, 아니면 False
+    """
+    expected_key = _generate_hmac_key(received_client_id)
+    if expected_key is None:
+        return False
+    # 비교에 걸리는 시간으로 키를 추측하는 타이밍 공격 방지
+    return hmac.compare_digest(expected_key, received_key)
+
+
+def _generate_hmac_key(_client_id: str) -> Optional[str]:
+    """
+    HMAC-SHA256 기반으로 API 키를 생성합니다.
+
+    Args:
+        _client_id (str): 사전에 합의된 클라이언트 식별자
+
+    Returns:
+        Optional[str]: 생성된 API 키, 실패 시 None
+    """
+    try:
+        message = _client_id.encode('utf-8')
+        secret_key = SecurityConfig.API_SECRET_KEY.encode('utf-8')
+        hashed = hmac.new(secret_key, message, hashlib.sha256)
+        return base64.urlsafe_b64encode(hashed.digest()).decode('utf-8')
+    except Exception as e:
+        print(e)
+        return None

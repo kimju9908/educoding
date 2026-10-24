@@ -1,0 +1,163 @@
+[
+  {
+    "chapterKey": "01",
+    "title": "01. 자바스크립트 기초",
+    "sortOrder": 1,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 자바스크립트 개요",
+        "sortOrder": 1,
+        "content": "*자바스크립트는 동적으로 웹 페이지를 변경하고 조작하는 데 사용될 수 있습니다. 예를 들어, 사용자가 버튼을 클릭하면, 자바스크립트는 새로운 콘텐츠를 로드하거나 웹 페이지의 스타일을 변경할 수 있습니다.*\n\n---\n\n## 자바스크립트란 무엇인가?\n\n**자바스크립트(JavaScript)**는 웹 페이지를 동적으로 만들기 위한 스크립트 언어입니다. HTML과 CSS와 함께 웹 프론트엔드 개발에서 중요한 역할을 하는 언어입니다. 자바스크립트는 사용자가 웹사이트를 방문할 때 브라우저에서 실행되어 웹 페이지를 동적으로 변경하거나 조작할 수 있게 해줍니다. 예를 들어, 사용자가 버튼을 클릭하면 새로운 콘텐츠를 로드하거나 페이지 스타일을 바꿀 수 있습니다.\n또한, 자바스크립트는 서버 측에서도 사용될 수 있습니다. **Node.js**라는 런타임 환경을 사용하면 서버에서 자바스크립트를 실행할 수 있으며, 이를 통해 데이터베이스 작업이나 웹 애플리케이션의 백엔드 개발도 가능합니다.\n\n### 자바스크립트의 특징\n\n#### 인터프리터 언어\n\n자바스크립트는 인터프리터 언어로, 현대 웹 브라우저에서 **JIT(Just In Time) 컴파일러**를 사용하여 실행 시 코드를 빠르게 컴파일합니다.\n\n#### 프로토타입 기반 객체 지향 언어\n\n자바스크립트는 **프로토타입 기반 객체 지향 언어**로, 객체를 생성한 후에도 속성이나 메서드를 동적으로 추가하거나 삭제할 수 있는 유연성이 특징입니다. 이는 Java나 C++과 같은 **클래스 기반 객체 지향 언어**와는 다른 점입니다.\n\n#### 동적 타입 언어\n\n자바스크립트는 **동적 타입 언어**로, 변수의 데이터 타입이 동적으로 변경될 수 있습니다. 즉, 같은 변수에 숫자를 저장했다가 문자열로 바꾸는 것이 가능합니다.\n\n#### 함수가 일급 객체\n\n자바스크립트의 함수는 **일급 객체**로 취급됩니다. 이는 **함수가 다른 함수의 인자로 전달되거나 반환될 수 있음을 의미**합니다. 이러한 특성 덕분에 **고차 함수**를 구현할 수 있으며, 자바스크립트에서**함수형 프로그래밍**이 가능하게 합니다.\n\n#### 클로저\n\n자바스크립트는 **클로저**를 사용할 수 있습니다. 클로저는 함수가 정의될 때의 환경을 기억하여, 외부 함수의 변수를 함수 내부에서 계속 사용할 수 있게 해줍니다. 이를 통해 데이터 은닉이나 특정 상태를 유지할 수 있습니다.\n\n### 자바스크립트의 역사\n\n#### 탄생 배경\n\n자바스크립트는 1995년, Netscape의 엔지니어인 Brendan Eich에 의해 개발되었습니다. 초기 이름은 **LiveScript**였으나, Java 언어의 인기를 고려하여 **JavaScript**로 변경되었습니다.\n\n#### 주요 특징\n\n자바스크립트는 **다중 패러다임 언어**로, 동적이며 Java와 C 언어의 구문을 기반으로 합니다. 자바스크립트는 **프로토타입 기반 객체 지향**과 **함수형 프로그래밍**을 모두 지원합니다. 함수가 객체로 취급되기 때문에, 함수 자체를 다른 객체처럼 다룰 수 있습니다.\n\n#### 바닐라 JS란?\n\n**바닐라 JS**는 라이브러리나 프레임워크 없이 순수 자바스크립트만을 사용하는 것을 의미합니다. 최근에는 다양한 라이브러리와 프레임워크의 사용이 일반화되었지만, 바닐라 JS를 이해하는 것은 자바스크립트의 기본을 다지는 데 중요합니다.\n\n### 자바스크립트로 할수 있는 일\n\n#### 웹 요소 제어\n\n자바스크립트를 사용하여 웹 페이지의 요소를 동적으로 제어할 수 있습니다. 예를 들어, 사용자가 입력한 정보를 확인하거나 특정 버튼 클릭 시 동작을 수행하게 할 수 있습니다.\n\n#### 웹 애플리케이션 개발\n\n자바스크립트를 이용해 다양한 웹 애플리케이션을 개발할 수 있습니다.\n\n#### 다양한 라이브러리 사용\n\n**React**, **Vue**, **Angular**와 같은 라이브러리와 프레임워크를 사용하여 더욱 강력하고 복잡한 기능을 구현할 수 있습니다.\n\n#### 서버 개발\n\n**Node.js**를 사용하면 자바스크립트로 서버를 개발할 수 있습니다. 이를 통해 웹 애플리케이션의 프론트엔드와 백엔드를 모두 자바스크립트로 개발할 수 있게 되었습니다.\n"
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 자바스크립트 시작하기",
+        "sortOrder": 2,
+        "content": "## 개발 환경 설정\n\n### Node.js 설치\n\n자바스크립트는 원래 브라우저에서 실행되도록 설계되었습니다. 하지만 Node.js를 사용하면 자바스크립트를 서버에서도 실행할 수 있어 백엔드 개발에도 사용할 수 있습니다.\n\n[Node.js 다운로드](https://nodejs.org/ko/download)\n\n### VS Code 설치\n\n자바스크립트를 효율적으로 작성하려면 VS Code와 같은 텍스트 편집기를 사용하는 것이 좋습니다.\n\n[VS Code 다운로드](https://code.visualstudio.com/download)\n\n### 자바스크립트 개발을 위한 추천 확장 프로그램\n\n- **JavaScript (ES6) 코드 스니펫** : ES6 문법을 포함한 자바스크립트 코드 자동 완성 기능을 제공합니다.\n- **ESLint** : 자바스크립트 코드의 문법 및 스타일 오류를 찾아줍니다.\n- **Code Runner** : 터미널에서 자바스크립트를 직접 실행할 수 있도록 합니다. (Node.js가 설치되어 있어야 합니다.)\n\n## 자바스크립트 코드 작성 방법\n\n자바스크립트는 HTML 문서에 **내부 스크립트**나 **외부 스크립트**로 포함할 수 있습니다.\n\n### HTML과 자바스크립트 연결하기\n\nHTML 문서와 자바스크립트 파일을 연결하는 방법은 **내부 스크립트와 외부 스크립트 2가지 방법**으로 나누어 집니다.\n\n#### 외부 스크립트 사용\n\n유지보수의 편의성을 위해 대부분의 경우 외부 자바스크립트 파일을 사용하는 것이 좋습니다.\n\n**HTML**\n\n```html\n<body>\n    <h1 id=\"head-line\">자바스크립트</h1>\n    <p id=\"desc\">자바스크립트와 HTML을 연결합니다.</p>\n    <script src=\"./sample.js\"></script>\n</body>\n```\n\n**sample.js**\n\n```javascript\nconst heading = document.querySelector('#head-line');\nheading.onclick = function() {\n    heading.style.color = \"red\";\n}\n```\n\n### 자바 코드 실행 하기\n\n자바스크립트는 브라우저나 VS Code에서 직접 실행할 수 있습니다.\n\n#### 크롬 개발자 도구 사용하기\n\n**F12**를 눌러 크롬 개발자 도구를 열고, **콘솔** 탭에서 자바스크립트 명령어를 직접 실행하거나 코드를 확인할 수 있습니다.\n\n#### 간단한 코드 테스트 예시\n\n자바스크립트 실행을 테스트할 수 있는 간단한 예시입니다.\n\n```javascript\nconst pi = 3.14;\nconsole.log(pi * 20);\nconsole.log(\"안녕하세요!\");\n```\n\n### 자바스크립트 입출력 방법\n\n#### 경고창 출력하기\n\n경고창은 사용자에게 간단한 메시지를 표시할 때 사용합니다.\n\n```javascript\nalert(\"이것은 경고창입니다.\");\n```\n\n#### 확인 창 출력하기\n\n확인창은 사용자에게 확인을 요청합니다.\n\n```javascript\nlet result = confirm(\"색상을 변경하시겠습니까?\");\nconsole.log(result);\n```\n\n#### 프롬프트 창에서 입력 받기\n\n프롬프트 창을 사용하여 사용자로부터 입력을 받을 수 있습니다.\n\n```javascript\nlet name = prompt(\"이름을 입력 하세요\");\nconsole.log(name);\n```\n\n#### 콘솔창에 출력하기\n\nconsole.log()를 사용하여 개발자 도구의 콘솔 창에 출력할 수 있습니다.\n\n```javascript\nlet name = prompt(\"이름을 입력 하세요\");\nconsole.log(name + \"님, 안녕하세요.\")\n```\n\n### 자바스크립트 기본 문법 및 개념\n\n**1. 변수**\n변수는 let, const 키워드를 사용하여 선언할 수 있습니다.\n\n- let : 블록 범위 스코프를 가지며, 같은 블록 내에서 재선언할 수 없습니다.\n- const : 블록 범위 스코프를 가지며, 값을 변경하거나 재선언할 수 없습니다.\n\n**2. 데이터 타입**\n자바스크립트는 number, string, boolean, null, undefined, object 등의 데이터 타입을 지원합니다.\n\n**3. 연산자**\n자바스크립트는 다양한 연산자를 제공합니다 :\n\n- 산술 연산자 : +, , , /, %\n- 비교 연산자 : ==, !=, ===, !==, >, &lt;, >=, &lt;=\n- 논리 연산자 : &&, ||, !\n\n**4. 조건문**\nif, else if, else, switch 등을 사용하여 조건문을 작성할 수 있습니다.\n\n**5. 반복문**\n자바스크립트는 for, while, do-while 반복문을 제공합니다.\n\n**6. 함수**\n함수는 function 키워드를 사용하여 선언할 수 있으며, 변수에 할당하거나 인자로 전달할 수 있습니다.\n\n**7. 객체**\n자바스크립트 객체는 키-값 쌍의 모음입니다.\n\n```javascript\nlet person = {\n    name: \"educoding\",\n    age: 30,\n    greet: function() {\n        console.log(\"안녕하세요 \" + this.name);\n    }\n};\n```\n\n**8. 배열**\n자바스크립트 배열은 순서가 있는 값의 집합입니다.\n\n```javascript\nlet numbers = [1, 2, 3, 4, 5];\n```\n\n**9. 클래스**\n자바스크립트 클래스는 객체를 생성하는 청사진을 제공합니다.\n\n```javascript\nclass Car {\n    constructor(brand) {\n        this.brand = brand;\n    }\n    drive() {\n        console.log(this.brand + \"가 운전 중입니다.\");\n    }\n}\n```\n"
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 자바스크립트 기초 문법",
+        "sortOrder": 3,
+        "content": "### 주석(Comments)\n\n자바스크립트(JavaScript)에서는 코드 내에 주석을 추가하여 코드를 설명하거나, 코드 실행 중에 무시되어야 하는 부분을 나타낼 수 있습니다. 주석은 코드를 읽기 쉽게 만들어주며, 코드를 수정하거나 유지보수할 때 유용합니다.\n\n#### 한 줄 주석 : //\n\n```javascript\n// 이 줄은 주석입니다. 실행되지 않습니다.\nconsole.log('실행됩니다.'); // 이 줄은 실행되며, 콘솔에 '실행됩니다.'가 출력됩니다.\n```\n\n#### 여러 줄 주석 : /\\* …. \\*/\n\n```javascript\n/*\n여러 줄의 주석입니다.\n이 줄은 실행되지 않습니다.\n*/\nconsole.log('실행됩니다.'); // 이 줄은 실행되며, 콘솔에 '실행됩니다.'가 출력됩니다.\n```\n\n### 스타일 가이드\n\n자바스크립트 스타일 가이드는 개발자들이 일관된 코드 스타일을 사용하여 코드를 작성하도록 돕는 규칙입니다. 일관된 스타일은 코드의 가독성과 유지보수성을 높이는 데 도움이 됩니다.\n\n- 소스 파일의 이름은 알파벳 소문자, 하이픈(-), 밑줄(_)으로만 작성\n- 소스파일의 확장자명은 **.js**\n- 소스파일의 인코딩은 **UTF-8**\n- **코드 줄 바꿈**과 **세미콜론(;)** 사용을 권장합니다.\n\n### 식별자(Identifiers)\n\n- 첫 글자는 영문자, 언더스코어(_), $로 시작해야 합니다.\n- 단어를 연결하여 식별자를 작성할 때는 카멜표기법(camelCase)이나 언더스코어(_)를 사용합니다.\n- 예약어는 식별자로 사용할 수 없습니다.\n\n### 변수와 상수\n\n자바스크립트에서 변수와 상수는 데이터를 저장하는 역할을 합니다.\n\n- **변수 선언** : var, let, const 키워드를 사용합니다. ES6 이후에는 let과 const를 주로 사용합니다.\n\n- let : 값을 변경할 수 있는 변수\n\n```javascript\nlet x = 10;\nx = 20; // 변수 x에 20을 할당합니다.\n```\n\n- const: 값을 변경할 수 없는 상수\n\n```javascript\nconst PI = 3.14; // 상수 PI를 선언하고, 3.14를 할당합니다.\nPI = 3.14159; // 에러 발생: 상수는 값을 변경할 수 없습니다.\n```\n\n### 호이스팅\n\n호이스팅은 변수 및 함수 선언이 스코프의 최상단으로 끌어올려지는 자바스크립트의 동작 방식입니다. 변수나 함수를 선언하기 전에 사용할 수 있지만, 변수의 초기화가 아닌 선언만 끌어올려지기 때문에, 선언 전에는 **undefined**로 초기화됩니다.\n\n```javascript\nconsole.log(test); // undefined 출력\nvar test = 100;\n```\n\n### 실습 문제\n\n#### 나이 계산 프로그램\n\n```javascript\nlet currentYear = 2022;\nlet birthYear;\nlet age;\n\nbirthYear = prompt(\"태어난 연도를 입력 하세요 : (YYYY)\", \"\");\nage = currentYear - birthYear + 1;\ndocument.write(currentYear + \"년 현재<br>\");\ndocument.write(birthYear + \"년에 태어난 사람의 나이는 \" + age + \"세 입니다.\");\n```\n\n#### 3개의 정수 중 큰 수와 작은 수 구하기\n\n```javascript\nlet a = Number(prompt(\"첫번째 수 입력 : \", \"\"));\nlet b = Number(prompt(\"두번째 수 입력 : \", \"\"));\nlet c = Number(prompt(\"세번째 수 입력 : \", \"\"));\nlet max, min;\n\nmax = Math.max(a, b, c);\nmin = Math.min(a, b, c);\n\ndocument.write(\"<h3>제일 큰 값 : \" + max + \"</h3>\");\ndocument.write(\"<h3>제일 작은 값 : \" + min + \"</h3>\");\n```\n\n### 데이터 타입(Data Types)\n\n데이터 타입은 프로그래밍 언어의 기본적인 구성 요소 입니다.\n\n#### 데이터 타입의 분류\n\n원시 타입에 속하지 않는 자바스크립트의 값은 객체라고 합니다. 객체는 변수 여러 개가 모여서 만들어진 복합 데이터 타입입니다. 자바스크립트에서는 배열, 함수, 정규 표현식과 같은 다양한 요소가 객체 입니다.\n\n![](/images/study/javascript/javascript_01_03_01.png)\n\n#### 문자열\n\n자바스크립트의 문자열은 길이가 16비트인 유니코드 문자(UTF-16)를 나열한 것으로 전 세계에서 사용하는 문자를 대부분 표현할 수 있습니다. 문자열 리터럴은 작은 따옴표(’’)나 큰따옴표(””)를 문자열로 앞뒤에 붙여서 표현합니다.\n\n```javascript\nlet string = \"Hello, World!\";\nconsole.log(string);\n```\n\n**문자열에 따옴표가 포함된 경우**\n\n```javascript\nlet string2 = '안녕하세요. 저는 \"안유진\"입니다.';\nconsole.log(string2);\n```\n\n**문자열 연결 연산자**\n\n```javascript\nlet string = '문자열' + \"연결 연산자\";\nconsole.log(string);\n```\n\n**이스케이프 문자**\n\n![](/images/study/javascript/javascript_01_03_02.png)\n\n```javascript\nlet string = \"이스케이프 문자를 이용해서\n줄 바꿈하고 싶어요.\";\nconsole.log(string);\n```\n\n**템플릿 문자열**\nES6에서 추가된 템플릿 문자열은 백틱으로 문자열을 정의하는 방법입니다.\n\n```javascript\nlet string = `문자열은 큰따옴표(\")나 작은따옴표(')로 감싸면 됩니다.`;\nconsole.log(string);\n```\n\n```javascript\nlet dan = 3;\nlet gugu = 8;\nconsole.log(`${dan} x ${gugu} = ${dan * gugu}`);\n```\n\n#### 숫자형 (Number)\n\n자바스크립트는 모든 숫자를 하나의 숫자형으로 다루며, 실수를 부동소수점 방식으로 표현합니다. 이 방식은 정확한 실수 계산에 문제가 있을 수 있습니다. 이를 해결하려면 BigInt를 사용하거나 BigDecimal 같은 라이브러리로 정밀도를 높여 계산하는 것이 좋습니다.\n\n**문제 예시**\n\n```javascript\nconsole.log(0.1 + 0.2); // 결과: 0.30000000000000004\n```\n\n**코드 예제 수정**\nnpm install decimal.js\n\n```javascript\nconst Decimal = require('decimal.js');\n\nconst a = new Decimal(0.1);\nconst b = new Decimal(0.2);\nconst result = a.plus(b);\nconsole.log(result.toString()); // 결과: \"0.3\"\n```\n\n#### 논리형\n\n논리 자료형은 참 또는 거짓에 해당하는 논리 값인 true와 flase를 의미합니다.\n\n```javascript\nlet age = prompt(\"나이를 입력 하세요 : \", \"\");\nage = Number(age);\n\nlet isAdult = (age > 18) ? true : false;\nif (isAdult) document.write(\"<h3>당신은 성인 입니다.</h3>\");\nelse document.write(\"<h3> 당신은 성인이 아닙니다.</h3>\");\n```\n\n#### undefined\n\n변수나 상수를 컴퓨터 메모리 공간에 선언하면 반드시 생성한 공간에 저장할 데이터를 할당해야 합니다. 할당하지 않을 경우 자바스크립트 내부적으로 젼수와 상수 공간에 임시로 데이터를 할당하는데, 이 때 할당되는 값이 undefined 입니다.\n\n```javascript\nlet empty;\nconsole.log(empty);\n```\n\n```javascript\nconsole.log(empty);\nvar empty = 10;\n```\n\n#### null\n\nnull 자료형은 null 값 하나만 있으며, 변수나 상수를 선언하고 의도적으로 선언한 공간을 비워 둘 때 할당 합니다.\n\n```javascript\nlet empty = null;\nconsole.log(empty);\n```\n\n> 👉 undefined와 null을 묶어서 특수 자료형이라고도 합니다.\n\n### 객체와 배열\n\n객체(object)는 자바스크립트의 핵심적인 자료형 입니다. 기본 자료형을 제외하고 자바스크립트의 거의 모든 데이터와 자료구조는 객체 입니다.\n객체 자료형에는 배열, 객체 리터럴, 함수가 있습니다.\n\n#### 배열\n\n복수의 데이터를 정의 할 수 있는 자료형\n\n```javascript\nlet score = [80, 99, 77, 65];\nconsole.log(score[1]);\n```\n\n> 👉 배열은 자바와 다르게 모든 자료형을 저장 할 수 있습니다.\n\n```javascript\nlet array = [\"아이브\", \"안유진\", 20, true, [100, 99, 88]]; \nconsole.log(array[4]);\n```\n\n배열로 정의한 데이터를 요소라고 하며, 배열의 요소를 접근하려면 인덱스를 이용 합니다.\n배열의 데이터의 위치를 나타내는 인덱스는 0 부터 시작 합니다.\n빈 배열을 선언 할 수 있습니다. (나중에 데이터를 동적으로 추가 위해 사용)\n\n```javascript\nlet array = [];\n```\n\n#### 객체 리터럴 (오브젝트)\n\n객체 리터럴은 객체를 정의하는 가장 간단한 방법 입니다. **객체 리터럴은 객체를 정의할 때 중괄호를 사용하며, 중괄호 안에는 키와 값의 한쌍으로 이루어진 속성**이 들어 갑니다.\n\n![](/images/study/javascript/javascript_01_03_03.png)\n\n객체 리터럴로 정의한 객체는 배열보다 작업이 많습니다.\n아래의 배열에서 국어, 영어, 수학, 과학 성적 저장 시 값의 의미를 파악할 수 없습니다.\n\n```javascript\nlet score = [88,56, 45, 67];\n```\n\n```javascript\nlet score = {\n    korScore : 80,\n    engScore : 77,\n    matScore : 89,\n    scnScore : 87\n};\nconsole.log(score.korScore);\nconsole.log(score['matScore']);\n\nconst person = {\n  name: 'John',\n  age: 30,\n  city: 'New York',\n  getInfo: function() {\n    return `${this.name} is ${this.age} years old and lives in ${this.city}.`;\n  }\n};\n\nconsole.log(person.getInfo()); // 출력 결과: 'John is 30 years old and lives in New York.'\n```\n\n#### typeof\n\n```javascript\nlet name = \"안유진\";\nconsole.log(typeof(name));\n```\n\n#### toString()\n\n배열 안의 모든 문자를 쉼표(,)를 이용해 모두 결합해서 하나의 문자열로 반환 합니다.\n\n```javascript\nlet fruits = [\"Banana\", \"Orange\", \"Apple\", \"Mango\"];\nconsole.log(fruits.toString());\n```\n\n### 연산자\n\n#### 산술연산자\n\n덧셈(+), 뺄셈(-), 곱셈(\\*), 나눗셈(/), 나머지(%), 거듭제곱(**)을 수행합니다.\n\n![](/images/study/javascript/javascript_01_03_04.png)\n\n```javascript\nconst a = 2;\nconst b = 3;\nconst c = a ** b;\nconsole.log(c); // 출력 결과: 8\n```\n\n#### 대입 연산자와 복합 대입 연산자\n\n![](/images/study/javascript/javascript_01_03_05.png)\n\n#### 비교 연산자\n\n비교 연산자는 피연산자를 비교한 뒤, 논리형 값인 참, 거짓으로 반환하는 연산을 수행 합니다.\n\n![](/images/study/javascript/javascript_01_03_06.png)\n\n#### 동등 연산자와 부등 연산자\n\n동등 연산자 (==): 두 값이 같은지 비교합니다. 자료형이 다를 경우 자동으로 형변환이 일어납니다.\n\n```javascript\nconsole.log(1 == '1'); // 출력 결과: true\nconsole.log(1 == true); // 출력 결과: true\nconsole.log(0 == false); // 출력 결과: true\n\nconsole.log(1 != '1'); // 출력 결과: false\nconsole.log(1 != true); // 출력 결과: false\nconsole.log(0 != false); // 출력 결과: false\n```\n\n#### 일치 연산자와 불일치 연산자\n\n일치 연산자 (===): 두 값이 같은지 비교합니다. 자료형도 같아야 합니다.\n\n```javascript\nconsole.log(1 === '1'); // 출력 결과: false\nconsole.log(1 === true); // 출력 결과: false\nconsole.log(0 === false); // 출력 결과: false\n\nconsole.log(1 !== '1'); // 출력 결과: true\nconsole.log(1 !== true); // 출력 결과: true\nconsole.log(0 !== false); // 출력 결과: true\n```\n\n#### 논리 연산자\n\n![](/images/study/javascript/javascript_01_03_07.png)\n\n```javascript\nconst a = 10;\nconst b = 5;\nconst c = 15;\n\nconsole.log(a > b || a > c); // 출력 결과: true\nconsole.log(a < b || a > c); // 출력 결과: false\n\nconsole.log(a > b && a < c); // 출력 결과: true\nconsole.log(a < b && a > c); // 출력 결과: false\n\nconsole.log(!(a > b)); // 출력 결과: false\nconsole.log(!(a < b)); // 출력 결과: true\n```\n\n#### 삼항 연산자\n\n![](/images/study/javascript/javascript_01_03_08.png)\n\n```javascript\nconst num = 7;\n\nconst message = (num % 2 === 0) ? '짝수입니다.' : '홀수입니다.';\nconsole.log(message); // 출력 결과: '홀수입니다.'\n```\n\n#### 연산자 우선 순위\n\n![](/images/study/javascript/javascript_01_03_09.png)\n\n### 형변환\n\n자바스크립트는 동적인 언어로, 변수의 데이터 타입이 자동으로 결정됩니다. 때문에 때때로 변수의 데이터 타입을 명시적으로 지정해주거나, 데이터 타입을 변환해주어야 할 필요가 있습니다. 이를 형변환이라고 합니다.\n\n#### 묵시적 형 변환\n\n자바스크립트는 **숫자형 데이터와 문자열 데이터를 연결 연산자로 처리하면 문자열로 형 변환**이 일어 납니다.\n\n```javascript\nlet num1 = 10 + '10';\nconsole.log(num1);\n```\n\n```javascript\nlet num1 = 10;\nlet num2 = \"10\";\nif(num1 == num2) console.log(\"값이 같습니다.\");\n```\n\n#### 명시적 형 변환\n\n```javascript\nlet num1 = 10;\nlet num2 = \"10\";\nconsole.log(10 + Number(num2));\n\nconst num = 10;\nconst str = String(num);\nconsole.log(str); // 출력 결과: '10'\n```\n"
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 조건문과 반복문",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 함수",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 객체",
+        "sortOrder": 6,
+        "content": ""
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. 클래스",
+        "sortOrder": 7,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "02",
+    "title": "02. 자바스크립트 응용",
+    "sortOrder": 2,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 문서 객체 모델 (DOM)",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 자바스크립트와 jQuery 비교",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 이벤트 다루기",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 브라우저 객체 모델 사용하기",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 정규표현식",
+        "sortOrder": 5,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "03",
+    "title": "03. HTTP & RESTful",
+    "sortOrder": 3,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. JSON",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. HTTP 비동기 통신",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. RESTful API",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. Mock Server",
+        "sortOrder": 4,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "04",
+    "title": "04. 최신 문법",
+    "sortOrder": 4,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. ES5 & ES6",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 함수형 프로그램",
+        "sortOrder": 2,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "05",
+    "title": "05. 알고리즘과 웹화면",
+    "sortOrder": 5,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. ✏️ 예제 : 계산기 만들기",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. ✏️ 예제 : 중복 없는 로또 번호 만들기",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. ✏️ 예제 : 영화표 예매하기",
+        "sortOrder": 3,
+        "content": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+# 채점 워커 (Taskiq + Docker 샌드박스)
+taskiq>=0.13
+taskiq-redis>=1.2
+redis>=5
+aiohttp>=3.9
+python-dotenv>=1.0
+pytz

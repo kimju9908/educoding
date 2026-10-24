@@ -1,0 +1,8 @@
+# 채점 API 서버 (FastAPI + Taskiq 작업 전송)
+fastapi>=0.115
+uvicorn[standard]>=0.30
+taskiq>=0.13
+taskiq-redis>=1.2
+redis>=5
+python-dotenv>=1.0
+pytz

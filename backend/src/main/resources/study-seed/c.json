@@ -1,0 +1,163 @@
+[
+  {
+    "chapterKey": "01",
+    "title": "01. C 기본",
+    "sortOrder": 1,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. C언어의 특징",
+        "sortOrder": 1,
+        "content": "### C언어란?\n\n**C언어**는 1972년 벨 연구소의 **데니스 리치(Dennis Ritchie)**에 의해 개발된 범용 프로그래밍 언어입니다. 주로 **시스템 프로그래밍**과 **운영 체제 개발**을 목적으로 만들어졌으며, UNIX 운영 체제를 개발하는 데 중요한 역할을 했습니다.\n\n---\n\n#### C언어의 특징\n\n· **절차지향 언어** : 함수 단위로 구성되어 순차적으로 명령 실행\n· **저수준 접근 가능** : 포인터와 메모리 제어를 통해 하드웨어와 밀접하게 작업 가능\n· **포인터 지원** : 효율적인 메모리 관리와 시스템 프로그래밍에 유리\n· **이식성** : 다양한 플랫폼에서 컴파일 후 실행 가능\n· **라이브러리 확장** : 표준 및 외부 라이브러리를 통해 기능 확장 가능\n\n#### C언어의 장점\n\n· **빠른 실행 속도** : 컴파일된 코드로 실행되어 속도가 매우 빠름\n· **유연성과 확장성** : 시스템 프로그래밍, 게임, 임베디드 등 다양한 분야에서 활용\n· **직접 메모리 제어 가능** : 효율적인 메모리 최적화 가능\n· **높은 이식성** : 플랫폼 종속성이 낮아 코드 재사용성이 좋음\n· **시스템 프로그래밍 적합** : 운영체제 및 드라이버 개발에 강점\n\n#### C언어의 단점\n\n· **메모리 관리 복잡성** : 포인터와 메모리 할당/해제로 인해 오류 발생 위험\n· **객체지향 지원 부족** : 코드 재사용성과 유지보수에 비효율적\n· **오류 처리 어려움** : 자동 예외 처리 시스템 부재로 수동으로 처리해야 함\n· **표준 라이브러리 한계** : 기본 제공 기능이 적고, 직접 구현 필요\n· **학습 난이도 높음** : 포인터와 메모리 제어 개념 이해가 어려움\n\n#### 활용 분야\n\n· 운영체제 개발 (UNIX, Linux)\n· 시스템 소프트웨어 (드라이버, 컴파일러)\n· 임베디드 시스템\n· 고성능 애플리케이션\n\n#### 요약\n\n· **장점** : 빠르고 유연하며 하드웨어에 가까운 작업이 가능\n· **단점** : 메모리 관리 및 오류 처리의 복잡성으로 인해 초보자에게 어려움\n\n---\n\n#### 컴파일 절차\n\nC언어의 프로그램은 다음 단계를 거쳐 실행 파일로 변환됩니다 :\n\n1. **소스 코드 작성 (**.c**)**\n\n- C언어로 작성된 코드 파일입니다.\n\n2. **전처리 (Preprocessing)**\n\n- 전처리기를 통해 **#include**, **#define** 등 전처리 지시문 처리\n- 결과: 확장된 소스 코드 (**.i**)\n\n3. **컴파일 (Compilation)**\n\n- 확장된 소스 코드를 어셈블리 코드 (**.s**)로 변환\n- 문법 검사와 최적화 수행\n\n4. **어셈블 (Assembly)**\n\n- 어셈블리 코드를 기계어로 변환하여 목적 파일 (**.o**) 생성\n\n5. **링킹 (Linking)**\n\n- 목적 파일과 라이브러리들을 결합해 실행 파일 (**.exe** 또는 OS에 맞는 포맷) 생성\n- 외부 함수나 라이브러리를 결합\n"
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 개발 환경 구축 및 터미널 명령어",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 기본",
+        "sortOrder": 3,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "02",
+    "title": "02. 자료형과 연산자",
+    "sortOrder": 2,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 입출력",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 데이터형",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 변수와 상수",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. ASCII?",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 연산자",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 자료형 변환",
+        "sortOrder": 6,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "03",
+    "title": "03. 제어문",
+    "sortOrder": 3,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 조건문",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 반복문",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. ✏️ 예제 : 회원정보 출력",
+        "sortOrder": 3,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "04",
+    "title": "04. 배열과 문자열",
+    "sortOrder": 4,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 배열",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 문자열",
+        "sortOrder": 2,
+        "content": ""
+      }
+    ]
+  },
+  {
+    "chapterKey": "05",
+    "title": "05. 함수 및 자료 처리",
+    "sortOrder": 5,
+    "lessons": [
+      {
+        "lessonKey": "01",
+        "label": "01. 함수",
+        "sortOrder": 1,
+        "content": ""
+      },
+      {
+        "lessonKey": "02",
+        "label": "02. 포인터",
+        "sortOrder": 2,
+        "content": ""
+      },
+      {
+        "lessonKey": "03",
+        "label": "03. 동적 할당",
+        "sortOrder": 3,
+        "content": ""
+      },
+      {
+        "lessonKey": "04",
+        "label": "04. 구조체",
+        "sortOrder": 4,
+        "content": ""
+      },
+      {
+        "lessonKey": "05",
+        "label": "05. 파일 입출력",
+        "sortOrder": 5,
+        "content": ""
+      },
+      {
+        "lessonKey": "06",
+        "label": "06. 기타",
+        "sortOrder": 6,
+        "content": ""
+      },
+      {
+        "lessonKey": "07",
+        "label": "07. ✏️ 예제 : 에어컨 만들기",
+        "sortOrder": 7,
+        "content": ""
+      }
+    ]
+  }
+]

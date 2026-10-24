@@ -1,0 +1,20 @@
+# 루트 레벨 안전망 -- 각 서브프로젝트(backend/frontend/judge/educoding-react-native/rag)는
+# 자체 .gitignore를 갖고 있지만, 모노레포로 합치면서 빠지는 게 없도록 여기서 한번 더 막는다.
+
+.DS_Store
+*.log
+
+# 의존성 / 가상환경 (용량이 크고 완전히 재생성 가능함)
+**/node_modules/
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.pyc
+
+# 빌드 산출물
+**/dist/
+**/build/
+backend/build/
+
+# 로컬 실행 로그
+local-dev/*.log

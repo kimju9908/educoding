@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // (필수) 변환할 JavaScript 버전 (esnext -> 최신)
+    "lib": ["dom", "dom.iterable", "esnext"], // 사용할 JavaScript 가능 라이브러리 목록
+    "allowJs": true, // 프로젝트에서 JavaScript 파일 허용
+    "skipLibCheck": true, // 'node_modules' 내부의 '.d.ts' 파일 타입 검사 생략
+    "esModuleInterop": true, // (필수) CommonJS 모듈을 ESM처럼 가져올 수 있도록 설정
+    "allowSyntheticDefaultImports": true,
+    "strict": true, // (필수) 엄격한 타입 검사 활성화
+    "forceConsistentCasingInFileNames": true, // (필수) 파일 및 폴더 이름 대소문자 일관성 유지
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": false,
+    "module": "esnext", // (필수) JavaScript 모듈 시스템 설정
+    "moduleResolution": "node", // 모듈 해석 방식
+    "resolveJsonModule": true, // JSON 파일 import 허용
+    "isolatedModules": true,
+    "noEmit": true, // (필수) '.js' 파일로 변환하지 않음 (React 프로젝트 필수)
+    "jsx": "react-jsx", // JSX 변환 방식
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*", "eslint.config.mjs", "prettier.config.mjs", "vite.config.ts"]
+}
