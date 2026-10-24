@@ -21,6 +21,7 @@ Run:
     cp .env.example .env
     uvicorn main:app --host 127.0.0.1 --port 5051
 """
+import logging
 import os
 from contextlib import asynccontextmanager
 from typing import List, Optional
@@ -34,6 +35,9 @@ from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
 load_dotenv()
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("rag.chatbot")
 
 ES_HOST = os.environ.get("ELASTIC_END_POINT", "http://127.0.0.1:9200")
 ES_USERNAME = os.environ.get("ELASTIC_USERNAME") or None
@@ -56,6 +60,12 @@ RAG_X_CLIENT_ID = os.environ.get("RAG_X_CLIENT_ID")
 # independent cap so a misbehaving/compromised caller can't blow up the prompt size.
 MAX_HISTORY_TURNS = int(os.environ.get("RAG_MAX_HISTORY_TURNS", "6"))
 VALID_CHAT_ROLES = {"user", "assistant"}
+
+# Hard cap on the tool-use loop below. A model that keeps calling search_study_material
+# instead of answering would otherwise burn tokens/latency forever -- the last iteration
+# forces a final answer (tool_choice="none") instead of just giving up, so a run that
+# hits the cap still returns something grounded in whatever was found so far.
+MAX_TOOL_ITERATIONS = int(os.environ.get("RAG_MAX_TOOL_ITERATIONS", "4"))
 
 ALLOWED_LANGUAGES = {"java", "c", "cplus", "javascript", "python"}
 
@@ -125,42 +135,142 @@ def retrieve(question: str, language: Optional[str]):
     return [hit for hit in response["hits"]["hits"] if hit["_score"] >= RAG_MIN_SCORE]
 
 
+SEARCH_TOOL = {
+    "name": "search_study_material",
+    "description": (
+        "educoding 학습 자료에서 질문과 관련된 내용을 kNN 검색한다. 답변하기 전에 반드시 한 번 "
+        "이상 호출해서 근거 자료를 확보해야 하며, 학습 자료에 없는 내용을 추측해서 답하면 안 된다. "
+        "사용자의 질문이 대화 맥락에 의존하는 짧은 후속 질문(예: '그거 말고 람다식으로는요?')이라면 "
+        "그대로 검색하지 말고, 이전 대화를 참고해 구체적인 검색어로 다시 써서 호출하라. 첫 검색 "
+        "결과가 질문에 답하기 부족하면 다른 검색어로 다시 호출할 수 있다. 관련 자료가 전혀 없으면 "
+        "결과가 비어 있다는 안내가 돌아오니, 그 경우 추측하지 말고 자료를 찾지 못했다고 답하라."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "검색어. 사용자의 원래 문장이 아니라, 대화 맥락을 반영해 구체화한 질문.",
+            },
+            "language": {
+                "type": "string",
+                "enum": sorted(ALLOWED_LANGUAGES),
+                "description": "특정 언어로 검색 범위를 제한하고 싶을 때만 지정한다.",
+            },
+        },
+        "required": ["query"],
+    },
+}
+
+
 def build_system_prompt() -> str:
     return (
-        "너는 educoding 학습 플랫폼의 학습 보조 챗봇이다. "
-        "아래 [학습 자료]에 제공된 내용만 근거로 한국어로 답변하라. "
-        "학습 자료에 없는 내용은 추측하지 말고, 자료에서 답을 찾을 수 없다고 명확히 말하라. "
-        "답변 본문에서 근거로 사용한 자료는 해당 번호를 [1], [2]처럼 표시하라. "
-        "이전 대화는 맥락 참고용이며, [번호] 인용은 이전 턴이 아니라 이번 턴에 새로 주어진 "
-        "[학습 자료]만을 가리킨다."
+        "너는 educoding 학습 플랫폼의 학습 보조 챗봇이다. search_study_material 도구로 찾은 "
+        "학습 자료에 제공된 내용만 근거로 한국어로 답변하라. 학습 자료에 없는 내용은 추측하지 말고, "
+        "자료에서 답을 찾을 수 없다고 명확히 말하라. 답변 본문에서 근거로 사용한 자료는 도구 결과에 "
+        "표시된 번호를 그대로 [1], [2]처럼 인용하라."
     )
 
 
-def build_context_message(question: str, hits) -> str:
-    context_blocks = []
-    for i, hit in enumerate(hits, start=1):
+def chunk_key(hit) -> str:
+    return hit["_source"].get("id") or hit["_id"]
+
+
+def format_search_result(hits, cited: dict) -> str:
+    """Formats retrieved chunks as a tool_result, assigning each a citation number
+    that stays stable across every search call in this request (so Claude citing
+    [2] always means the same chunk, even after a second, different-query search).
+    `cited` is mutated: chunk id -> (citation number, hit).
+    """
+    if not hits:
+        return "검색 결과 없음 -- 이 검색어로는 관련 학습 자료를 찾지 못했습니다."
+
+    blocks = []
+    for hit in hits:
+        key = chunk_key(hit)
+        if key not in cited:
+            cited[key] = (len(cited) + 1, hit)
+        number, _ = cited[key]
         src = hit["_source"]
-        context_blocks.append(
-            f"[{i}] ({src['language']} / {src['chapterTitle']} / {src['lessonLabel']} / {src['heading']})\n"
+        blocks.append(
+            f"[{number}] ({src['language']} / {src['chapterTitle']} / {src['lessonLabel']} / {src['heading']})\n"
             f"{src['content']}"
         )
-    context = "\n\n".join(context_blocks)
-    return f"[학습 자료]\n{context}\n\n[질문]\n{question}"
+    return "\n\n".join(blocks)
 
 
-def build_messages(question: str, hits, history: List[ChatTurn]) -> list:
-    """Multi-turn message list for Claude: prior turns verbatim, then this turn's
-    retrieved context + question. History entries with an invalid role are dropped
-    rather than rejected outright, since a stale/odd session shouldn't 500 the whole
-    request over one bad turn.
+def resolve_tool_language(tool_input: dict, fallback: Optional[str]) -> Optional[str]:
+    value = tool_input.get("language")
+    if value in ALLOWED_LANGUAGES:
+        return value
+    return fallback  # ignore malformed/unsupported values from the model rather than 400ing the whole turn
+
+
+def run_agent(claude: anthropic.Anthropic, question: str, language: Optional[str], history: List[ChatTurn]):
+    """Agentic RAG loop: Claude decides when and what to search (search_study_material),
+    can re-search with a rewritten query, and we force a final answer on the last
+    iteration so a model that keeps calling tools can't loop forever.
     """
     messages = [
         {"role": turn.role, "content": turn.content}
         for turn in history[-MAX_HISTORY_TURNS:]
         if turn.role in VALID_CHAT_ROLES
     ]
-    messages.append({"role": "user", "content": build_context_message(question, hits)})
-    return messages
+    messages.append({"role": "user", "content": question})
+
+    cited: dict = {}  # chunk id -> (citation number, hit), stable across all searches this request
+
+    for i in range(MAX_TOOL_ITERATIONS):
+        is_first = i == 0
+        is_last = i == MAX_TOOL_ITERATIONS - 1
+        kwargs = dict(
+            model=CLAUDE_MODEL,
+            max_tokens=2000,
+            thinking={"type": "adaptive"},
+            system=build_system_prompt(),
+            tools=[SEARCH_TOOL],
+            messages=messages,
+        )
+        if is_last:
+            kwargs["tool_choice"] = {"type": "none"}  # out of iterations: answer with whatever we have
+        elif is_first:
+            # Relying on the system prompt's "search before answering" instruction alone
+            # isn't reliable -- live-testing a follow-up question found Claude sometimes
+            # skips the tool and answers from the conversation history instead, citing a
+            # stale [n] number with no sources attached. Forcing the tool on turn 1 makes
+            # every answer grounded in an actual search, every time.
+            kwargs["tool_choice"] = {"type": "tool", "name": SEARCH_TOOL["name"]}
+        response = claude.messages.create(**kwargs)
+
+        messages.append({"role": "assistant", "content": response.content})
+        tool_uses = [block for block in response.content if block.type == "tool_use"]
+
+        if not tool_uses:
+            answer = next((block.text for block in response.content if block.type == "text"), "")
+            ordered_hits = [hit for _, hit in sorted(cited.values(), key=lambda pair: pair[0])]
+            logger.info(
+                "run_agent finished after %d call(s), %d distinct cited chunk(s), stop_reason=%s",
+                i + 1, len(cited), response.stop_reason,
+            )
+            return answer, ordered_hits
+
+        tool_results = []
+        for tool_use in tool_uses:
+            query = (tool_use.input or {}).get("query") or question
+            tool_language = resolve_tool_language(tool_use.input or {}, language)
+            hits = retrieve(query, tool_language)
+            tool_results.append({
+                "type": "tool_result",
+                "tool_use_id": tool_use.id,
+                "content": format_search_result(hits, cited),
+            })
+        messages.append({"role": "user", "content": tool_results})
+
+    # Unreachable in practice: the forced tool_choice="none" call above always returns
+    # text, never another tool_use, so the loop always returns inside the `if not
+    # tool_uses` branch by the last iteration.
+    ordered_hits = [hit for _, hit in sorted(cited.values(), key=lambda pair: pair[0])]
+    return "죄송합니다, 지금은 답변을 만들지 못했습니다. 다시 질문해 주세요.", ordered_hits
 
 
 @app.post("/chatbot/ask", response_model=AskResponse)
@@ -185,21 +295,9 @@ def ask(
             detail="X-Anthropic-Api-Key header missing -- set ANTHROPIC_API_KEY in backend/.env and restart the backend",
         )
 
-    hits = retrieve(question, body.language)
-    if not hits:
-        return AskResponse(answer="관련된 학습 자료를 찾지 못했습니다.", sources=[])
-
-    messages = build_messages(question, hits, body.history)
-
     try:
         claude = anthropic.Anthropic(api_key=x_anthropic_api_key)
-        response = claude.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=2000,
-            thinking={"type": "adaptive"},
-            system=build_system_prompt(),
-            messages=messages,
-        )
+        answer, hits = run_agent(claude, question, body.language, body.history)
     except anthropic.AuthenticationError:
         raise HTTPException(status_code=502, detail="Claude API authentication failed -- check ANTHROPIC_API_KEY")
     except anthropic.RateLimitError:
@@ -208,8 +306,6 @@ def ask(
         raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
     except anthropic.APIConnectionError:
         raise HTTPException(status_code=502, detail="Could not reach Claude API")
-
-    answer = next((block.text for block in response.content if block.type == "text"), "")
 
     sources = [
         Source(
