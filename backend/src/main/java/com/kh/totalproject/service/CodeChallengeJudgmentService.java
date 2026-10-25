@@ -43,7 +43,8 @@ public class CodeChallengeJudgmentService {
                 .codeLanguage(judgmentJobResult.getCodeLanguage())
                 .code(judgmentJobResult.getCode())
                 .codeByteSize(judgmentJobResult.getCodeByteSize())
-                .submittedAt(judgmentJobResult.getSubmittedAt());
+                .submittedAt(judgmentJobResult.getSubmittedAt())
+                .jobId(judgmentJobResult.getJobId());
 
         // 통과한 경우
         if (judgmentJobResult instanceof JudgeJobResultPassed passed) {

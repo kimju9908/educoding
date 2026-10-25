@@ -34,7 +34,10 @@ from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
+import learning_graph
 import agent_graph
+import hint_graph
+import review_graph
 # Importing retrieval is what actually loads rag/service/.env (see its module
 # docstring/top) -- that has to happen before ES_HOST etc. below are read, which is
 # exactly why it's a plain import and not deferred.
@@ -157,6 +160,98 @@ def ask(
     return AskResponse(answer=answer, sources=sources)
 
 
+class ReviewRequest(BaseModel):
+    # Built by the backend (CodeReviewService) AFTER it verified ownership and
+    # passed=true -- this service doesn't re-check either, it can't (no user context).
+    submission: review_graph.SubmissionContext
+    challenge: review_graph.ChallengeContext
+
+
+@app.post("/review/generate", response_model=review_graph.ReviewResult)
+def generate_review(
+    body: ReviewRequest,
+    x_api_key: Optional[str] = Header(default=None),
+    x_client_id: Optional[str] = Header(default=None),
+    x_anthropic_api_key: Optional[str] = Header(default=None, alias="X-Anthropic-Api-Key"),
+):
+    verify_auth(x_api_key, x_client_id)
+
+    if not x_anthropic_api_key:
+        raise HTTPException(
+            status_code=503,
+            detail="X-Anthropic-Api-Key header missing -- set ANTHROPIC_API_KEY in backend/.env and restart the backend",
+        )
+
+    try:
+        return review_graph.run_review(body.submission, body.challenge, x_anthropic_api_key, CLAUDE_MODEL)
+    except review_graph.ReviewFormatError as e:
+        raise HTTPException(status_code=502, detail=f"AI review format error: {e}")
+    except anthropic.AuthenticationError:
+        raise HTTPException(status_code=502, detail="Claude API authentication failed -- check ANTHROPIC_API_KEY")
+    except anthropic.RateLimitError:
+        raise HTTPException(status_code=502, detail="Claude API rate limited, try again shortly")
+    except anthropic.APITimeoutError:
+        raise HTTPException(status_code=504, detail="Claude API timed out")
+    except anthropic.APIStatusError as e:
+        raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
+    except anthropic.APIConnectionError:
+        raise HTTPException(status_code=502, detail="Could not reach Claude API")
+
+
+@app.post("/hint/generate", response_model=hint_graph.HintResult)
+def generate_hint(
+    body: hint_graph.HintRequestContext,
+    x_api_key: Optional[str] = Header(default=None),
+    x_client_id: Optional[str] = Header(default=None),
+    x_anthropic_api_key: Optional[str] = Header(default=None, alias="X-Anthropic-Api-Key"),
+):
+    # Built by the backend (CodeHintService) AFTER it verified ownership, challenge match
+    # and which level may be revealed -- this service can't re-check any of it (no user context).
+    verify_auth(x_api_key, x_client_id)
+
+    if not x_anthropic_api_key:
+        raise HTTPException(
+            status_code=503,
+            detail="X-Anthropic-Api-Key header missing -- set ANTHROPIC_API_KEY in backend/.env and restart the backend",
+        )
+
+    try:
+        return hint_graph.run_hint(body, x_anthropic_api_key, CLAUDE_MODEL)
+    except hint_graph.HintFormatError as e:
+        raise HTTPException(status_code=502, detail=f"AI hint format error: {e}")
+    except anthropic.AuthenticationError:
+        raise HTTPException(status_code=502, detail="Claude API authentication failed -- check ANTHROPIC_API_KEY")
+    except anthropic.RateLimitError:
+        raise HTTPException(status_code=502, detail="Claude API rate limited, try again shortly")
+    except anthropic.APITimeoutError:
+        raise HTTPException(status_code=504, detail="Claude API timed out")
+    except anthropic.APIStatusError as e:
+        raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
+    except anthropic.APIConnectionError:
+        raise HTTPException(status_code=502, detail="Could not reach Claude API")
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# The authenticated Spring backend supplies a closed, user-scoped snapshot.
+
+
+@app.post("/learning-path/generate", response_model=learning_graph.Selection)
+def generate_learning_path(
+    body: learning_graph.LearningContext,
+    x_api_key: Optional[str] = Header(default=None),
+    x_client_id: Optional[str] = Header(default=None),
+    x_anthropic_api_key: Optional[str] = Header(default=None, alias="X-Anthropic-Api-Key"),
+):
+    verify_auth(x_api_key, x_client_id)
+    if not x_anthropic_api_key:
+        raise HTTPException(status_code=503, detail="AI key missing")
+    try:
+        return learning_graph.run_learning_path(body, x_anthropic_api_key, CLAUDE_MODEL)
+    except anthropic.APITimeoutError:
+        raise HTTPException(status_code=504, detail="AI timed out")
+    except (ValueError, anthropic.APIError):
+        raise HTTPException(status_code=502, detail="AI learning path unavailable or invalid")

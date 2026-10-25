@@ -4,7 +4,7 @@ import Console from './CodingTest_CodeResultConsole';
 import { CodingTest_CodeResult as CssWrapper } from '../../../styles/codingtest/CodingTest_CodeResult';
 import { CodeResultProps, FailureCauseMap, FailureCauseType } from '../CodingTestType';
 
-const CodingTest_CodeResult: React.FC<CodeResultProps> = ({ results }) => {
+const CodingTest_CodeResult: React.FC<CodeResultProps> = ({ results, headerAction }) => {
   const isFailureCauseType = (cause: string | undefined): cause is FailureCauseType => {
     return !!cause && cause in FailureCauseMap;
   };
@@ -76,6 +76,7 @@ const CodingTest_CodeResult: React.FC<CodeResultProps> = ({ results }) => {
     <CssWrapper>
       <div>
         <span>결과 출력</span>
+        {headerAction}
       </div>
       <div>{renderResults()}</div>
     </CssWrapper>

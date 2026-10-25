@@ -1,0 +1,331 @@
+{
+  "version": 1,
+  "prerequisites": {
+    "연산자": [],
+    "조건문": [
+      "연산자"
+    ],
+    "반복문": [
+      "조건문"
+    ],
+    "배열": [
+      "반복문"
+    ],
+    "문자열": [
+      "반복문"
+    ],
+    "해시": [
+      "배열"
+    ]
+  },
+  "challenges": [
+    {
+      "id": 1,
+      "title": "두 정수의 덧셈",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "나머지와 몫 구하기",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "1차 방정식의 해 구하기",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "두 수 비교하기",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "윤년 판별하기",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "학점 계산하기",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "구구단",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "1부터 N까지 합 구하기",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "계단 만들기",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "최댓 값 찾기",
+      "concepts": [
+        "배열",
+        "반복문"
+      ]
+    },
+    {
+      "id": 11,
+      "title": "배열 뒤집기",
+      "concepts": [
+        "배열",
+        "반복문"
+      ]
+    },
+    {
+      "id": 12,
+      "title": "2차원 배열 요소의 합 구하기",
+      "concepts": [
+        "배열",
+        "반복문"
+      ]
+    },
+    {
+      "id": 13,
+      "title": "문자열 길이 출력하기",
+      "concepts": [
+        "문자열"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "문자가 등장하는 횟수 세기",
+      "concepts": [
+        "문자열"
+      ]
+    },
+    {
+      "id": 15,
+      "title": "대소문자 변환하기",
+      "concepts": [
+        "문자열"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "language": "java",
+      "chapter": "02",
+      "lesson": "03",
+      "label": "03. 연산자",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "language": "java",
+      "chapter": "02",
+      "lesson": "04",
+      "label": "04. 조건문",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "language": "java",
+      "chapter": "02",
+      "lesson": "05",
+      "label": "05. 반복문",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "language": "java",
+      "chapter": "03",
+      "lesson": "02",
+      "label": "02. 배열",
+      "concepts": [
+        "배열"
+      ]
+    },
+    {
+      "language": "java",
+      "chapter": "03",
+      "lesson": "03",
+      "label": "03. String",
+      "concepts": [
+        "문자열"
+      ]
+    },
+    {
+      "language": "java",
+      "chapter": "06",
+      "lesson": "04",
+      "label": "04. Map",
+      "concepts": [
+        "해시"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "01",
+      "lesson": "07",
+      "label": "07. 문자열",
+      "concepts": [
+        "문자열"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "01",
+      "lesson": "08",
+      "label": "08. 연산자",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "01",
+      "lesson": "09",
+      "label": "09. 조건문",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "01",
+      "lesson": "10",
+      "label": "10. 반복문",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "02",
+      "lesson": "02",
+      "label": "02. List",
+      "concepts": [
+        "배열"
+      ]
+    },
+    {
+      "language": "python",
+      "chapter": "02",
+      "lesson": "03",
+      "label": "03. Dictionary",
+      "concepts": [
+        "해시"
+      ]
+    },
+    {
+      "language": "c",
+      "chapter": "02",
+      "lesson": "05",
+      "label": "05. 연산자",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "language": "c",
+      "chapter": "03",
+      "lesson": "01",
+      "label": "01. 조건문",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "language": "c",
+      "chapter": "03",
+      "lesson": "02",
+      "label": "02. 반복문",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "language": "c",
+      "chapter": "04",
+      "lesson": "01",
+      "label": "01. 배열",
+      "concepts": [
+        "배열"
+      ]
+    },
+    {
+      "language": "c",
+      "chapter": "04",
+      "lesson": "02",
+      "label": "02. 문자열",
+      "concepts": [
+        "문자열"
+      ]
+    },
+    {
+      "language": "cplus",
+      "chapter": "02",
+      "lesson": "02",
+      "label": "02. 연산자",
+      "concepts": [
+        "연산자"
+      ]
+    },
+    {
+      "language": "cplus",
+      "chapter": "03",
+      "lesson": "01",
+      "label": "03. 조건문",
+      "concepts": [
+        "조건문"
+      ]
+    },
+    {
+      "language": "cplus",
+      "chapter": "03",
+      "lesson": "02",
+      "label": "04. 반복문",
+      "concepts": [
+        "반복문"
+      ]
+    },
+    {
+      "language": "cplus",
+      "chapter": "04",
+      "lesson": "01",
+      "label": "01. 배열",
+      "concepts": [
+        "배열"
+      ]
+    },
+    {
+      "language": "cplus",
+      "chapter": "04",
+      "lesson": "02",
+      "label": "02. 문자열",
+      "concepts": [
+        "문자열"
+      ]
+    }
+  ]
+}

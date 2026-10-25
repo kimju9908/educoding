@@ -61,4 +61,14 @@ public interface CodeChallengeJudgmentRepository extends JpaRepository<CodeChall
             "WHERE j.user.userKey = :userKey " +
             "GROUP BY j.codeChallenge.difficulty, j.codeLanguage")
     List<Tuple> findJudgmentStatsByDifficultyAndLanguage(@Param("userKey") Long userKey);
+
+    // 특정 judge 작업(jobId)으로 만들어진 채점 1건 조회 (AI 코드 리뷰 대상 제출 확인용)
+    Optional<CodeChallengeJudgment> findFirstByJobIdOrderByJudgmentIdDesc(String jobId);
+
+    // 특정 유저가 특정 문제에 낸 오답 제출 최근 10건 (AI 힌트 기준 제출 선택용)
+    List<CodeChallengeJudgment> findTop10ByUser_UserKeyAndCodeChallenge_ChallengeIdAndPassedFalseOrderByJudgmentIdDesc(
+            Long userKey, Long challengeId);
+
+    // 자동 저장 설정 미리보기용 -- 어떤 문제든 가장 최근 정답 제출 1건 (GitHub 자동 커밋 기능)
+    Optional<CodeChallengeJudgment> findFirstByUser_UserKeyAndPassedTrueOrderByJudgmentIdDesc(Long userKey);
 }

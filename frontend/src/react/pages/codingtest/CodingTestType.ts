@@ -90,6 +90,8 @@ export type CodeChallengeInfoProps = {
 
 export type CodeResultProps = {
   results: TestCaseResultMap | null;
+  // "결과 출력" 헤더 오른쪽에 붙는 요소 (AI 코드 리뷰 버튼)
+  headerAction?: React.ReactNode;
 };
 
 export type CodeResultConsoleProps = {

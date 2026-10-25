@@ -61,11 +61,17 @@ public class CodeChallengeJudgment {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String failureDetail;
 
+    // 이 채점을 만든 judge 작업 ID. 클라이언트는 SSE로 jobId만 알고 judgmentId는 모르기 때문에,
+    // "방금 채점한 그 제출"을 정확히 찾기 위해 저장한다 (AI 코드 리뷰가 최신 제출로 대체되지 않도록).
+    // 이 컬럼이 생기기 전에 저장된 행은 null.
+    @Column(nullable = true, length = 64)
+    private String jobId;
+
     @Builder
     public CodeChallengeJudgment(User user, CodeChallenge codeChallenge, boolean passed,
                                  CodeChallengeLanguage codeLanguage, String code, int codeByteSize,
                                  LocalDateTime submittedAt, Float maxMemoryUsageMb, Integer maxElapsedTimeMs,
-                                 FailureCause failureCause, String failureDetail) {
+                                 FailureCause failureCause, String failureDetail, String jobId) {
         this.user = user;
         this.codeChallenge = codeChallenge;
         this.passed = passed;
@@ -73,6 +79,7 @@ public class CodeChallengeJudgment {
         this.code = code;
         this.codeByteSize = codeByteSize;
         this.submittedAt = submittedAt;
+        this.jobId = jobId;
 
         // 명시적 대입 없는 필드는 null 값으로 초기화
         if (passed) {

@@ -21,6 +21,8 @@ import {
 } from '../../../../api/AxiosApi/CodingTestApi/CodingTestApiType';
 import { CodingTest_CodingPage as CssWrapper } from '../../../styles/codingtest/CodingTest_CodingPage';
 import { LevelTypeObject, SSETestCaseResult, TestCaseResultMap } from '../CodingTestType';
+import CodingTest_AiHint from '../components/CodingTest_AiHint';
+import CodingTest_AiReview from '../components/CodingTest_AiReview';
 import CodingTest_CodeEditor from '../components/CodingTest_CodeEditor';
 import CodingTest_CodeResult from '../components/CodingTest_CodeResult';
 import CodingTest_QuestInfo from '../components/CodingTest_QuestInfo';
@@ -56,16 +58,26 @@ const CodingTest_Coding = (): JSX.Element => {
   // 코드 실행 결과
   const [results, setResults] = useState<TestCaseResultMap | null>(null);
 
+  // 이번 채점의 모든 테스트 케이스가 통과했는지 (SSE 메시지마다 갱신)
+  const allPassedRef = useRef<boolean>(false);
+  // AI 코드 리뷰 대상: 정답 처리된 채점의 jobId (새 제출·취소·오답이면 null)
+  const [reviewJobId, setReviewJobId] = useState<string | null>(null);
+  // AI 힌트: 오답으로 끝난 채점의 jobId (그 제출을 힌트 기준으로 자동 선택)
+  const [failedJobId, setFailedJobId] = useState<string | null>(null);
+  const [hintOpen, setHintOpen] = useState(false);
+
   // SSE 연결이 반복되지 않도록 useCallback 사용
   const handleOpen = useCallback((totalTestCases: number) => {
     const resultToUpdate: TestCaseResultMap = {};
     for (let i = 1; i <= totalTestCases; i++) resultToUpdate[i] = {};
+    allPassedRef.current = totalTestCases > 0;
     setResults(resultToUpdate);
   }, []);
 
   const handleMessage = useCallback((result: SSETestCaseResult): void => {
     // 정상 실행이 된 경우
     if (!result.failureCause) {
+      if (!result.passed) allPassedRef.current = false;
       setResults((prev) => ({
         ...prev,
         [result.testCaseIndex as number]: {
@@ -75,6 +87,7 @@ const CodingTest_Coding = (): JSX.Element => {
         },
       }));
     } else {
+      allPassedRef.current = false;
       setResults({
         [-1]: {
           failureCause: result.failureCause,
@@ -93,6 +106,7 @@ const CodingTest_Coding = (): JSX.Element => {
 
   const handleError = useCallback((errorMessage: string): void => {
     jobIdRef.current = null;
+    allPassedRef.current = false;
     setResults(null);
     // alert(errorMessage);
     setDialogMessage(errorMessage || '알 수 없는 오류가 발생했습니다.');
@@ -100,6 +114,9 @@ const CodingTest_Coding = (): JSX.Element => {
   }, []);
 
   const handleComplete = useCallback((): void => {
+    // jobId를 비우기 전에, 통과한 채점이면 그 jobId를 AI 코드 리뷰 대상으로 잡아둔다
+    if (allPassedRef.current && jobIdRef.current) setReviewJobId(jobIdRef.current);
+    if (!allPassedRef.current && jobIdRef.current) setFailedJobId(jobIdRef.current);
     jobIdRef.current = null;
     setDialogMessage('채점이 완료되었습니다.');
     setDialogOpen(true);
@@ -145,6 +162,8 @@ const CodingTest_Coding = (): JSX.Element => {
     }
 
     jobIdRef.current = submitResponseData['jobId'];
+    allPassedRef.current = false;
+    setReviewJobId(null);
     setResults(null);
     connect();
   };
@@ -200,6 +219,9 @@ const CodingTest_Coding = (): JSX.Element => {
           </div>
 
           <div>
+            <button className="leave-page-btn" onClick={() => setHintOpen((prev) => !prev)}>
+              {hintOpen ? '힌트 닫기' : '힌트 보기'}
+            </button>
             <button
               className="leave-page-btn"
               onClick={() => {
@@ -222,7 +244,10 @@ const CodingTest_Coding = (): JSX.Element => {
               handleCancelButtonClick={handleCancelButtonClick}
               isConnectedRef={isConnectedRef}
             />
-            <CodingTest_CodeResult results={results} />
+            <CodingTest_CodeResult
+              results={results}
+              headerAction={<CodingTest_AiReview jobId={reviewJobId} />}
+            />
           </div>
           <div>
             <CodingTest_QuestInfo
@@ -232,6 +257,13 @@ const CodingTest_Coding = (): JSX.Element => {
             />
           </div>
         </main>
+        <CodingTest_AiHint
+          challengeId={Number(challengeId)}
+          language={convertLanguageWithVersion(language) ?? null}
+          failedJobId={failedJobId}
+          open={hintOpen}
+          onClose={() => setHintOpen(false)}
+        />
         {/* <footer></footer> */}
         <Dialog
           open={dialogOpen}

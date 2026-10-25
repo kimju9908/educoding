@@ -15,6 +15,7 @@ import CodingTest_QuestList from '../components/CodingTest_QuestList';
 import Level_Explain from '../components/Level_Explain';
 import Level_List from '../components/Level_List';
 import Level_Title from '../components/Level_Title';
+import CodingTest_LearningPath from '../components/CodingTest_LearningPath';
 
 // User Nickname, 등급
 // Coding Test 난이도 받아와야함
@@ -56,6 +57,7 @@ const CodingTest_Main = (): JSX.Element => {
   return (
     <>
       <Wrap>
+        <CodingTest_LearningPath />
         <Container>
           <LeftContainer>
             {currentLevel ? (
