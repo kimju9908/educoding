@@ -58,7 +58,10 @@ export const FloatingLeftContainer = styled.div.attrs({
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  /* 예전엔 전체 페이지에서 검정 배경(BodyContainer) 위에 떠 있어서 반투명 검정이 거의
+     검정으로 보였는데, 지금은 전역 모달(MUI Dialog)의 흰 Paper 위에 바로 얹혀서 그 반투명이
+     흰색과 섞여 탁한 회색으로 보였음 -- 불투명한 색으로 고정 */
+  background-color: #121212;
   z-index: 10;
   gap: 50px;
   padding: 60px 0 0;

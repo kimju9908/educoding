@@ -166,7 +166,7 @@ const LoginModal = (): JSX.Element => {
         open={isOpen}
         onClose={handleClose}
         TransitionProps={{ onEnter }}
-        PaperProps={{ sx: { borderRadius: '8px', overflow: 'visible' } }}
+        PaperProps={{ sx: { borderRadius: '8px', overflow: 'visible', backgroundColor: '#121212' } }}
       >
         <FloatingLeftContainer style={{ height: 'auto', padding: '40px 0' }}>
           <FloatingLeftLoginContainer>
