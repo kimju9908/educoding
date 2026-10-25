@@ -39,8 +39,7 @@ out/
 ### Firebase API Key
 src/main/resources/firebase-service-account.json
 
-# ignore test setting
-src/test/**
+# ignore test setting (not test source code itself -- see RagChatbotServiceTest.java)
 src/main/resources/application-test.properties
 
 # react dependencies

@@ -3,6 +3,15 @@
 ChatAnthropic is faked out (no real Claude calls); Elasticsearch/the embedding
 model are faked the same way test_retrieval.py does, since the tools node
 calls retrieval.retrieve() for real.
+
+Scope note: tests below that script a FakeChatAnthropic to return a specific
+tool_use (e.g. "the model called search_study_material with chunk_id=X")
+verify the *mechanics* that follow from that call -- that tools_node runs the
+right lookup, formats the right tool_result, and the loop continues/ends
+correctly. They do not and cannot verify that a real Claude would choose to
+look up the right past citation on its own; that's a live-model judgment call,
+exercised instead by the real-stack conversation in rag/README.md's "멀티턴에서
+이전 출처 다시 조회하기" section.
 """
 import numpy as np
 import pytest
