@@ -9,6 +9,7 @@ import com.kh.totalproject.dto.response.JudgmentStatisticsResponse;
 import com.kh.totalproject.entity.CodeChallenge;
 import com.kh.totalproject.entity.CodeChallengeJudgment;
 import com.kh.totalproject.entity.User;
+import com.kh.totalproject.github.AutoCommitOutbox;
 import com.kh.totalproject.repository.CodeChallengeJudgmentRepository;
 import com.kh.totalproject.repository.CodeChallengeRepository;
 import com.kh.totalproject.repository.UserRepository;
@@ -29,6 +30,7 @@ public class CodeChallengeJudgmentService {
     private final UserRepository userRepository;
     private final CodeChallengeRepository codeChallengeRepository;
     private final CodeChallengeJudgmentRepository codeChallengeJudgmentRepository;
+    private final AutoCommitOutbox autoCommitOutbox;
 
     public void saveJudgmentHistory(JudgeJobResult judgmentJobResult) {
         User user = userRepository.findById(judgmentJobResult.getUserId())
@@ -62,6 +64,13 @@ public class CodeChallengeJudgmentService {
 
         CodeChallengeJudgment judgment = builder.build();
         codeChallengeJudgmentRepository.save(judgment);
+
+        // Outbox pattern (docs/github-auto-commit.md section 3): same transaction as the
+        // judgment save above, so "judgment saved" and "auto-commit job queued" are atomic.
+        if (Boolean.TRUE.equals(judgment.getPassed())) {
+            autoCommitOutbox.enqueueIfEnabled(judgment.getUser().getUserKey(), judgment.getJudgmentId(),
+                    challenge.getChallengeId(), judgment.getCodeLanguage(), challenge.getTitle());
+        }
     }
 
     public JudgmentStatisticsResponse getJudgmentStatistics(Long userKey) {

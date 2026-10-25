@@ -34,6 +34,7 @@ import Cs_Post_Read from './react/pages/mypage/components/Board/Cs_Post_Read';
 import MyPage_Main from './react/pages/mypage/pages/Account/MyPage_Account';
 import MyPage_CodingTest from './react/pages/mypage/pages/CodingTest/MyPage_CodingTest';
 import MyPage_Community from './react/pages/mypage/pages/Community/MyPage_Community';
+import MyPage_Github from './react/pages/mypage/pages/Github/MyPage_Github';
 import MyPage_MenteeList from './react/pages/mypage/pages/MenteeList/MyPage_MenteeList';
 import MyPage_MentorList from './react/pages/mypage/pages/MentorList/MyPage_MentorList';
 import MyPage_Report from './react/pages/mypage/pages/Report/MyPage_Report';
@@ -222,6 +223,15 @@ const MyPageRoutes = [
     element: (
       <RequiredAuth>
         <MyPage_Study />
+      </RequiredAuth>
+    ),
+    auth: true,
+  },
+  {
+    path: '/mypage/github',
+    element: (
+      <RequiredAuth>
+        <MyPage_Github />
       </RequiredAuth>
     ),
     auth: true,

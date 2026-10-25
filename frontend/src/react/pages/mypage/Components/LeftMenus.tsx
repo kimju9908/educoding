@@ -32,6 +32,7 @@ const LeftMenus = (): JSX.Element => {
     { id: 'withdrawal', sort: '내 프로필', label: '️회원 탈퇴', link: '/mypage/withdrawal' },
     { id: 'study', sort: '공부방', label: '언어 공부', link: '/mypage/study' },
     { id: 'codingtest', sort: '공부방', label: '코딩테스트', link: '/mypage/codingtest' },
+    { id: 'github', sort: '공부방', label: 'GitHub 진단', link: '/mypage/github' },
     { id: 'community', sort: '작성한 게시글', label: '커뮤니티 게시판', link: '/mypage/community' },
     { id: 'report', sort: '작성한 게시글', label: '악성 사용자 신고', link: '/mypage/report' },
     { id: 'mentor', sort: '멘토링 전용 페이지', label: '내 멘토 보기', link: '/mypage/mentor' },

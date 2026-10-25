@@ -68,6 +68,9 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 무상태 세션 정책
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/webhook/callback-event/**").access(ipAuthorizationManager) // IP 화이트 리스트에 해당 되는 경우 검사 X
+                        // GitHub가 브라우저 리다이렉트로 직접 호출하는 콜백 -- Authorization 헤더가 없어
+                        // 서명된 state로만 신원을 검증한다(GithubStateToken). /api/github/** 나머지는 기존 JWT 인증 필요.
+                        .requestMatchers("/api/github/oauth/callback", "/api/github/install/callback").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",

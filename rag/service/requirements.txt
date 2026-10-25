@@ -7,3 +7,5 @@ anthropic>=0.40
 python-dotenv>=1.0
 langgraph>=1.2
 langchain-anthropic>=1.7
+mcp>=1.0,<2 # 2.x renames FastMCP/ClientSession APIs (see migration guide); pinned until github_mcp_server.py/github_graph.py are ported
+requests>=2.31

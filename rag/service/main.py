@@ -36,8 +36,10 @@ from sentence_transformers import SentenceTransformer
 
 import learning_graph
 import agent_graph
+import github_graph
 import hint_graph
 import review_graph
+import solution_summary_graph
 # Importing retrieval is what actually loads rag/service/.env (see its module
 # docstring/top) -- that has to happen before ES_HOST etc. below are read, which is
 # exactly why it's a plain import and not deferred.
@@ -255,3 +257,53 @@ def generate_learning_path(
         raise HTTPException(status_code=504, detail="AI timed out")
     except (ValueError, anthropic.APIError):
         raise HTTPException(status_code=502, detail="AI learning path unavailable or invalid")
+
+
+# Spring has already verified the GitHub identity, the installation and the selected
+# repos, and pins each repo to a HEAD SHA before calling here. The installation token
+# is minted fresh per analysis and never stored -- same "secret only in a header, never
+# in a model message or the request body" rule as X-Anthropic-Api-Key.
+@app.post("/github/diagnose", response_model=github_graph.DiagnosisResult)
+async def diagnose_github(
+    body: github_graph.DiagnosisContext,
+    x_api_key: Optional[str] = Header(default=None),
+    x_client_id: Optional[str] = Header(default=None),
+    x_anthropic_api_key: Optional[str] = Header(default=None, alias="X-Anthropic-Api-Key"),
+    x_github_installation_token: Optional[str] = Header(default=None, alias="X-Github-Installation-Token"),
+):
+    verify_auth(x_api_key, x_client_id)
+    if not x_anthropic_api_key:
+        raise HTTPException(status_code=503, detail="AI key missing")
+    if not x_github_installation_token:
+        raise HTTPException(status_code=503, detail="GitHub installation token missing")
+    try:
+        return await github_graph.run_diagnosis(body, x_github_installation_token, x_anthropic_api_key, CLAUDE_MODEL)
+    except github_graph.DiagnosisFormatError as e:
+        raise HTTPException(status_code=502, detail=f"AI diagnosis format error: {e}")
+    except anthropic.APITimeoutError:
+        raise HTTPException(status_code=504, detail="AI timed out")
+    except (ValueError, anthropic.APIError):
+        raise HTTPException(status_code=502, detail="AI diagnosis unavailable or invalid")
+
+
+# No tool-use loop, no MCP -- the backend already assembled everything this needs
+# (docs/github-auto-commit.md section 5). AutoCommitJobRunner tries this at most once
+# per job attempt and falls back to a fixed default description on any failure.
+@app.post("/solution-summary/generate", response_model=solution_summary_graph.SummaryResult)
+def generate_solution_summary(
+    body: solution_summary_graph.SummaryRequest,
+    x_api_key: Optional[str] = Header(default=None),
+    x_client_id: Optional[str] = Header(default=None),
+    x_anthropic_api_key: Optional[str] = Header(default=None, alias="X-Anthropic-Api-Key"),
+):
+    verify_auth(x_api_key, x_client_id)
+    if not x_anthropic_api_key:
+        raise HTTPException(status_code=503, detail="AI key missing")
+    try:
+        return solution_summary_graph.run_summary(body, x_anthropic_api_key, CLAUDE_MODEL)
+    except solution_summary_graph.SummaryFormatError as e:
+        raise HTTPException(status_code=502, detail=f"AI summary format error: {e}")
+    except anthropic.APITimeoutError:
+        raise HTTPException(status_code=504, detail="AI timed out")
+    except (ValueError, anthropic.APIError):
+        raise HTTPException(status_code=502, detail="AI summary unavailable or invalid")
